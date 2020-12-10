@@ -1,0 +1,57 @@
+{
+  "_id": "schema",
+  "name": "schema",
+  "description": "数据结构",
+  "aid": "0",
+  "do": true,
+  "content": {
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "required": true,
+        "description": "应用内唯一"
+      },
+      "description": {
+        "name": "description",
+        "type": "string",
+        "description": "描述",
+        "required": false
+      },
+      "createdAt": {
+        "name": "createdAt",
+        "type": "datetime",
+        "required": false
+      },
+      "updatedAt": {
+        "name": "updatedAt",
+        "type": "datetime",
+        "required": false
+      },
+      "deletedAt": {
+        "name": "deletedAt",
+        "type": "datetime",
+        "required": false
+      },
+      "_id": {
+        "type": "string",
+        "required": true
+      },
+      "content": {
+        "type": "json",
+        "required": true
+      },
+      "tag": {
+        "required": false,
+        "index": false,
+        "type": "string"
+      },
+      "aid": {
+        "required": true,
+        "index": true,
+        "type": "string"
+      }
+    }
+  },
+  "tag": "mongodb"
+}

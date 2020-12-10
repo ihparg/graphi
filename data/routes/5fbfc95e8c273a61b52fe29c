@@ -1,0 +1,80 @@
+{
+  "aid": "0",
+  "title": "用户登录",
+  "method": "POST",
+  "tag": "user",
+  "path": "/api/user/login",
+  "requestBody": {
+    "type": "ref",
+    "properties": {
+      "password": {
+        "ref": "user.password"
+      },
+      "name": {
+        "ref": "user.name"
+      }
+    },
+    "ref": "user"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "ref",
+        "properties": {
+          "status": {
+            "ref": "user.status"
+          },
+          "role": {
+            "ref": "user.role"
+          },
+          "name": {
+            "ref": "user.name"
+          },
+          "token": {
+            "required": true,
+            "type": "string"
+          },
+          "_id": {
+            "required": true,
+            "ref": "user._id"
+          },
+          "email": {
+            "required": false,
+            "ref": "user.email"
+          }
+        },
+        "ref": "user"
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fbfc95e8c273a61b52fe29c",
+  "resolve": "user.login",
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "fullPath": "POST:/api/user/login",
+  "refs": [
+    "user",
+    "requestHeaders",
+    "response"
+  ]
+}

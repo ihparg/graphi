@@ -1,0 +1,78 @@
+{
+  "aid": "0",
+  "title": "应用增加用户",
+  "method": "POST",
+  "tag": "app",
+  "path": "/api/app/addMemeber",
+  "resolve": "app.addMember",
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "required": true,
+        "type": "string",
+        "description": "app Id"
+      },
+      "role": {
+        "required": true,
+        "type": "integer",
+        "maximum": "4",
+        "minimum": "1"
+      },
+      "user": {
+        "required": true,
+        "type": "object",
+        "properties": {
+          "_id": {
+            "required": true,
+            "type": "string"
+          },
+          "name": {
+            "required": false,
+            "type": "string"
+          }
+        }
+      }
+    },
+    "defaultValue": "",
+    "description": ""
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "boolean"
+      }
+    },
+    "ref": "response"
+  },
+  "refs": [
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5fd05cf4bb41056daff5b556",
+  "fullPath": "POST:/api/app/addmemeber"
+}

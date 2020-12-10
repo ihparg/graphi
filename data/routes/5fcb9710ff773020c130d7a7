@@ -1,0 +1,90 @@
+{
+  "aid": "0",
+  "title": "Schema列表",
+  "method": "GET",
+  "tag": "schema",
+  "path": "/api/schema/:aid/list",
+  "resolve": "schema.list",
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "_id": "5fcb9710ff773020c130d7a7",
+  "fullPath": "GET:/api/schema/:aid/list",
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "ref",
+            "required": false,
+            "properties": {
+              "name": {
+                "ref": "schema.name"
+              },
+              "description": {
+                "ref": "schema.description"
+              },
+              "createdAt": {
+                "ref": "schema.createdAt"
+              },
+              "updatedAt": {
+                "ref": "schema.updatedAt"
+              },
+              "deletedAt": {
+                "ref": "schema.deletedAt"
+              },
+              "_id": {
+                "ref": "schema._id"
+              },
+              "content": {
+                "required": true,
+                "ref": "schema.content"
+              },
+              "tag": {
+                "required": false,
+                "ref": "schema.tag"
+              },
+              "aid": {
+                "required": true,
+                "ref": "schema.aid"
+              }
+            },
+            "ref": "schema"
+          }
+        ]
+      }
+    },
+    "ref": "response"
+  },
+  "refs": [
+    "requestHeaders",
+    "response",
+    "schema"
+  ]
+}

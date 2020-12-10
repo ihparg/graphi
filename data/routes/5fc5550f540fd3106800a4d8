@@ -1,0 +1,70 @@
+{
+  "aid": "0",
+  "title": "获取用户信息",
+  "method": "GET",
+  "tag": "user",
+  "path": "/api/user/info",
+  "resolve": "user.info",
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "required": false,
+        "type": "string",
+        "description": "不填id时，查询当前用户信息"
+      }
+    }
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "ref",
+        "properties": {
+          "email": {
+            "ref": "user.email"
+          },
+          "status": {
+            "ref": "user.status"
+          },
+          "role": {
+            "ref": "user.role"
+          },
+          "_id": {
+            "ref": "user._id"
+          },
+          "name": {
+            "ref": "user.name"
+          }
+        },
+        "ref": "user"
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fc5550f540fd3106800a4d8",
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "fullPath": "GET:/api/user/info"
+}

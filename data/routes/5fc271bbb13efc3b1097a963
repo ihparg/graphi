@@ -1,0 +1,74 @@
+{
+  "aid": "0",
+  "title": "初始化用户",
+  "method": "POST",
+  "tag": "user",
+  "path": "/api/user/init",
+  "resolve": "user.init",
+  "requestBody": {
+    "type": "ref",
+    "properties": {
+      "password": {
+        "ref": "user.password"
+      },
+      "email": {
+        "ref": "user.email"
+      },
+      "name": {
+        "ref": "user.name"
+      }
+    },
+    "ref": "user"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "ref",
+        "properties": {
+          "email": {
+            "ref": "user.email"
+          },
+          "status": {
+            "ref": "user.status"
+          },
+          "createdAt": {
+            "ref": "user.createdAt"
+          },
+          "updatedAt": {
+            "ref": "user.updatedAt"
+          },
+          "role": {
+            "ref": "user.role"
+          },
+          "_id": {
+            "ref": "user._id"
+          },
+          "name": {
+            "ref": "user.name"
+          }
+        },
+        "ref": "user"
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fc271bbb13efc3b1097a963",
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "fullPath": "POST:/api/user/init"
+}

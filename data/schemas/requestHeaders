@@ -1,0 +1,22 @@
+{
+  "aid": "0",
+  "content": {
+    "type": "object",
+    "properties": {
+      "Content-Type": {
+        "type": "string",
+        "required": true,
+        "defaultValue": "application/json"
+      },
+      "Authorization": {
+        "type": "string",
+        "required": true
+      }
+    }
+  },
+  "name": "requestHeaders",
+  "description": "通用请求头",
+  "do": false,
+  "_id": "requestHeaders",
+  "tag": "模板"
+}

@@ -1,0 +1,141 @@
+{
+  "aid": "0",
+  "title": "初始化用户",
+  "method": "POST",
+  "tag": "user",
+  "path": "/api/user/init",
+  "resolve": "user.init",
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "password": {
+        "ref": "user.password",
+        "type": "string",
+        "name": "password",
+        "required": true,
+        "description": ""
+      },
+      "email": {
+        "ref": "user.email",
+        "type": "string",
+        "name": "email",
+        "required": true
+      },
+      "name": {
+        "ref": "user.name",
+        "type": "string",
+        "required": true,
+        "description": ""
+      }
+    },
+    "ref": "user"
+  },
+  "responseBody": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "ref": "response.code",
+        "type": "integer",
+        "required": true,
+        "enum": [
+          {
+            "value": "200",
+            "text": "success"
+          },
+          {
+            "value": "400",
+            "text": "no auth"
+          },
+          {
+            "value": "404",
+            "text": "not found"
+          },
+          {
+            "value": "500",
+            "text": "server error"
+          }
+        ],
+        "defaultValue": "200"
+      },
+      "message": {
+        "ref": "response.message",
+        "type": "string",
+        "required": false
+      },
+      "data": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "email": {
+            "ref": "user.email",
+            "type": "string",
+            "name": "email",
+            "required": true
+          },
+          "status": {
+            "ref": "user.status",
+            "type": "integer",
+            "defaultValue": 0,
+            "required": true,
+            "enum": [
+              {
+                "value": "0",
+                "text": "停用"
+              },
+              {
+                "value": "1",
+                "text": "启用"
+              }
+            ]
+          },
+          "createdAt": {
+            "ref": "user.createdAt",
+            "type": "datetime",
+            "name": "createdAt",
+            "required": false
+          },
+          "updatedAt": {
+            "ref": "user.updatedAt",
+            "type": "datetime",
+            "name": "updatedAt",
+            "required": false
+          },
+          "role": {
+            "ref": "user.role",
+            "type": "integer",
+            "required": true,
+            "defaultValue": "1",
+            "enum": [
+              {
+                "value": "0",
+                "text": "管理员"
+              },
+              {
+                "value": "1",
+                "text": "用户"
+              },
+              {
+                "value": "2",
+                "text": "Service"
+              }
+            ]
+          },
+          "_id": {
+            "ref": "user._id",
+            "type": "string",
+            "required": true
+          },
+          "name": {
+            "ref": "user.name",
+            "type": "string",
+            "required": true,
+            "description": ""
+          }
+        },
+        "ref": "user"
+      }
+    },
+    "ref": "response"
+  },
+  "id": "5fc271bbb13efc3b1097a963"
+}

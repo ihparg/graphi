@@ -1,0 +1,92 @@
+{
+  "aid": "0",
+  "title": "创建用户",
+  "method": "POST",
+  "tag": "user",
+  "path": "/api/user/create",
+  "resolve": "user.create",
+  "requestBody": {
+    "type": "ref",
+    "properties": {
+      "password": {
+        "ref": "user.password"
+      },
+      "email": {
+        "ref": "user.email"
+      },
+      "role": {
+        "ref": "user.role"
+      },
+      "name": {
+        "ref": "user.name"
+      },
+      "phone": {
+        "ref": "user.phone"
+      },
+      "status": {
+        "required": true,
+        "ref": "user.status"
+      }
+    },
+    "ref": "user"
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "ref",
+        "properties": {
+          "email": {
+            "ref": "user.email"
+          },
+          "status": {
+            "ref": "user.status"
+          },
+          "createdAt": {
+            "ref": "user.createdAt"
+          },
+          "updatedAt": {
+            "ref": "user.updatedAt"
+          },
+          "role": {
+            "ref": "user.role"
+          },
+          "_id": {
+            "ref": "user._id"
+          },
+          "name": {
+            "ref": "user.name"
+          }
+        },
+        "ref": "user"
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fc634f546343919359ee657",
+  "fullPath": "POST:/api/user/create",
+  "refs": [
+    "user",
+    "requestHeaders",
+    "response"
+  ]
+}

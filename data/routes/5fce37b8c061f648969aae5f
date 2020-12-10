@@ -1,0 +1,56 @@
+{
+  "aid": "0",
+  "title": "接口锁定编辑",
+  "method": "POST",
+  "tag": "route",
+  "path": "/api/route/:_id/lock",
+  "resolve": "",
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "type": "string",
+        "required": false,
+        "description": "接口ID"
+      }
+    }
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "boolean"
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fce37b8c061f648969aae5f",
+  "fullPath": "POST:/api/route/:_id/lock",
+  "refs": [
+    "requestHeaders",
+    "response"
+  ]
+}

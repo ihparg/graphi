@@ -1,0 +1,100 @@
+{
+  "aid": "0",
+  "title": "接口列表",
+  "method": "GET",
+  "tag": "route",
+  "path": "/api/route/:aid",
+  "resolve": "route.list",
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "ref",
+            "required": false,
+            "properties": {
+              "tag": {
+                "ref": "route.tag"
+              },
+              "path": {
+                "ref": "route.path"
+              },
+              "method": {
+                "ref": "route.method"
+              },
+              "description": {
+                "ref": "route.description"
+              },
+              "createdAt": {
+                "ref": "route.createdAt"
+              },
+              "status": {
+                "ref": "route.status"
+              },
+              "_id": {
+                "ref": "route._id"
+              },
+              "aid": {
+                "ref": "route.aid"
+              },
+              "updatedAt": {
+                "required": false,
+                "ref": "route.updatedAt"
+              },
+              "fullPath": {
+                "required": false,
+                "ref": "route.fullPath"
+              },
+              "alias": {
+                "required": false,
+                "ref": "route.alias"
+              },
+              "title": {
+                "required": true,
+                "ref": "route.title"
+              }
+            },
+            "ref": "route"
+          }
+        ]
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fcb95aa5a1fdb1ebe963e7d",
+  "fullPath": "GET:/api/route/:aid",
+  "refs": [
+    "requestHeaders",
+    "response",
+    "route"
+  ]
+}

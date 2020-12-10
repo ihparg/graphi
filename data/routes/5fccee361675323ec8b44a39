@@ -1,0 +1,177 @@
+{
+  "aid": "0",
+  "title": "保存接口",
+  "method": "POST",
+  "tag": "route",
+  "path": "/api/route/:aid/save",
+  "resolve": "route.save",
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "_id": "5fccee361675323ec8b44a39",
+  "fullPath": "POST:/api/route/:aid/save",
+  "requestBody": {
+    "type": "ref",
+    "properties": {
+      "tag": {
+        "ref": "route.tag"
+      },
+      "path": {
+        "ref": "route.path"
+      },
+      "method": {
+        "ref": "route.method"
+      },
+      "description": {
+        "ref": "route.description"
+      },
+      "routeParams": {
+        "ref": "route.routeParams"
+      },
+      "requestHeaders": {
+        "ref": "route.requestHeaders"
+      },
+      "requestBody": {
+        "ref": "route.requestBody"
+      },
+      "responseHeaders": {
+        "ref": "route.responseHeaders"
+      },
+      "responseBody": {
+        "ref": "route.responseBody"
+      },
+      "fullPath": {
+        "ref": "route.fullPath"
+      },
+      "aid": {
+        "ref": "route.aid"
+      },
+      "_id": {
+        "required": false,
+        "ref": "route._id"
+      },
+      "queryStrings": {
+        "required": false,
+        "ref": "route.queryStrings"
+      },
+      "alias": {
+        "required": false,
+        "ref": "route.alias"
+      },
+      "title": {
+        "required": true,
+        "ref": "route.title"
+      },
+      "refs": {
+        "required": true,
+        "type": "array",
+        "description": "引用的Schema ID",
+        "items": [
+          {
+            "type": "string",
+            "required": false,
+            "exampleValue": "@id"
+          }
+        ]
+      }
+    },
+    "ref": "route"
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "ref",
+        "properties": {
+          "tag": {
+            "ref": "route.tag"
+          },
+          "path": {
+            "ref": "route.path"
+          },
+          "method": {
+            "ref": "route.method"
+          },
+          "description": {
+            "ref": "route.description"
+          },
+          "createdAt": {
+            "ref": "route.createdAt"
+          },
+          "updatedAt": {
+            "ref": "route.updatedAt"
+          },
+          "routeParams": {
+            "ref": "route.routeParams"
+          },
+          "queryStrings": {
+            "ref": "route.queryStrings"
+          },
+          "requestHeaders": {
+            "ref": "route.requestHeaders"
+          },
+          "requestBody": {
+            "ref": "route.requestBody"
+          },
+          "responseHeaders": {
+            "ref": "route.responseHeaders"
+          },
+          "responseBody": {
+            "ref": "route.responseBody"
+          },
+          "status": {
+            "ref": "route.status"
+          },
+          "_id": {
+            "ref": "route._id"
+          },
+          "fullPath": {
+            "ref": "route.fullPath"
+          },
+          "aid": {
+            "ref": "route.aid"
+          },
+          "title": {
+            "required": true,
+            "ref": "route.title"
+          },
+          "alias": {
+            "required": false,
+            "ref": "route.alias"
+          }
+        },
+        "ref": "route"
+      }
+    },
+    "ref": "response"
+  },
+  "refs": [
+    "route",
+    "requestHeaders",
+    "response"
+  ]
+}

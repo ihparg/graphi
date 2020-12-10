@@ -1,0 +1,44 @@
+{
+  "aid": "0",
+  "name": "response",
+  "description": "返回结果",
+  "_id": "response",
+  "content": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "required": true,
+        "type": "integer",
+        "enum": [
+          {
+            "value": "200",
+            "text": "success"
+          },
+          {
+            "value": "401",
+            "text": "need login"
+          },
+          {
+            "value": "403",
+            "text": "no auth"
+          },
+          {
+            "value": "404",
+            "text": "not found"
+          },
+          {
+            "value": "500",
+            "text": "server error"
+          }
+        ],
+        "defaultValue": "200"
+      },
+      "message": {
+        "required": false,
+        "type": "string"
+      }
+    }
+  },
+  "tag": "模板",
+  "do": false
+}

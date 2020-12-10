@@ -1,0 +1,39 @@
+{
+  "aid": "0",
+  "title": "用户登出",
+  "method": "POST",
+  "tag": "user",
+  "path": "/api/user/logout",
+  "resolve": "user.logout",
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "required": true,
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "boolean"
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fc3c9f906aa9f01b350dcc3",
+  "fullPath": "POST:/api/user/logout"
+}

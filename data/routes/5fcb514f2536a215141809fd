@@ -1,0 +1,119 @@
+{
+  "aid": "0",
+  "title": "获取单个应用信息",
+  "method": "GET",
+  "tag": "app",
+  "path": "/api/app/:id",
+  "resolve": "app.one",
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      }
+    }
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "ref",
+        "properties": {
+          "name": {
+            "ref": "app.name"
+          },
+          "description": {
+            "ref": "app.description"
+          },
+          "lastVersion": {
+            "ref": "app.lastVersion"
+          },
+          "visibility": {
+            "ref": "app.visibility"
+          },
+          "status": {
+            "ref": "app.status"
+          },
+          "createdAt": {
+            "ref": "app.createdAt"
+          },
+          "updatedAt": {
+            "ref": "app.updatedAt"
+          },
+          "_id": {
+            "ref": "app._id"
+          },
+          "owner": {
+            "required": true,
+            "ref": "app.owner",
+            "properties": {
+              "_id": {
+                "ref": "user._id"
+              },
+              "name": {
+                "ref": "user.name"
+              }
+            }
+          },
+          "users": {
+            "required": false,
+            "ref": "app.users",
+            "items": [
+              {
+                "type": "ref",
+                "ref": "app.users.0",
+                "properties": {
+                  "role": {
+                    "required": false,
+                    "ref": "app.users.0.role"
+                  },
+                  "user": {
+                    "required": false,
+                    "ref": "app.users.0.user",
+                    "properties": {
+                      "_id": {
+                        "ref": "user._id"
+                      },
+                      "name": {
+                        "ref": "user.name"
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "ref": "app"
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fcb514f2536a215141809fd",
+  "fullPath": "GET:/api/app/:id",
+  "refs": [
+    "requestHeaders",
+    "response",
+    "app",
+    "user"
+  ]
+}

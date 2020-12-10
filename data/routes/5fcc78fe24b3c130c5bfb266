@@ -1,0 +1,60 @@
+{
+  "aid": "0",
+  "title": "获取resolves列表",
+  "method": "GET",
+  "tag": "resolve",
+  "path": "/api/resolve/:aid/list",
+  "resolve": "resolve.list",
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "_id": "5fcc78fe24b3c130c5bfb266",
+  "fullPath": "GET:/api/resolve/:aid/list",
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "json",
+            "required": false
+          }
+        ]
+      }
+    },
+    "ref": "response"
+  },
+  "refs": [
+    "requestHeaders",
+    "response"
+  ]
+}

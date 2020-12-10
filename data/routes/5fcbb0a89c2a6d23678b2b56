@@ -1,0 +1,107 @@
+{
+  "aid": "0",
+  "title": "保存Schema",
+  "method": "POST",
+  "tag": "schema",
+  "path": "/api/schema/:aid/save",
+  "resolve": "schema.save",
+  "requestBody": {
+    "type": "ref",
+    "properties": {
+      "name": {
+        "ref": "schema.name"
+      },
+      "description": {
+        "ref": "schema.description"
+      },
+      "tag": {
+        "required": false,
+        "ref": "schema.tag"
+      },
+      "content": {
+        "required": true,
+        "ref": "schema.content"
+      },
+      "aid": {
+        "required": true,
+        "ref": "schema.aid"
+      },
+      "_id": {
+        "required": false,
+        "ref": "schema._id"
+      }
+    },
+    "ref": "schema"
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "ref",
+        "properties": {
+          "name": {
+            "ref": "schema.name"
+          },
+          "description": {
+            "ref": "schema.description"
+          },
+          "createdAt": {
+            "ref": "schema.createdAt"
+          },
+          "updatedAt": {
+            "ref": "schema.updatedAt"
+          },
+          "deletedAt": {
+            "ref": "schema.deletedAt"
+          },
+          "_id": {
+            "ref": "schema._id"
+          },
+          "tag": {
+            "required": false,
+            "ref": "schema.tag"
+          },
+          "content": {
+            "required": true,
+            "ref": "schema.content"
+          },
+          "aid": {
+            "required": true,
+            "ref": "schema.aid"
+          }
+        },
+        "ref": "schema"
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fcbb0a89c2a6d23678b2b56",
+  "fullPath": "POST:/api/schema/:aid/save"
+}

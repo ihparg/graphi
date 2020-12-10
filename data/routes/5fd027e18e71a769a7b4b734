@@ -1,0 +1,46 @@
+{
+  "aid": "0",
+  "title": "获取用户列表数量",
+  "method": "GET",
+  "tag": "user",
+  "path": "/api/user/normalCount",
+  "resolve": "user.normalCount",
+  "routeParams": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "integer"
+      }
+    },
+    "ref": "response"
+  },
+  "refs": [
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5fd027e18e71a769a7b4b734",
+  "fullPath": "GET:/api/user/normalcount"
+}

@@ -1,0 +1,87 @@
+{
+  "aid": "0",
+  "title": "用户登录",
+  "method": "POST",
+  "tag": "用户",
+  "resolve": "fake",
+  "path": "/api/user/login",
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "password": {
+        "ref": "user.password",
+        "type": "string",
+        "name": "password",
+        "required": true,
+        "description": ""
+      },
+      "name": {
+        "ref": "user.name",
+        "type": "string",
+        "required": true,
+        "description": ""
+      }
+    },
+    "ref": "user"
+  },
+  "responseBody": {
+    "type": "object",
+    "properties": {
+      "email": {
+        "ref": "user.email",
+        "type": "string",
+        "name": "email",
+        "required": true
+      },
+      "status": {
+        "ref": "user.status",
+        "type": "integer",
+        "defaultValue": 0,
+        "required": true,
+        "enum": [
+          {
+            "value": "0",
+            "text": "停用"
+          },
+          {
+            "value": "1",
+            "text": "启用"
+          }
+        ]
+      },
+      "role": {
+        "ref": "user.role",
+        "type": "integer",
+        "required": true,
+        "defaultValue": "1",
+        "enum": [
+          {
+            "value": "0",
+            "text": "管理员"
+          },
+          {
+            "value": "1",
+            "text": "用户"
+          },
+          {
+            "value": "2",
+            "text": "Service"
+          }
+        ]
+      },
+      "_id": {
+        "ref": "user._id",
+        "type": "string",
+        "required": true
+      },
+      "name": {
+        "ref": "user.name",
+        "type": "string",
+        "required": true,
+        "description": ""
+      }
+    },
+    "ref": "user"
+  },
+  "id": "5fbfc95e8c273a61b52fe29c"
+}

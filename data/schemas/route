@@ -1,0 +1,144 @@
+{
+  "_id": "route",
+  "name": "route",
+  "description": "接口",
+  "aid": "0",
+  "do": true,
+  "content": {
+    "type": "object",
+    "properties": {
+      "tag": {
+        "name": "tag",
+        "type": "string",
+        "required": false
+      },
+      "path": {
+        "name": "path",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      "method": {
+        "type": "string",
+        "required": true,
+        "enum": [
+          {
+            "value": "GET",
+            "text": ""
+          },
+          {
+            "value": "POST",
+            "text": ""
+          },
+          {
+            "value": "PUT"
+          },
+          {
+            "value": "DELETE"
+          }
+        ],
+        "description": "",
+        "defaultValue": "GET"
+      },
+      "description": {
+        "name": "description",
+        "type": "text",
+        "description": "描述",
+        "required": false
+      },
+      "createdAt": {
+        "name": "createdAt",
+        "type": "datetime",
+        "required": false
+      },
+      "updatedAt": {
+        "name": "updatedAt",
+        "type": "datetime",
+        "required": false
+      },
+      "routeParams": {
+        "name": "routeParams",
+        "type": "json",
+        "required": false
+      },
+      "queryStrings": {
+        "name": "queryStrings",
+        "type": "json",
+        "required": false
+      },
+      "requestHeaders": {
+        "name": "requestHeaders",
+        "type": "json",
+        "required": false
+      },
+      "requestBody": {
+        "name": "requestBody",
+        "type": "json",
+        "required": false
+      },
+      "responseHeaders": {
+        "name": "responseHeaders",
+        "type": "json",
+        "required": false
+      },
+      "responseBody": {
+        "name": "responseBody",
+        "type": "json",
+        "required": false
+      },
+      "status": {
+        "type": "integer",
+        "enum": [
+          {
+            "value": "0",
+            "text": "开发中"
+          },
+          {
+            "value": "1",
+            "text": "测试中"
+          },
+          {
+            "value": "2",
+            "text": "已完成"
+          }
+        ],
+        "defaultValue": "0",
+        "required": true,
+        "index": false
+      },
+      "_id": {
+        "type": "string",
+        "required": true
+      },
+      "user": {
+        "required": false,
+        "type": "ref",
+        "ref": "user",
+        "description": "最后修改用户"
+      },
+      "fullPath": {
+        "required": false,
+        "type": "string",
+        "description": "格式：method:/path，用来去重校验"
+      },
+      "aid": {
+        "required": true,
+        "type": "string",
+        "description": "应用 ID",
+        "index": true
+      },
+      "title": {
+        "required": true,
+        "index": false,
+        "type": "string"
+      },
+      "alias": {
+        "type": "string",
+        "required": false,
+        "index": false,
+        "description": "接口别名"
+      }
+    }
+  },
+  "tag": "mongodb"
+}

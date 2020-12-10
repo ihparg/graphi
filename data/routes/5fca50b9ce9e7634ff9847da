@@ -1,0 +1,90 @@
+{
+  "aid": "0",
+  "title": "应用列表",
+  "method": "GET",
+  "tag": "app",
+  "path": "/api/apps",
+  "resolve": "app.list",
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "ref",
+            "required": false,
+            "properties": {
+              "name": {
+                "ref": "app.name"
+              },
+              "description": {
+                "ref": "app.description"
+              },
+              "lastVersion": {
+                "ref": "app.lastVersion"
+              },
+              "visibility": {
+                "ref": "app.visibility"
+              },
+              "status": {
+                "ref": "app.status"
+              },
+              "createdAt": {
+                "ref": "app.createdAt"
+              },
+              "updatedAt": {
+                "ref": "app.updatedAt"
+              },
+              "_id": {
+                "ref": "app._id"
+              },
+              "owner": {
+                "required": true,
+                "ref": "app.owner",
+                "properties": {
+                  "_id": {
+                    "ref": "user._id"
+                  },
+                  "name": {
+                    "required": true,
+                    "ref": "user.name"
+                  }
+                }
+              }
+            },
+            "ref": "app"
+          }
+        ]
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fca50b9ce9e7634ff9847da",
+  "fullPath": "GET:/api/apps",
+  "refs": [
+    "requestHeaders",
+    "response",
+    "app",
+    "user"
+  ]
+}

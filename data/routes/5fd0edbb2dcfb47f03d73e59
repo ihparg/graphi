@@ -1,0 +1,61 @@
+{
+  "aid": "0",
+  "method": "POST",
+  "tag": "app",
+  "resolve": "app.removeMember",
+  "title": "删除应用用户",
+  "path": "/api/app/removeMember",
+  "routeParams": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "required": false,
+        "type": "string",
+        "description": "app Id"
+      },
+      "_id": {
+        "required": false,
+        "type": "string",
+        "description": "user ref id"
+      }
+    }
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "boolean"
+      }
+    },
+    "ref": "response"
+  },
+  "refs": [
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5fd0edbb2dcfb47f03d73e59",
+  "fullPath": "POST:/api/app/removemember"
+}

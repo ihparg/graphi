@@ -1,0 +1,28 @@
+[
+  {
+    "_id": "1",
+    "email": "text1@gmail.com",
+    "name": "test1",
+    "password": "123456",
+    "role": 1,
+    "status": 0,
+    "createdAt": "2015-02-25 01:14:33",
+    "updatedAt": "2015-02-25 01:14:34",
+    "tokens": [
+      { "createdAt":"2015-02-25 01:14:33", "token": "12345678" }
+    ]
+  },
+  {
+    "_id": "2",
+    "email": "text2@gmail.com",
+    "name": "test2",
+    "password": "123456",
+    "role": 2,
+    "status": 0,
+    "createdAt": "2015-02-25 01:14:33",
+    "updatedAt": "2015-02-25 01:14:34",
+    "tokens": [
+      { "createdAt":"2015-02-25 01:14:33", "token": "12345678" }
+    ]
+  }
+]

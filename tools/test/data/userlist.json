@@ -1,0 +1,103 @@
+{
+  "aid": "0",
+  "title": "用户列表",
+  "method": "GET",
+  "tag": "用户",
+  "path": "/api/user/list",
+  "resolve": "fake",
+  "requestHeaders": {
+    "type": "object",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type",
+        "type": "string",
+        "required": true,
+        "defaultValue": "application/json"
+      },
+      "Authentication": {
+        "ref": "requestHeaders.Authentication",
+        "type": "string",
+        "required": false
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "array",
+    "items": [
+      {
+        "type": "object",
+        "required": false,
+        "properties": {
+          "email": {
+            "ref": "user.email",
+            "type": "string",
+            "name": "email",
+            "required": true
+          },
+          "status": {
+            "ref": "user.status",
+            "type": "integer",
+            "defaultValue": 0,
+            "required": true,
+            "enum": [
+              {
+                "value": "0",
+                "text": "停用"
+              },
+              {
+                "value": "1",
+                "text": "启用"
+              }
+            ]
+          },
+          "createdAt": {
+            "ref": "user.createdAt",
+            "type": "datetime",
+            "name": "createdAt",
+            "required": false
+          },
+          "updatedAt": {
+            "ref": "user.updatedAt",
+            "type": "datetime",
+            "name": "updatedAt",
+            "required": false
+          },
+          "role": {
+            "ref": "user.role",
+            "type": "integer",
+            "required": true,
+            "defaultValue": "1",
+            "enum": [
+              {
+                "value": "0",
+                "text": "管理员"
+              },
+              {
+                "value": "1",
+                "text": "用户"
+              },
+              {
+                "value": "2",
+                "text": "Service"
+              }
+            ]
+          },
+          "_id": {
+            "ref": "user._id",
+            "type": "string",
+            "required": true
+          },
+          "name": {
+            "ref": "user.name",
+            "type": "string",
+            "required": true,
+            "description": ""
+          }
+        },
+        "ref": "user"
+      }
+    ]
+  },
+  "id": "5fbbcacf5e169d275936d3b1"
+}

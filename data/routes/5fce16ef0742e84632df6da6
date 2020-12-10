@@ -1,0 +1,126 @@
+{
+  "aid": "0",
+  "title": "获取单个接口信息",
+  "method": "GET",
+  "tag": "route",
+  "path": "/api/route/:aid/:_id",
+  "resolve": "route.fetchOne",
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      },
+      "_id": {
+        "type": "string"
+      }
+    }
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "ref",
+        "properties": {
+          "tag": {
+            "ref": "route.tag"
+          },
+          "path": {
+            "ref": "route.path"
+          },
+          "method": {
+            "ref": "route.method"
+          },
+          "description": {
+            "ref": "route.description"
+          },
+          "createdAt": {
+            "ref": "route.createdAt"
+          },
+          "updatedAt": {
+            "ref": "route.updatedAt"
+          },
+          "routeParams": {
+            "ref": "route.routeParams"
+          },
+          "queryStrings": {
+            "ref": "route.queryStrings"
+          },
+          "requestHeaders": {
+            "ref": "route.requestHeaders"
+          },
+          "requestBody": {
+            "ref": "route.requestBody"
+          },
+          "responseHeaders": {
+            "ref": "route.responseHeaders"
+          },
+          "responseBody": {
+            "ref": "route.responseBody"
+          },
+          "status": {
+            "ref": "route.status"
+          },
+          "_id": {
+            "ref": "route._id"
+          },
+          "fullPath": {
+            "ref": "route.fullPath"
+          },
+          "aid": {
+            "ref": "route.aid"
+          },
+          "title": {
+            "ref": "route.title"
+          },
+          "alias": {
+            "ref": "route.alias"
+          },
+          "user": {
+            "required": false,
+            "ref": "route.user",
+            "properties": {
+              "_id": {
+                "ref": "user._id"
+              },
+              "name": {
+                "required": true,
+                "ref": "user.name"
+              }
+            }
+          }
+        },
+        "ref": "route"
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fce16ef0742e84632df6da6",
+  "fullPath": "GET:/api/route/:aid/:_id",
+  "$incomplete": true,
+  "refs": [
+    "requestHeaders",
+    "response",
+    "route",
+    "user"
+  ]
+}

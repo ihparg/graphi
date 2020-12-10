@@ -1,0 +1,213 @@
+{
+  "aid": "0",
+  "content": {
+    "type": "object",
+    "properties": {
+      "arrayObject": {
+        "type": "array",
+        "required": false,
+        "items": [
+          {
+            "type": "object",
+            "required": false,
+            "properties": {
+              "hello": {
+                "type": "string",
+                "required": false
+              },
+              "ok": {
+                "type": "integer",
+                "required": false
+              }
+            }
+          }
+        ]
+      },
+      "arrayRef": {
+        "type": "array",
+        "required": false,
+        "items": [
+          {
+            "type": "ref",
+            "required": false,
+            "properties": {},
+            "ref": "response"
+          }
+        ]
+      },
+      "mapRef": {
+        "type": "map",
+        "required": false,
+        "items": [
+          {
+            "type": "ref",
+            "required": false,
+            "properties": {},
+            "ref": "response"
+          }
+        ]
+      },
+      "mapObject": {
+        "type": "map",
+        "required": false,
+        "items": [
+          {
+            "type": "object",
+            "required": false,
+            "properties": {
+              "hello": {
+                "type": "string",
+                "required": false
+              }
+            }
+          }
+        ]
+      },
+      "arrayBase": {
+        "type": "array",
+        "required": false,
+        "items": [
+          {
+            "type": "string"
+          }
+        ]
+      },
+      "mapBase": {
+        "type": "map",
+        "required": false,
+        "items": [
+          {
+            "type": "string",
+            "required": false,
+            "description": "base map schema"
+          }
+        ]
+      },
+      "objectObject": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "abc": {
+            "required": false,
+            "type": ""
+          },
+          "bcd": {
+            "required": false,
+            "type": "object",
+            "properties": {
+              "def": {
+                "required": false,
+                "type": "integer"
+              },
+              "hello": {
+                "required": false,
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "arrayArray": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "array",
+            "required": false,
+            "items": [
+              {
+                "type": "array",
+                "required": false,
+                "items": [
+                  {
+                    "type": "string",
+                    "required": false,
+                    "description": "套娃"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "arrayMap": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "map",
+            "required": false,
+            "items": [
+              {
+                "type": "string"
+              }
+            ]
+          }
+        ]
+      },
+      "mapMap": {
+        "required": false,
+        "type": "map",
+        "items": [
+          {
+            "type": "map",
+            "required": false,
+            "items": [
+              {
+                "type": "integer",
+                "required": false
+              }
+            ]
+          }
+        ]
+      },
+      "mapArray": {
+        "required": false,
+        "type": "map",
+        "items": [
+          {
+            "type": "array",
+            "required": false,
+            "items": [
+              {
+                "type": "integer",
+                "required": false
+              }
+            ]
+          }
+        ]
+      },
+      "objectArray": {
+        "required": false,
+        "type": "object",
+        "properties": {
+          "array": {
+            "required": false,
+            "type": "array",
+            "items": [
+              {
+                "type": "object",
+                "required": false,
+                "properties": {
+                  "abc": {
+                    "required": false,
+                    "type": "string"
+                  },
+                  "bcd": {
+                    "required": false,
+                    "type": "integer"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "name": "atest",
+  "do": false,
+  "_id": "atest",
+  "description": "测试用数据",
+  "tag": "数据测试"
+}

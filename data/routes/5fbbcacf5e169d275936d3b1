@@ -1,0 +1,73 @@
+{
+  "aid": "0",
+  "title": "用户列表",
+  "method": "GET",
+  "tag": "user",
+  "path": "/api/user/list",
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "required": true,
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "ref",
+            "required": false,
+            "properties": {
+              "name": {
+                "ref": "user.name"
+              },
+              "email": {
+                "ref": "user.email"
+              },
+              "status": {
+                "ref": "user.status"
+              },
+              "createdAt": {
+                "ref": "user.createdAt"
+              },
+              "updatedAt": {
+                "ref": "user.updatedAt"
+              },
+              "role": {
+                "ref": "user.role"
+              },
+              "_id": {
+                "ref": "user._id"
+              },
+              "lastLoginAt": {
+                "required": false,
+                "ref": "user.lastLoginAt"
+              }
+            },
+            "ref": "user"
+          }
+        ]
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fbbcacf5e169d275936d3b1",
+  "resolve": "user.all",
+  "fullPath": "GET:/api/user/list"
+}

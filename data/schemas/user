@@ -1,0 +1,108 @@
+{
+  "_id": "user",
+  "name": "user",
+  "description": "用户",
+  "aid": "0",
+  "do": true,
+  "content": {
+    "type": "object",
+    "properties": {
+      "password": {
+        "name": "password",
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      "email": {
+        "type": "string",
+        "required": true,
+        "exampleValue": "@email"
+      },
+      "status": {
+        "type": "integer",
+        "defaultValue": 0,
+        "required": true,
+        "enum": [
+          {
+            "value": "0",
+            "text": "停用"
+          },
+          {
+            "value": "1",
+            "text": "启用"
+          }
+        ]
+      },
+      "createdAt": {
+        "name": "createdAt",
+        "type": "datetime",
+        "required": false
+      },
+      "updatedAt": {
+        "name": "updatedAt",
+        "type": "datetime",
+        "required": false
+      },
+      "role": {
+        "type": "integer",
+        "required": true,
+        "defaultValue": "0",
+        "enum": [
+          {
+            "value": "0",
+            "text": "用户"
+          },
+          {
+            "value": "1",
+            "text": "管理员"
+          },
+          {
+            "value": "2",
+            "text": "Service"
+          }
+        ]
+      },
+      "_id": {
+        "type": "string",
+        "required": true,
+        "exampleValue": "@id"
+      },
+      "tokens": {
+        "type": "array",
+        "items": [
+          {
+            "required": false,
+            "type": "object",
+            "properties": {
+              "token": {
+                "required": false,
+                "type": "string"
+              },
+              "createdAt": {
+                "required": false,
+                "type": "datetime"
+              }
+            }
+          }
+        ]
+      },
+      "name": {
+        "type": "string",
+        "required": true,
+        "description": ""
+      },
+      "phone": {
+        "required": false,
+        "type": "string",
+        "minLength": "11",
+        "maxLength": "11",
+        "exampleValue": ""
+      },
+      "lastLoginAt": {
+        "required": false,
+        "type": "datetime"
+      }
+    }
+  },
+  "tag": "mongodb"
+}

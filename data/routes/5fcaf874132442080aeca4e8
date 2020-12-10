@@ -1,0 +1,54 @@
+{
+  "aid": "0",
+  "title": "创建应用",
+  "method": "POST",
+  "tag": "app",
+  "path": "/api/app",
+  "resolve": "app.create",
+  "requestBody": {
+    "type": "ref",
+    "properties": {
+      "name": {
+        "ref": "app.name"
+      },
+      "description": {
+        "ref": "app.description"
+      },
+      "visibility": {
+        "ref": "app.visibility"
+      }
+    },
+    "ref": "app"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "string",
+        "exampleValue": "@id"
+      }
+    },
+    "ref": "response"
+  },
+  "_id": "5fcaf874132442080aeca4e8",
+  "fullPath": "POST:/api/app",
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  }
+}
