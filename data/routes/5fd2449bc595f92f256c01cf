@@ -1,0 +1,69 @@
+{
+  "aid": "0",
+  "method": "POST",
+  "tag": "route",
+  "resolve": "route.process",
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "required": true,
+        "type": "string",
+        "description": "接口Id"
+      }
+    }
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "integer",
+        "description": "新status"
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "变更接口状态",
+  "path": "/api/route/:aid/process",
+  "refs": [
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5fd2449bc595f92f256c01cf",
+  "fullPath": "POST:/api/route/:aid/process"
+}

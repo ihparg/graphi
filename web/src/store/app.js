@@ -24,6 +24,7 @@ const getters = {
     return getter.appRole === 1 || getter.appRole === 2
   },
   isGuest(state, getter) {
+    if (state.id === '0') return false
     return getter.appRole === 0 || getter.appRole === 4
   },
 }

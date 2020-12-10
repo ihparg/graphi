@@ -130,9 +130,17 @@ export default {
     display: inline-block;
     width: 8px;
     height: 8px;
-    margin-right: 4px;
+    margin-right: 8px;
     border-radius: 4px;
-    background: #000000;
+    background: #333333;
+  }
+
+  .status-1 {
+    background: #ff9800;
+  }
+
+  .status-2 {
+    background: #4caf50;
   }
 }
 
