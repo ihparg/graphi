@@ -10,7 +10,7 @@
     :rid="rid"
   />
 
-  <router-link v-if="!editable" class="add-button" :to="`/app/${aid}/route/0`">
+  <router-link v-if="!editable && isDeveloper" class="add-button" :to="`/app/${aid}/route/0`">
     <ui-fab color="primary">
       <v-icon name="add" size="2rem" />
     </ui-fab>
@@ -33,6 +33,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('app', ['isDeveloper']),
     ...mapGetters('route', { routes: 'sortedRoutes' }),
     ...mapState('schema', { schemas: 'data' }),
     aid() {

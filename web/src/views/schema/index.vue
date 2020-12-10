@@ -9,7 +9,7 @@
     :name="name"
   />
 
-  <router-link v-if="!editable" class="add-button" :to="`/app/${aid}/schema/0`">
+  <router-link v-if="!editable && isDeveloper" class="add-button" :to="`/app/${aid}/schema/0`">
     <ui-fab color="primary">
       <v-icon name="add" size="2rem" />
     </ui-fab>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 import List from './list.vue'
 import Content from './content.vue'
 
@@ -32,6 +32,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('app', ['isDeveloper']),
     ...mapState('schema', ['data']),
     aid() {
       return this.$route.params.aid

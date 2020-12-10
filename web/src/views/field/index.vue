@@ -1,6 +1,5 @@
 <template>
-  <v-loading v-if="!value" />
-  <div v-else>
+  <div v-if="value">
     <div v-if="isMissed" class="node error" @click="handleRemove">
       {{ name }}: is removed from schemas.
     </div>

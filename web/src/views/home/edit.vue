@@ -50,7 +50,7 @@ export default {
     handleSubmit() {
       fetch.post('/api/app', this.value).then(id => {
         this.$message.show('应用创建成功，创建一个数据结构吧')
-        this.$router.push(`/schema/${id}/0`)
+        this.$router.push(`/app/${id}/schema/0`)
       })
     },
   },

@@ -1,11 +1,11 @@
 <template>
   <v-drawer width="30rem" @close="handleClose">
     <v-form :data="value">
-      <v-input name="name" :rules="[rule.required]" label="用户名" />
+      <v-input name="name" required :rules="[rule.required]" label="用户名" />
 
-      <v-input name="password" :rules="[rule.required]" type="password" label="密码" />
+      <v-input name="password" required :rules="[rule.required]" type="password" label="密码" />
 
-      <v-input name="email" :rules="[rule.required, rule.email]" label="邮箱" />
+      <v-input name="email" :rules="[rule.email]" label="邮箱" />
 
       <v-input name="role" type="select" label="角色" :default-value="0" :options="roles" />
 

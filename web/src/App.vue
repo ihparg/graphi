@@ -4,7 +4,7 @@
     <div class="header">
       <router-link class="logo" to="/">
         <v-icon name="logo" size="2rem" />
-        <span style="font-size: 1.2rem; margin-left: 0.5rem">GRAPHI</span>
+        <span style="font-size: 1.2rem; margin-left: 0.75rem">GRAPHI</span>
       </router-link>
 
       <div style="flex: 1"></div>
@@ -93,7 +93,7 @@ export default {
   color: #fff;
   text-decoration: none;
   font-size: 1.4rem;
-  margin-left: 1rem;
+  margin-left: 0.75rem;
 
   * {
     vertical-align: middle;

@@ -3,7 +3,7 @@
 const Service = require('egg').Service
 
 const ROLES = {
-  owner: 1,
+  maintainer: 1,
   developer: 2,
   tester: 3,
   guest: 4,
@@ -30,7 +30,7 @@ module.exports = class extends Service {
       ctx.cache.set(key, role, 3600)
     }
 
-    if (role === 1) return
+    if (role === ROLES.maintainer) return
 
     switch (op) {
       case 'get':
@@ -47,5 +47,10 @@ module.exports = class extends Service {
         break
       default:
     }
+  }
+
+  async removeCache(_id, aid) {
+    const key = _id + ':app:' + aid
+    this.ctx.cache.del(key)
   }
 }

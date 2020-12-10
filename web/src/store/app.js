@@ -20,10 +20,12 @@ const getters = {
     return getter.appRole === 1 || getter.appRole === 3
   },
   isDeveloper(state, getter) {
+    if (state.id === '0') return process.env.NODE_ENV === 'development'
     return getter.appRole === 1 || getter.appRole === 2
   },
-  isGuset(state, getter) {
-    return getter.appRole !== 0
+  isGuest(state, getter) {
+    if (state.id === '0') return false
+    return getter.appRole === 0 || getter.appRole === 4
   },
 }
 

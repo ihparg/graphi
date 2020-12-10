@@ -1,5 +1,13 @@
 import fetch from '@/utils/fetch'
 
+const mutations = {
+  CHANGE_STATUS(state, { _id, status }) {
+    const route = state.data.find(d => d._id === _id)
+    route.status = status
+    state.data = [...state.data]
+  },
+}
+
 const actions = {
   async fetchList({ state }, { aid }) {
     if (state.data && state.aid === aid) return
@@ -46,5 +54,6 @@ const getters = {
 export default {
   namespaced: true,
   actions,
+  mutations,
   getters,
 }

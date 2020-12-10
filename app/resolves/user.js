@@ -71,6 +71,7 @@ module.exports = {
 
   async create(ctx, data) {
     ctx.assert(ctx.user.role === 1, '没有权限')
+    data.password = createPwd(data.password)
     const user = await ctx.model.User(data)
     user.save()
     return user

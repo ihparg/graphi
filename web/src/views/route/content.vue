@@ -68,29 +68,35 @@
               :schemas="schemas"
               :allow-dash="opt.allowDash"
               :type="opt.type || 'route-fields'"
+              :default-value="{ type: 'object', properties: {} }"
             />
           </v-tab>
         </v-tabs>
       </div>
 
-      <div class="foot">
+      <div v-if="!isGuest" class="foot">
         <template v-if="editable">
           <v-submit :submit="handleSubmit">
             保存
           </v-submit>
 
-          <ui-button
-            v-if="rid !== '0'"
-            button-type="button"
-            style="margin-left: 1rem;"
-            @click="setEditable(false)"
-          >
+          <ui-button v-if="rid !== '0'" button-type="button" @click="setEditable(false)">
             取消
           </ui-button>
         </template>
         <template v-else>
-          <ui-button button-type="button" @click="setEditable(true)">
+          <ui-button v-if="isDeveloper" button-type="button" @click="setEditable(true)">
             编辑
+          </ui-button>
+
+          <ui-button
+            v-if="(isDeveloper && value.status === 0) || (isTester && value.status === 1)"
+            :loading="processing"
+            :color="value.status === 0 ? 'orange' : 'green'"
+            button-type="button"
+            @click="handleProcess"
+          >
+            {{ value.status === 0 ? '开发完成' : '测试通过' }}
           </ui-button>
         </template>
       </div>
@@ -103,6 +109,7 @@ import { mapGetters, mapState } from 'vuex'
 import Rule from '@/utils/rule'
 import { getRouteParamsKeys, getAllRefs } from '@/utils/route'
 import { fastClone } from '@/utils/clone'
+import fetch from '@/utils/fetch'
 import { registerInput } from '@/components/form'
 import Fields from './fields.vue'
 import Params from './params.vue'
@@ -154,10 +161,12 @@ export default {
         },
       ],
       value: fastClone(route),
+      processing: false,
     }
   },
   computed: {
     ...mapState('route', ['resolves']),
+    ...mapGetters('app', ['isDeveloper', 'isTester', 'isGuest']),
     ...mapGetters('schema', ['flattenedSchemas']),
     propertiesLength() {
       const length = {}
@@ -237,6 +246,19 @@ export default {
       })
       this.value.routeParams = { type: 'object', properties: newProps }
     },
+    handleProcess() {
+      this.processing = true
+
+      fetch
+        .post(`/api/route/${this.aid}/process`, { _id: this.rid })
+        .then(status => {
+          this.$store.commit('route/CHANGE_STATUS', { _id: this.rid, status })
+          this.$message.show('操作成功')
+        })
+        .finally(() => {
+          this.processing = false
+        })
+    },
   },
 }
 </script>
@@ -257,9 +279,14 @@ export default {
 .foot {
   position: sticky;
   bottom: 0;
+  height: 4.2rem;
   padding: 1rem 2rem;
   background: #f2f2f2;
   box-shadow: $box-shadow;
+
+  button {
+    margin-right: 1rem;
+  }
 }
 </style>
 

@@ -58,13 +58,17 @@ module.exports = {
   },
 
   async process(ctx, data) {
-    const route = ctx.model.Route.findById(data._id)
+    const route = await ctx.model.Route.findById(data._id)
     ctx.assert(route, '接口不存在')
     ctx.assert(route.status < 2, '接口状态不正确')
-    const user = route.users.find(u => u.user === ctx.user._id)
 
-    console.log(user)
-    return true
+    const op = [ 'update', 'test' ][route.status]
+    await ctx.service.app.checkPermission(data.aid, op)
+
+    route.status += 1
+    route.save()
+
+    return route.status
   },
 }
 

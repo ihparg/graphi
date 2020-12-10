@@ -15,8 +15,9 @@
       },
       "email": {
         "type": "string",
-        "required": true,
-        "exampleValue": "@email"
+        "required": false,
+        "exampleValue": "@email",
+        "index": false
       },
       "status": {
         "type": "integer",
