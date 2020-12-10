@@ -22,7 +22,13 @@ class SchemaController extends Controller {
     const filePath = path.resolve(app.config.schemaPath, body.name)
 
     await fs.writeFile(filePath, JSON.stringify(body, null, 2))
-    if (body.tag === 'mongodb') genModel(filePath, body.name)
+    let schemas = await loadDir(app.config.schemaPath)
+    schemas = schemas.reduce((obj, s) => {
+      obj[s.name] = s
+      return obj
+    }, {})
+
+    if (body.tag === 'mongodb') genModel(filePath, body.name, schemas)
 
     ctx.body = body
   }

@@ -40,8 +40,13 @@ const getEnum = (arr, sp = '') => {
 
 const getIndex = data => (data.index ? ', index: true' : '')
 
-const genField = (name, data) => {
+const genField = (name, data, schemas) => {
   const result = { name }
+
+  console.log(data.type, data.ref)
+  if (data.type === 'ref' && schemas[data.ref].tag !== 'mongodb') {
+    data = schemas[data.ref].content
+  }
 
   const dv = data.defaultValue
 
@@ -68,11 +73,11 @@ const genField = (name, data) => {
       break
     case 'object':
       result.text = '{'
-      result.children = Object.keys(data.properties).map(k => genField(k, data.properties[k]))
+      result.children = Object.keys(data.properties).map(k => genField(k, data.properties[k], schemas))
       break
     case 'array':
       result.text = '['
-      result.children = [ genField('', data.items[0]) ]
+      result.children = [ genField('', data.items[0], schemas) ]
       break
     case 'uuid':
       result.text = '{ type: Schema.Types.ObjectId }'
@@ -84,7 +89,7 @@ const genField = (name, data) => {
   return result
 }
 
-module.exports = async (filePath, name) => {
+module.exports = async (filePath, name, schemas) => {
   const data = await loadJsonFile(filePath)
   if (data.tag !== 'mongodb') return
   name = data.name
@@ -92,7 +97,7 @@ module.exports = async (filePath, name) => {
   const fields = []
   Object.keys(data.content.properties).forEach(k => {
     if ([ '_id', 'createdAt', 'updatedAt' ].includes(k)) return
-    fields.push(genField(k, data.content.properties[k]))
+    fields.push(genField(k, data.content.properties[k], schemas))
   })
 
   const template = nunjucks.compile(templateStr)

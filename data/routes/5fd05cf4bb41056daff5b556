@@ -3,7 +3,7 @@
   "title": "应用增加用户",
   "method": "POST",
   "tag": "app",
-  "path": "/api/app/addMemeber",
+  "path": "/api/app/addMember",
   "resolve": "app.addMember",
   "requestBody": {
     "type": "object",
@@ -15,9 +15,9 @@
       },
       "role": {
         "required": true,
-        "type": "integer",
-        "maximum": "4",
-        "minimum": "1"
+        "type": "ref",
+        "properties": {},
+        "ref": "appRole"
       },
       "user": {
         "required": true,
@@ -70,9 +70,10 @@
     "ref": "response"
   },
   "refs": [
+    "appRole",
     "requestHeaders",
     "response"
   ],
   "_id": "5fd05cf4bb41056daff5b556",
-  "fullPath": "POST:/api/app/addmemeber"
+  "fullPath": "POST:/api/app/addmember"
 }

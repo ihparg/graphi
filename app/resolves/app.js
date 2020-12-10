@@ -22,13 +22,16 @@ module.exports = {
   },
 
   async one(ctx, data) {
-    const app = await ctx.model.App.findById(data.id).populate('owner').populate('users.user')
+    const app = await ctx.model.App.findById(data.id).populate('owner').populate('users')
+      .populate('users.user')
     ctx.assert(app, 404)
     const hasPermission = app.users.find(u => {
       // eslint-disable-next-line eqeqeq
       return u.user._id == ctx.user._id
     })
     ctx.assert(hasPermission, 403, '没有权限')
+
+    console.log(JSON.stringify(app, null, 2))
 
     return app
   },
@@ -53,6 +56,17 @@ module.exports = {
     ctx.assert(app.owner.toString() === ctx.user._id, '没有权限')
 
     await ctx.model.App.update({ _id: data.aid }, { $pull: { users: { user: data._id } } })
+
+    return true
+  },
+
+  async changeMember(ctx, data) {
+    const app = await ctx.model.App.findById(data.aid)
+    ctx.assert(app, 404)
+    ctx.assert(app.owner.toString() === ctx.user._id, '没有权限')
+    const user = app.users.find(u => u.user.toString() === data._id)
+    user.role = data.role
+    app.save()
 
     return true
   },
