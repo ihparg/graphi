@@ -1,0 +1,29 @@
+{
+  "aid": "0",
+  "content": {
+    "type": "integer",
+    "enum": [
+      {
+        "value": "1",
+        "text": "Maintainer"
+      },
+      {
+        "value": "2",
+        "text": "Developer"
+      },
+      {
+        "value": "3",
+        "text": "Tester"
+      },
+      {
+        "value": "4",
+        "text": "Guest"
+      }
+    ],
+    "defaultValue": "4"
+  },
+  "tag": "enum",
+  "name": "appRole",
+  "description": "应用用户角色",
+  "_id": "appRole"
+}

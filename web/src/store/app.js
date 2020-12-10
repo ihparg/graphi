@@ -1,4 +1,5 @@
 import fetch from '@/utils/fetch'
+import message from '@/components/message'
 
 const getters = {
   appRole(state, getter, rootState, rootGetters) {
@@ -51,8 +52,23 @@ const actions = {
     state.app.users.push(user)
   },
 
-  async removeMember({ state }, _id) {
-    state.app.users = state.app.users.filter(u => u.user._id !== _id)
+  async removeMember({ state }, data) {
+    fetch.post('/api/app/removeMember', data).then(res => {
+      if (res) {
+        state.app.users = state.app.users.filter(u => u.user._id !== data._id)
+        message.show('操作成功')
+      }
+    })
+  },
+
+  async changeMember({ state }, data) {
+    fetch.post('/api/app/changeMember', data).then(res => {
+      if (res) {
+        const user = state.app.users.find(u => u.user._id === data._id)
+        user.role = data.role
+        message.show('操作成功')
+      }
+    })
   },
 }
 

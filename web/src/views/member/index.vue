@@ -15,10 +15,19 @@
 
       <v-table :data="app.users">
         <v-table-col title="用户">
-          <template #default="scope">{{ scope.user.name }} </template>
+          <template #default="scope">{{ scope.user.name }}</template>
         </v-table-col>
         <v-table-col title="角色">
-          <template #default="scope">{{ roles[scope.role] }} </template>
+          <template #default="scope">
+            <ui-select
+              v-if="isOwner && scope.user._id !== currentUser._id"
+              class="role-select"
+              :value="scope.role"
+              :options="roleOptions"
+              @input="changeMember(scope.user._id, $event)"
+            />
+            <span v-else>{{ roles[scope.role] }}</span>
+          </template>
         </v-table-col>
         <v-table-col title="" width="8rem">
           <template #default="scope">
@@ -91,17 +100,18 @@ export default {
     },
     handleSubmit(data) {
       data.aid = this.app._id
-      fetch.post('/api/app/addMemeber', data).then(res => {
+      fetch.post('/api/app/addMember', data).then(res => {
         if (res) this.$store.dispatch('app/addMember', data)
         this.newMember = false
       })
     },
     handleRemove(_id) {
       const data = { aid: this.app._id, _id }
-      console.log('data', data)
-      fetch.post('/api/app/removeMember', data).then(res => {
-        if (res) this.$store.dispatch('app/removeMember', _id)
-      })
+      this.$store.dispatch('app/removeMember', data)
+    },
+    changeMember(_id, role) {
+      const data = { _id, role: role.value, aid: this.app._id }
+      this.$store.dispatch('app/changeMember', data)
     },
   },
 }
@@ -122,5 +132,10 @@ export default {
 .user-list {
   max-width: 96rem;
   margin: 0 auto;
+}
+
+.role-select {
+  width: 10rem;
+  margin: 0;
 }
 </style>

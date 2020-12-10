@@ -184,6 +184,7 @@ export default {
         return []
       },
     },
+    class: String,
     placeholder: String,
     icon: String,
     iconPosition: {
@@ -282,6 +283,7 @@ export default {
   computed: {
     classes() {
       return [
+        this.class,
         `ui-select--type-${this.type}`,
         `ui-select--icon-position-${this.iconPosition}`,
         { 'is-active': this.isActive },

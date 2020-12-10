@@ -25,7 +25,6 @@ const registerRoutes = async (router, config) => {
       (route.requestBody || {}).properties
     ))
 
-
     router[route.method.toLowerCase()](route.path, auth(needLogin), async function(ctx) {
       const args = Object.assign({}, ctx.query, ctx.params, ctx.request.body)
       // 过滤掉第一层不要的数据

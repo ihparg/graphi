@@ -62,27 +62,9 @@
               },
               "role": {
                 "required": false,
-                "type": "integer",
-                "enum": [
-                  {
-                    "value": "1",
-                    "text": "manager"
-                  },
-                  {
-                    "value": "2",
-                    "text": "developer"
-                  },
-                  {
-                    "value": "3",
-                    "text": "tester"
-                  },
-                  {
-                    "value": "4",
-                    "text": "guest"
-                  }
-                ],
-                "defaultValue": "4",
-                "index": false
+                "type": "ref",
+                "properties": {},
+                "ref": "appRole"
               }
             }
           }

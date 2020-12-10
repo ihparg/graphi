@@ -1,0 +1,68 @@
+{
+  "aid": "0",
+  "method": "POST",
+  "tag": "app",
+  "resolve": "app.changeMember",
+  "title": "应用变更用户权限",
+  "path": "/api/app/changeMember",
+  "routeParams": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "required": true,
+        "type": "string",
+        "description": "用户 Id"
+      },
+      "aid": {
+        "required": false,
+        "type": "string",
+        "description": "app Id"
+      },
+      "role": {
+        "required": true,
+        "type": "ref",
+        "properties": {},
+        "ref": "appRole"
+      }
+    }
+  },
+  "refs": [
+    "appRole",
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5fd184fcf9d1f314a185d337",
+  "fullPath": "POST:/api/app/changemember",
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "boolean"
+      }
+    },
+    "ref": "response"
+  }
+}
