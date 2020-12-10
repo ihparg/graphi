@@ -8,7 +8,7 @@
         :class="['item', activeId === r._id ? 'active' : '']"
         :to="`/app/${aid}/route/${r._id}`"
       >
-        <div>{{ r.title }}</div>
+        <div class="title"><span :class="['status-' + r.status]" />{{ r.title }}</div>
         <div class="path">
           <span class="method" :class="{ get: r.method === 'GET' }">
             {{ r.method }}
@@ -119,6 +119,20 @@ export default {
   .path,
   .tag {
     color: #fff;
+  }
+}
+
+.title {
+  display: flex;
+  align-items: center;
+
+  span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 4px;
+    border-radius: 4px;
+    background: #000000;
   }
 }
 

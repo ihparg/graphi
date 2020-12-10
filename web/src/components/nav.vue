@@ -1,11 +1,14 @@
 <template>
   <div class="nav">
     <div class="inner">
-      <router-link v-for="item in routes" :key="item.name" v-slot="{ isActive }" :to="item.path">
-        <div :class="['item', isActive ? 'actived' : '']">
-          <v-icon :name="item.icon" />
-          <span class="text">{{ item.name }}</span>
-        </div>
+      <router-link
+        v-for="item in routes"
+        :key="item.name"
+        :class="itemClasses(item.path)"
+        :to="item.path"
+      >
+        <v-icon :name="item.icon" />
+        <span class="text">{{ item.name }}</span>
       </router-link>
     </div>
   </div>
@@ -15,6 +18,13 @@
 export default {
   props: {
     routes: Array,
+  },
+  methods: {
+    itemClasses(path) {
+      const classes = ['item']
+      if (this.$route.path.startsWith(path)) classes.push('actived')
+      return classes
+    },
   },
 }
 </script>

@@ -47,7 +47,7 @@
         </div>
       </div>
 
-      <div class="foot">
+      <div v-if="isDeveloper" class="foot">
         <template v-if="editable">
           <v-submit :submit="handleSubmit">
             保存
@@ -63,7 +63,7 @@
           </ui-button>
         </template>
         <template v-else>
-          <ui-button button-type="button" @click="setEditable(true)">
+          <ui-button v-if="isDeveloper" button-type="button" @click="setEditable(true)">
             编辑
           </ui-button>
         </template>
@@ -86,6 +86,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import { fastClone } from '@/utils/clone'
 import { allTypes } from '@/utils/types'
 import { getActiveField } from '@/utils/schema'
@@ -128,6 +129,7 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('app', ['isDeveloper', 'isGuest']),
     schema() {
       return this.schemas[this.name]
     },
@@ -233,6 +235,7 @@ export default {
   position: sticky;
   bottom: 0;
   padding: 1rem 2rem;
+  height: 4.2rem;
   background: #f2f2f2;
   box-shadow: $box-shadow;
 }

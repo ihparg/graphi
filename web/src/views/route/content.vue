@@ -68,12 +68,13 @@
               :schemas="schemas"
               :allow-dash="opt.allowDash"
               :type="opt.type || 'route-fields'"
+              :default-value="{ type: 'object', properties: {} }"
             />
           </v-tab>
         </v-tabs>
       </div>
 
-      <div class="foot">
+      <div v-if="!isGuest" class="foot">
         <template v-if="editable">
           <v-submit :submit="handleSubmit">
             保存
@@ -89,7 +90,7 @@
           </ui-button>
         </template>
         <template v-else>
-          <ui-button button-type="button" @click="setEditable(true)">
+          <ui-button v-if="isDeveloper" button-type="button" @click="setEditable(true)">
             编辑
           </ui-button>
         </template>
@@ -158,6 +159,7 @@ export default {
   },
   computed: {
     ...mapState('route', ['resolves']),
+    ...mapGetters('app', ['isDeveloper', 'isTester', 'isGuest']),
     ...mapGetters('schema', ['flattenedSchemas']),
     propertiesLength() {
       const length = {}
@@ -257,6 +259,7 @@ export default {
 .foot {
   position: sticky;
   bottom: 0;
+  height: 4.2rem;
   padding: 1rem 2rem;
   background: #f2f2f2;
   box-shadow: $box-shadow;
