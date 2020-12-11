@@ -19,6 +19,8 @@ const templateStr = `
  * 由 modelGenerator 自动生成，不要修改
  */
 'use strict'
+
+const mongooseDelete = require('mongoose-delete')
  
 module.exports = ({ mongoose }) => {
   const Schema = mongoose.Schema
@@ -28,6 +30,9 @@ module.exports = ({ mongoose }) => {
     minimize: false,
     timestamps: {},
   })
+
+  {{name}}.plugin(mongooseDelete, { deletedAt: true, overrideMethods: true })
+
   return mongoose.model('{{name}}', {{name}})
 }
 `
@@ -43,7 +48,6 @@ const getIndex = data => (data.index ? ', index: true' : '')
 const genField = (name, data, schemas) => {
   const result = { name }
 
-  console.log(data.type, data.ref)
   if (data.type === 'ref' && schemas[data.ref].tag !== 'mongodb') {
     data = schemas[data.ref].content
   }

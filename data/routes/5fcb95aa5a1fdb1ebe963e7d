@@ -74,13 +74,25 @@
                 "required": false,
                 "ref": "route.fullPath"
               },
-              "alias": {
-                "required": false,
-                "ref": "route.alias"
-              },
               "title": {
                 "required": true,
                 "ref": "route.title"
+              },
+              "name": {
+                "required": false,
+                "ref": "route.name"
+              },
+              "updatedBy": {
+                "required": false,
+                "ref": "route.updatedBy",
+                "properties": {
+                  "_id": {
+                    "ref": "user._id"
+                  },
+                  "name": {
+                    "ref": "user.name"
+                  }
+                }
               }
             },
             "ref": "route"
@@ -95,6 +107,19 @@
   "refs": [
     "requestHeaders",
     "response",
-    "route"
-  ]
+    "route",
+    "user"
+  ],
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  }
 }

@@ -9,9 +9,15 @@ const getters = {
   },
 }
 
+const mutations = {
+  REMOVE(state, name) {
+    delete state.data[name]
+  },
+}
+
 const actions = {
   async fetchAll({ state }, { aid }) {
-    if (state.data && state.aid === aid) return
+    if (state.aid === aid) return
 
     const res = await fetch.get(`/api/schema/${aid}/list`)
     state.aid = aid
@@ -30,5 +36,6 @@ const actions = {
 export default {
   namespaced: true,
   getters,
+  mutations,
   actions,
 }

@@ -38,7 +38,7 @@
         <div style="display: flex;">
           <v-input
             name="path"
-            label="Path"
+            label="路径"
             required
             :rules="[rule.required, rule.pathExist]"
             style="flex: 1; margin-right: 1rem;"
@@ -82,6 +82,13 @@
 
           <ui-button v-if="rid !== '0'" button-type="button" @click="setEditable(false)">
             取消
+          </ui-button>
+
+          <ui-button v-if="isMaintainer && name !== '0'" class="btn-remove">
+            删除
+            <v-confirm :action="handleRemove">
+              确定删除?
+            </v-confirm>
           </ui-button>
         </template>
         <template v-else>
@@ -166,7 +173,7 @@ export default {
   },
   computed: {
     ...mapState('route', ['resolves']),
-    ...mapGetters('app', ['isDeveloper', 'isTester', 'isGuest']),
+    ...mapGetters('app', ['isDeveloper', 'isMaintainer', 'isTester', 'isGuest']),
     ...mapGetters('schema', ['flattenedSchemas']),
     propertiesLength() {
       const length = {}
@@ -203,8 +210,8 @@ export default {
     }
   },
   methods: {
-    handleSubmit(data) {
-      const allRefs = getAllRefs(data)
+    checkRefs() {
+      const allRefs = getAllRefs(this.value)
       const refs = {}
       for (let i = 0; i < allRefs.length; i++) {
         const ref = allRefs[i]
@@ -214,9 +221,15 @@ export default {
 
         if (!(ref in this.flattenedSchemas)) {
           this.$message.error(`找不到引用字段${ref}，请检查后再提交`)
-          return
+          return null
         }
       }
+
+      return refs
+    },
+    handleSubmit(data) {
+      const refs = this.checkRefs()
+      if (!refs) return
 
       data.aid = this.aid
       data.refs = Object.keys(refs)
@@ -247,8 +260,8 @@ export default {
       this.value.routeParams = { type: 'object', properties: newProps }
     },
     handleProcess() {
+      if (!this.checkRefs()) return
       this.processing = true
-
       fetch
         .post(`/api/route/${this.aid}/process`, { _id: this.rid })
         .then(status => {
@@ -258,6 +271,12 @@ export default {
         .finally(() => {
           this.processing = false
         })
+    },
+    handleRemove() {
+      fetch.delete(`/api/route`, { aid: this.aid, _id: this.rid }).then(() => {
+        this.$router.push(`/app/${this.aid}/route`)
+        this.$store.commit('route/REMOVE', this.rid)
+      })
     },
   },
 }
@@ -286,6 +305,10 @@ export default {
 
   button {
     margin-right: 1rem;
+  }
+
+  .btn-remove {
+    float: right;
   }
 }
 </style>

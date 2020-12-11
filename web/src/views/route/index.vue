@@ -1,54 +1,63 @@
 <template>
-  <List v-if="isReady" :list="routes" :active-id="rid" :aid="aid" />
-  <Content
-    v-if="isReady && rid"
-    :key="rid"
-    v-model:editable="editable"
-    :routes="routes"
-    :schemas="schemas"
-    :aid="aid"
-    :rid="rid"
-  />
+  <v-loading v-if="!isReady" />
+  <template v-else>
+    <router-link v-if="isDeveloper" class="add-button" :to="`/app/${aid}/route/0`">
+      <ui-fab color="primary">
+        <v-icon name="add" size="2rem" />
+      </ui-fab>
+    </router-link>
 
-  <router-link v-if="!editable && isDeveloper" class="add-button" :to="`/app/${aid}/route/0`">
-    <ui-fab color="primary">
-      <v-icon name="add" size="2rem" />
-    </ui-fab>
-  </router-link>
+    <div class="route-list">
+      <v-search v-model="filter" style="width: 20rem; margin-bottom: 2rem; padding: 0.5rem 0;" />
+
+      <v-table :data="routes" @row-click="handleRowClick">
+        <v-table-col title="接口名称" name="title" />
+        <v-table-col title="方法" name="method" />
+        <v-table-col title="路径" name="path" />
+        <v-table-col title="Tag" name="tag" />
+        <v-table-col v-slot="scope" title="最后修改">
+          {{ scope.updatedBy && scope.updatedBy.name }}
+        </v-table-col>
+        <v-table-col title="修改时间" name="createdAt" />
+        <v-table-col v-slot="scope" title="状态">
+          {{ status[scope.status] }}
+        </v-table-col>
+      </v-table>
+    </div>
+  </template>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
-import Content from './content.vue'
-import List from './list.vue'
+import fuzzysearch from 'fuzzysearch'
 
 export default {
-  components: {
-    Content,
-    List,
-  },
   data() {
     return {
-      editable: this.$route.params.rid === '0',
+      filter: '',
+      status: ['开发中', '测试中', '已完成'],
     }
   },
   computed: {
     ...mapGetters('app', ['isDeveloper']),
-    ...mapGetters('route', { routes: 'sortedRoutes' }),
+    ...mapGetters('route', ['sortedRoutes']),
     ...mapState('schema', { schemas: 'data' }),
+    routes() {
+      const { filter } = this
+      if (!filter) return this.sortedRoutes
+      return this.sortedRoutes.filter(route => {
+        return (
+          route.tag === filter ||
+          fuzzysearch(filter, route.title) ||
+          fuzzysearch(filter, route.path)
+        )
+      })
+    },
     aid() {
       return this.$route.params.aid
     },
-    rid() {
-      return this.$route.params.rid
-    },
     isReady() {
       return this.routes && this.schemas
-    },
-  },
-  watch: {
-    '$route.params.rid': function(rid) {
-      this.editable = rid === '0'
     },
   },
   created() {
@@ -59,6 +68,9 @@ export default {
   methods: {
     ...mapActions('route', { fetchRoutes: 'fetchList' }),
     ...mapActions('schema', { fetchSchemas: 'fetchAll' }),
+    handleRowClick(route) {
+      this.$router.push(`/app/${route.aid}/route/${route._id}`)
+    },
   },
 }
 </script>
@@ -69,5 +81,10 @@ export default {
   top: 1rem;
   right: 1rem;
   z-index: 10;
+}
+
+.route-list {
+  width: 100%;
+  padding: 2rem;
 }
 </style>

@@ -61,6 +61,13 @@
           >
             取消
           </ui-button>
+
+          <ui-button v-if="isMaintainer && name !== '0'" class="btn-remove">
+            删除
+            <v-confirm :action="handleRemove">
+              确定删除?
+            </v-confirm>
+          </ui-button>
         </template>
         <template v-else>
           <ui-button v-if="isDeveloper" button-type="button" @click="setEditable(true)">
@@ -87,6 +94,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import fetch from '@/utils/fetch'
 import { fastClone } from '@/utils/clone'
 import { allTypes } from '@/utils/types'
 import { getActiveField } from '@/utils/schema'
@@ -129,7 +137,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('app', ['isDeveloper', 'isGuest']),
+    ...mapGetters('app', ['isDeveloper', 'isMaintainer', 'isGuest']),
     schema() {
       return this.schemas[this.name]
     },
@@ -192,6 +200,13 @@ export default {
 
       this.active = getActiveField(path, this.value.content, this.schemas)
     },
+    handleRemove() {
+      const { aid, _id } = this.schema
+      fetch.delete(`/api/schema`, { aid, _id }).then(() => {
+        this.$router.push(`/app/${aid}/schema`)
+        this.$store.commit('schema/REMOVE', this.name)
+      })
+    },
   },
 }
 </script>
@@ -238,6 +253,10 @@ export default {
   height: 4.2rem;
   background: #f2f2f2;
   box-shadow: $box-shadow;
+
+  .btn-remove {
+    float: right;
+  }
 }
 
 .pop-confirm {

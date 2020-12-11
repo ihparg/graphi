@@ -43,7 +43,7 @@ module.exports = class extends Service {
         ctx.assert(role === ROLES.tester, 403, '没有权限')
         break
       case 'delete':
-        ctx.assert(role === ROLES.owner, 403, '没有权限')
+        ctx.assert(role === ROLES.maintainer, 403, '没有权限')
         break
       default:
     }

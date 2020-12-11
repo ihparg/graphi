@@ -10,10 +10,8 @@
       <v-table :data="filterList" @row-click="handleRowClick">
         <v-table-col title="应用名称" name="name" />
         <v-table-col title="应用说明" name="description" />
-        <v-table-col title="所有者">
-          <template #default="scope">
-            {{ scope.owner.name }}
-          </template>
+        <v-table-col v-slot="scope" title="所有者">
+          {{ scope.owner.name }}
         </v-table-col>
         <v-table-col title="创建时间" name="createdAt" />
       </v-table>

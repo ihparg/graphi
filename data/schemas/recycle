@@ -1,0 +1,44 @@
+{
+  "aid": "0",
+  "content": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "required": true,
+        "type": "string",
+        "description": "",
+        "index": false,
+        "exampleValue": "@id"
+      },
+      "cid": {
+        "required": true,
+        "index": true,
+        "type": "string",
+        "description": "被删除资源 Id"
+      },
+      "deletedBy": {
+        "required": false,
+        "type": "ref",
+        "properties": {},
+        "ref": "user",
+        "description": "删除人"
+      },
+      "cname": {
+        "required": true,
+        "index": false,
+        "type": "string",
+        "description": "collection name"
+      },
+      "description": {
+        "required": false,
+        "index": false,
+        "type": "string",
+        "description": "描述"
+      }
+    }
+  },
+  "tag": "mongodb",
+  "name": "recycle",
+  "description": "被删除的内容记录表",
+  "_id": "recycle"
+}

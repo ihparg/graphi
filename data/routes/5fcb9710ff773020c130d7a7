@@ -73,6 +73,18 @@
               "aid": {
                 "required": true,
                 "ref": "schema.aid"
+              },
+              "updatedBy": {
+                "required": false,
+                "ref": "schema.updatedBy",
+                "properties": {
+                  "_id": {
+                    "ref": "user._id"
+                  },
+                  "name": {
+                    "ref": "user.name"
+                  }
+                }
               }
             },
             "ref": "schema"
@@ -85,6 +97,19 @@
   "refs": [
     "requestHeaders",
     "response",
-    "schema"
-  ]
+    "schema",
+    "user"
+  ],
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  }
 }
