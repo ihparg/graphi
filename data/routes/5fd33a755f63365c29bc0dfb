@@ -1,0 +1,71 @@
+{
+  "aid": "0",
+  "method": "DELETE",
+  "tag": "route",
+  "resolve": "route.remove",
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "required": true,
+        "type": "string",
+        "exampleValue": "@id",
+        "description": "应用Id"
+      },
+      "_id": {
+        "required": true,
+        "type": "string",
+        "exampleValue": "@id",
+        "description": "接口Id"
+      }
+    }
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {}
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "boolean"
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "删除接口",
+  "path": "/api/route",
+  "refs": [
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5fd33a755f63365c29bc0dfb",
+  "fullPath": "DELETE:/api/route"
+}

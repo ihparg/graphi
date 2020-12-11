@@ -22,7 +22,7 @@ const execute = async (name, _, args, ctx) => {
   } catch (e) {
     ctx.logger.error(e)
     // throw e
-    return { code: e.status, message: e.message }
+    return { code: e.status || 500, message: e.message }
   }
 }
 

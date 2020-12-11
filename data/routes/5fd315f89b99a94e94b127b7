@@ -1,0 +1,71 @@
+{
+  "aid": "0",
+  "method": "DELETE",
+  "tag": "schema",
+  "resolve": "schema.remove",
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "required": true,
+        "type": "string",
+        "exampleValue": "@id",
+        "description": "应用Id"
+      },
+      "_id": {
+        "required": true,
+        "type": "string",
+        "exampleValue": "@id",
+        "description": "Schema Id"
+      }
+    }
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {}
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "boolean"
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "删除Schema",
+  "path": "/api/schema",
+  "refs": [
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5fd315f89b99a94e94b127b7",
+  "fullPath": "DELETE:/api/schema"
+}

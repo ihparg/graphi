@@ -110,12 +110,6 @@
         "type": "string",
         "required": true
       },
-      "user": {
-        "required": false,
-        "type": "ref",
-        "ref": "user",
-        "description": "最后修改用户"
-      },
       "fullPath": {
         "required": false,
         "type": "string",
@@ -132,11 +126,17 @@
         "index": false,
         "type": "string"
       },
-      "alias": {
+      "name": {
         "type": "string",
         "required": false,
         "index": false,
-        "description": "接口别名"
+        "description": "接口名称，备用"
+      },
+      "updatedBy": {
+        "required": false,
+        "type": "ref",
+        "ref": "user",
+        "description": "最后修改用户"
       }
     }
   },

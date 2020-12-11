@@ -8,13 +8,13 @@ module.exports = {
   async list(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'get')
 
-    const routes = await ctx.model.Route.find({ aid: data.aid })
+    const routes = await ctx.model.Route.find({ aid: data.aid }).populate('updatedBy')
     return routes
   },
 
   async fetchOne(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'get')
-    const route = await ctx.model.Route.findById(data._id).populate('user')
+    const route = await ctx.model.Route.findById(data._id).populate('updatedBy')
     ctx.assert(route)
     return route
   },
@@ -49,10 +49,11 @@ module.exports = {
     route.save()
 
     // 处理refs
-    await ctx.model.RouteRefs.deleteOne({ aid: route.aid, rid: route._id })
-    if (data.refs && data.refs.length > 0) {
-      await ctx.model.RouteRefs.create({ aid: route.aid, rid: route._id, refs: data.refs })
-    }
+    await ctx.model.RouteRefs.findOneAndUpdate(
+      { aid: route.aid, rid: route._id },
+      { refs: data.refs },
+      { new: true, upsert: true }
+    )
 
     return route
   },
@@ -69,6 +70,19 @@ module.exports = {
     route.save()
 
     return route.status
+  },
+
+  async remove(ctx, data) {
+    await ctx.service.app.checkPermission(data.aid, 'delete')
+
+    const route = await ctx.model.Route.findById(data._id)
+    ctx.assert(route, '接口不存在')
+    await route.delete()
+
+    const log = await ctx.model.Recycle({ cid: data._id, cname: 'route', deletedBy: ctx.user._id })
+    log.save()
+
+    return true
   },
 }
 

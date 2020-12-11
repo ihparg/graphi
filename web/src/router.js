@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from './views/home/index.vue'
 import Schema from './views/schema/index.vue'
 import Route from './views/route/index.vue'
+import RouteDetail from './views/route/detail.vue'
 import User from './views/user/index.vue'
 import NoAuth from './views/user/noauth.vue'
 import App from './views/app/index.vue'
@@ -15,7 +16,8 @@ const routes = [
     component: App,
     children: [
       { path: 'schema/:name?', component: Schema },
-      { path: 'route/:rid?', component: Route },
+      { path: 'route', component: Route },
+      { path: 'route/:rid', component: RouteDetail },
       { path: 'users', component: User },
       { path: 'member', component: Member },
     ],

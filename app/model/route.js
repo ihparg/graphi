@@ -3,6 +3,7 @@
  * 由 modelGenerator 自动生成，不要修改
  */
 'use strict'
+const mongooseDelete = require('mongoose-delete')
 module.exports = ({ mongoose }) => {
   const Schema = mongoose.Schema
   const route = new Schema({
@@ -17,14 +18,15 @@ module.exports = ({ mongoose }) => {
     responseHeaders: {},
     responseBody: {},
     status: { type: Number, default: 0, enum: [ 0, 1, 2 ] },
-    user: { type: Schema.Types.ObjectId, ref: 'user' },
     fullPath: { type: String },
     aid: { type: String, index: true },
     title: { type: String },
-    alias: { type: String },
+    name: { type: String },
+    updatedBy: { type: Schema.Types.ObjectId, ref: 'user' },
   }, {
     minimize: false,
     timestamps: {},
   })
+  route.plugin(mongooseDelete, { deletedAt: true, overrideMethods: true })
   return mongoose.model('route', route)
 }

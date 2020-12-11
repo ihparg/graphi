@@ -6,11 +6,14 @@ const mutations = {
     route.status = status
     state.data = [...state.data]
   },
+  REMOVE(state, _id) {
+    state.data = state.data.filter(d => d._id !== _id)
+  },
 }
 
 const actions = {
   async fetchList({ state }, { aid }) {
-    if (state.data && state.aid === aid) return
+    if (state.aid === aid) return
 
     const data = await fetch.get(`/api/route/${aid}`)
     if (`${aid}` !== '0') {

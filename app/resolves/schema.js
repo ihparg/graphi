@@ -37,4 +37,19 @@ module.exports = {
 
     return schema
   },
+
+  async remove(ctx, data) {
+    await ctx.service.app.checkPermission(data.aid, 'delete')
+
+    const exist = await ctx.model.RouteRefs.exists({ aid: data.aid, refs: data._id })
+    ctx.assert(!exist, '有接口引用了这个Schema，不能删除')
+    const schema = await ctx.model.Schema.findById(data._id)
+    ctx.assert(schema, 'Schema 不存在')
+    await schema.delete()
+
+    const log = await ctx.model.Recycle({ cid: data._id, cname: 'schema', deletedBy: ctx.user._id })
+    log.save()
+
+    return true
+  },
 }

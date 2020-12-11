@@ -92,18 +92,18 @@
           "title": {
             "ref": "route.title"
           },
-          "alias": {
-            "ref": "route.alias"
-          },
-          "user": {
+          "name": {
             "required": false,
-            "ref": "route.user",
+            "ref": "route.name"
+          },
+          "updatedBy": {
+            "required": false,
+            "ref": "route.updatedBy",
             "properties": {
               "_id": {
                 "ref": "user._id"
               },
               "name": {
-                "required": true,
                 "ref": "user.name"
               }
             }
@@ -122,5 +122,17 @@
     "response",
     "route",
     "user"
-  ]
+  ],
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  }
 }

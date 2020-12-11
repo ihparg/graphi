@@ -17,27 +17,23 @@
         <v-table-col title="用户">
           <template #default="scope">{{ scope.user.name }}</template>
         </v-table-col>
-        <v-table-col title="角色">
-          <template #default="scope">
-            <ui-select
-              v-if="isOwner && scope.user._id !== currentUser._id"
-              class="role-select"
-              :value="scope.role"
-              :options="roleOptions"
-              @input="changeMember(scope.user._id, $event)"
-            />
-            <span v-else>{{ roles[scope.role] }}</span>
-          </template>
+        <v-table-col v-slot="scope" title="角色">
+          <ui-select
+            v-if="isOwner && scope.user._id !== currentUser._id"
+            class="role-select"
+            :value="scope.role"
+            :options="roleOptions"
+            @input="changeMember(scope.user._id, $event)"
+          />
+          <span v-else>{{ roles[scope.role] }}</span>
         </v-table-col>
-        <v-table-col title="" width="8rem">
-          <template #default="scope">
-            <a v-if="isOwner && scope.user._id !== currentUser._id" href="javascript:;">
-              <v-icon name="delete" />
-              <v-confirm :action="() => handleRemove(scope.user._id)">
-                确定从项目里移除这个用户?
-              </v-confirm>
-            </a>
-          </template>
+        <v-table-col v-slot="scope" title="" width="8rem">
+          <a v-if="isOwner && scope.user._id !== currentUser._id" href="javascript:;">
+            <v-icon name="delete" />
+            <v-confirm :action="() => handleRemove(scope.user._id)">
+              确定从项目里移除这个用户?
+            </v-confirm>
+          </a>
         </v-table-col>
       </v-table>
     </div>
