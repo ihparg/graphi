@@ -5,20 +5,16 @@
     "properties": {
       "_id": {
         "required": true,
-        "index": false,
-        "type": "string"
+        "type": "uuid"
       },
       "rid": {
         "required": true,
-        "index": true,
-        "type": "string",
-        "exampleValue": "",
+        "type": "uuid",
         "description": "route Id"
       },
       "aid": {
         "required": true,
-        "index": true,
-        "type": "string",
+        "type": "uuid",
         "description": "app Id"
       },
       "refs": {

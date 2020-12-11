@@ -100,7 +100,7 @@
 
           <ui-button v-if="nodeType === ''" type="secondary" button-type="button" color="red">
             删除
-            <v-confirm :action="remove">
+            <v-confirm @confirm="remove">
               确定删除这个字段?
             </v-confirm>
           </ui-button>

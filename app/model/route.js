@@ -19,7 +19,7 @@ module.exports = ({ mongoose }) => {
     responseBody: {},
     status: { type: Number, default: 0, enum: [ 0, 1, 2 ] },
     fullPath: { type: String },
-    aid: { type: String, index: true },
+    aid: { type: Schema.Types.ObjectId },
     title: { type: String },
     name: { type: String },
     updatedBy: { type: Schema.Types.ObjectId, ref: 'user' },

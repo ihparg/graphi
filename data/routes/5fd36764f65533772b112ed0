@@ -1,0 +1,105 @@
+{
+  "aid": "0",
+  "method": "GET",
+  "tag": "app",
+  "resolve": "recycle.list",
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "ref",
+            "required": false,
+            "properties": {
+              "_id": {
+                "ref": "recycle._id"
+              },
+              "cid": {
+                "ref": "recycle.cid"
+              },
+              "cname": {
+                "ref": "recycle.cname"
+              },
+              "content": {
+                "ref": "recycle.content"
+              },
+              "deletedBy": {
+                "required": false,
+                "ref": "recycle.deletedBy",
+                "properties": {
+                  "_id": {
+                    "ref": "user._id"
+                  },
+                  "name": {
+                    "ref": "user.name"
+                  }
+                }
+              },
+              "aid": {
+                "required": true,
+                "ref": "recycle.aid"
+              },
+              "createdAt": {
+                "required": false,
+                "ref": "recycle.createdAt"
+              }
+            },
+            "ref": "recycle"
+          }
+        ]
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "应用内删除数据列表",
+  "path": "/api/app/:aid/recycle",
+  "refs": [
+    "requestHeaders",
+    "response",
+    "recycle",
+    "user"
+  ],
+  "_id": "5fd36764f65533772b112ed0",
+  "fullPath": "GET:/api/app/:aid/recycle"
+}

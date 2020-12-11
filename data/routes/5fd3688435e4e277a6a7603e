@@ -1,20 +1,14 @@
 {
   "aid": "0",
-  "method": "DELETE",
-  "tag": "route",
-  "resolve": "route.remove",
+  "method": "POST",
+  "tag": "app",
+  "resolve": "recycle.restore",
   "requestBody": {
     "type": "object",
     "properties": {
-      "aid": {
-        "required": true,
-        "type": "uuid",
-        "description": "应用Id"
-      },
       "_id": {
         "required": true,
-        "type": "uuid",
-        "description": "接口Id"
+        "type": "uuid"
       }
     }
   },
@@ -58,12 +52,12 @@
     "type": "object",
     "properties": {}
   },
-  "title": "删除接口",
-  "path": "/api/route",
+  "title": "恢复已删除数据",
+  "path": "/api/app/restore",
   "refs": [
     "requestHeaders",
     "response"
   ],
-  "_id": "5fd33a755f63365c29bc0dfb",
-  "fullPath": "DELETE:/api/route"
+  "_id": "5fd3688435e4e277a6a7603e",
+  "fullPath": "POST:/api/app/restore"
 }

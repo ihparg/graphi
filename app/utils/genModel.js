@@ -66,7 +66,7 @@ const genField = (name, data, schemas) => {
       result.text = '{ type: Date },'
       break
     case 'boolean':
-      result.text = `{ type: Boolean, default: ${dv === 'true'} }`
+      result.text = `{ type: Boolean, default: ${dv === 'true'} },`
       break
     case 'map':
     case 'json':
@@ -84,7 +84,7 @@ const genField = (name, data, schemas) => {
       result.children = [ genField('', data.items[0], schemas) ]
       break
     case 'uuid':
-      result.text = '{ type: Schema.Types.ObjectId }'
+      result.text = '{ type: Schema.Types.ObjectId },'
       break
     default:
       result.text = `{ type: String${dv ? ", default: '" + dv + "'" : ''}${getEnum(data.enum, "'")}${getIndex(data)} },`

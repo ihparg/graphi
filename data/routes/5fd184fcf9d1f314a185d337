@@ -26,12 +26,12 @@
     "properties": {
       "_id": {
         "required": true,
-        "type": "string",
+        "type": "uuid",
         "description": "用户 Id"
       },
       "aid": {
         "required": false,
-        "type": "string",
+        "type": "uuid",
         "description": "app Id"
       },
       "role": {
@@ -64,5 +64,13 @@
       }
     },
     "ref": "response"
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
   }
 }

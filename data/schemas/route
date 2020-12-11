@@ -107,7 +107,7 @@
         "index": false
       },
       "_id": {
-        "type": "string",
+        "type": "uuid",
         "required": true
       },
       "fullPath": {
@@ -117,9 +117,8 @@
       },
       "aid": {
         "required": true,
-        "type": "string",
-        "description": "应用 ID",
-        "index": true
+        "type": "uuid",
+        "description": "应用 ID"
       },
       "title": {
         "required": true,

@@ -7,8 +7,8 @@ const mongooseDelete = require('mongoose-delete')
 module.exports = ({ mongoose }) => {
   const Schema = mongoose.Schema
   const routeRefs = new Schema({
-    rid: { type: String, index: true },
-    aid: { type: String, index: true },
+    rid: { type: Schema.Types.ObjectId },
+    aid: { type: Schema.Types.ObjectId },
     refs: [
       { type: Schema.Types.ObjectId },
     ],

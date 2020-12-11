@@ -84,9 +84,9 @@
             取消
           </ui-button>
 
-          <ui-button v-if="isMaintainer && name !== '0'" class="btn-remove">
+          <ui-button v-if="isMaintainer && rid !== '0'" class="btn-remove">
             删除
-            <v-confirm :action="handleRemove">
+            <v-confirm @confirm="handleRemove">
               确定删除?
             </v-confirm>
           </ui-button>

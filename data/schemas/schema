@@ -34,7 +34,7 @@
         "required": false
       },
       "_id": {
-        "type": "string",
+        "type": "uuid",
         "required": true
       },
       "content": {
@@ -48,8 +48,7 @@
       },
       "aid": {
         "required": true,
-        "index": true,
-        "type": "string"
+        "type": "uuid"
       },
       "updatedBy": {
         "required": false,

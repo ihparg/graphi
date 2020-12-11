@@ -10,7 +10,7 @@
     "properties": {
       "aid": {
         "required": true,
-        "type": "string",
+        "type": "uuid",
         "description": "app Id"
       },
       "role": {
@@ -25,7 +25,7 @@
         "properties": {
           "_id": {
             "required": true,
-            "type": "string"
+            "type": "uuid"
           },
           "name": {
             "required": false,
@@ -75,5 +75,13 @@
     "response"
   ],
   "_id": "5fd05cf4bb41056daff5b556",
-  "fullPath": "POST:/api/app/addmember"
+  "fullPath": "POST:/api/app/addmember",
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  }
 }

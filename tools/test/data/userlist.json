@@ -85,7 +85,7 @@
           },
           "_id": {
             "ref": "user._id",
-            "type": "string",
+            "type": "uuid",
             "required": true
           },
           "name": {

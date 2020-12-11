@@ -16,6 +16,7 @@ const types = [
   'string',
   'text',
   'map',
+  'uuid',
 ]
 
 module.exports = type => {
