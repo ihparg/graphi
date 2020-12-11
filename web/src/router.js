@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from './views/home/index.vue'
 import Schema from './views/schema/index.vue'
+import SchemaDetail from './views/schema/detail.vue'
 import Route from './views/route/index.vue'
 import RouteDetail from './views/route/detail.vue'
 import User from './views/user/index.vue'
@@ -15,7 +16,8 @@ const routes = [
     path: '/app/:aid',
     component: App,
     children: [
-      { path: 'schema/:name?', component: Schema },
+      { path: 'schema', component: Schema },
+      { path: 'schema/:name', component: SchemaDetail },
       { path: 'route', component: Route },
       { path: 'route/:rid', component: RouteDetail },
       { path: 'users', component: User },

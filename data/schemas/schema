@@ -50,6 +50,13 @@
         "required": true,
         "index": true,
         "type": "string"
+      },
+      "updatedBy": {
+        "required": false,
+        "type": "ref",
+        "properties": {},
+        "ref": "user",
+        "description": "最后修改人"
       }
     }
   },

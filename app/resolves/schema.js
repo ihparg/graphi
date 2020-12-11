@@ -3,7 +3,7 @@
 module.exports = {
   async list(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'get')
-    const schemas = await ctx.model.Schema.find({ aid: data.aid })
+    const schemas = await ctx.model.Schema.find({ aid: data.aid }).populate('updatedBy')
     return schemas
   },
 
@@ -18,6 +18,8 @@ module.exports = {
     }
 
     ctx.assert(!exist, data.name + ' 已存在')
+
+    data.updatedBy = ctx.user._id
 
     let schema
     if (data._id) {

@@ -1,34 +1,35 @@
 <template>
-  <List v-if="data" :list="list" :active-id="name" :aid="aid" />
-  <Content
-    v-if="!!name && data"
-    :key="name"
-    v-model:editable="editable"
-    :schemas="data"
-    :aid="aid"
-    :name="name"
-  />
+  <v-loading v-if="!data" />
+  <template v-else>
+    <router-link v-if="isDeveloper" class="add-button" :to="`/app/${aid}/schema/0`">
+      <ui-fab color="primary">
+        <v-icon name="add" size="2rem" />
+      </ui-fab>
+    </router-link>
 
-  <router-link v-if="!editable && isDeveloper" class="add-button" :to="`/app/${aid}/schema/0`">
-    <ui-fab color="primary">
-      <v-icon name="add" size="2rem" />
-    </ui-fab>
-  </router-link>
+    <div class="schema-list">
+      <v-search v-model="filter" style="width: 20rem; margin-bottom: 2rem; padding: 0.5rem 0;" />
+
+      <v-table :data="list" @row-click="handleRowClick">
+        <v-table-col title="名称" name="name" />
+        <v-table-col title="Tag" name="tag" />
+        <v-table-col title="最后更改时间" name="updatedAt" />
+        <v-table-col v-slot="scope" title="更改人">
+          {{ scope.updatedBy && scope.updatedBy.name }}
+        </v-table-col>
+        <v-table-col title="说明" name="description" />
+      </v-table>
+    </div>
+  </template>
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex'
-import List from './list.vue'
-import Content from './content.vue'
+import { mapState, mapGetters } from 'vuex'
 
 export default {
-  components: {
-    Content,
-    List,
-  },
   data() {
     return {
-      editable: this.$route.params.name === '0',
+      filter: '',
     }
   },
   computed: {
@@ -37,25 +38,17 @@ export default {
     aid() {
       return this.$route.params.aid
     },
-    name() {
-      return this.$route.params.name
-    },
     list() {
       return Object.values(this.data).sort((a, b) => a.name.localeCompare(b.name))
     },
   },
-  watch: {
-    '$route.params.name': function(name) {
-      this.editable = name === '0'
-    },
-  },
   created() {
-    this.fetchAll({
-      aid: this.aid,
-    })
+    this.$store.dispatch('schema/fetchAll', { aid: this.aid })
   },
   methods: {
-    ...mapActions('schema', ['fetchAll']),
+    handleRowClick(schema) {
+      this.$router.push(`/app/${this.aid}/schema/${schema.name}`)
+    },
   },
 }
 </script>
@@ -66,5 +59,11 @@ export default {
   top: 1rem;
   right: 1rem;
   z-index: 10;
+}
+
+.schema-list {
+  padding: 2rem;
+  width: 96rem;
+  margin: 0 auto;
 }
 </style>
