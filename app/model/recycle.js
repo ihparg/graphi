@@ -7,10 +7,11 @@ const mongooseDelete = require('mongoose-delete')
 module.exports = ({ mongoose }) => {
   const Schema = mongoose.Schema
   const recycle = new Schema({
-    cid: { type: String, index: true },
-    deletedBy: { type: Schema.Types.ObjectId, ref: 'user' },
-    cname: { type: String },
-    description: { type: String },
+  cid: { type: Schema.Types.ObjectId },
+  deletedBy: { type: Schema.Types.ObjectId, ref: 'user' },
+  cname: { type: String },
+  content: { type: String },
+  aid: { type: Schema.Types.ObjectId },
   }, {
     minimize: false,
     timestamps: {},

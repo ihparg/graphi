@@ -8,14 +8,12 @@
     "properties": {
       "aid": {
         "required": true,
-        "type": "string",
-        "exampleValue": "@id",
+        "type": "uuid",
         "description": "应用Id"
       },
       "_id": {
         "required": true,
-        "type": "string",
-        "exampleValue": "@id",
+        "type": "uuid",
         "description": "Schema Id"
       }
     }

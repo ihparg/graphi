@@ -10,13 +10,7 @@ module.exports = {
   async save(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'update')
 
-    let exist
-    if (data._id) {
-      exist = await ctx.model.Schema.exists({ aid: data.aid, name: data.name, _id: { $ne: data._id } })
-    } else {
-      exist = await ctx.model.Schema.exists({ aid: data.aid, name: data.name })
-    }
-
+    const exist = await ctx.service.schema.checkExist(data)
     ctx.assert(!exist, data.name + ' 已存在')
 
     data.updatedBy = ctx.user._id
@@ -49,8 +43,13 @@ module.exports = {
     ctx.assert(schema, 'Schema 不存在')
     await schema.delete()
 
-    const log = await ctx.model.Recycle({ cid: data._id, cname: 'schema', deletedBy: ctx.user._id })
-    log.save()
+    await ctx.model.Recycle.create({
+      aid: data.aid,
+      cid: data._id,
+      cname: 'schema',
+      deletedBy: ctx.user._id,
+      content: schema.name,
+    })
 
     return true
   },

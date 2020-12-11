@@ -5,15 +5,12 @@
     "properties": {
       "_id": {
         "required": true,
-        "type": "string",
-        "description": "",
-        "index": false,
-        "exampleValue": "@id"
+        "type": "uuid",
+        "description": ""
       },
       "cid": {
         "required": true,
-        "index": true,
-        "type": "string",
+        "type": "uuid",
         "description": "被删除资源 Id"
       },
       "deletedBy": {
@@ -29,11 +26,20 @@
         "type": "string",
         "description": "collection name"
       },
-      "description": {
+      "content": {
         "required": false,
         "index": false,
         "type": "string",
         "description": "描述"
+      },
+      "aid": {
+        "required": true,
+        "type": "uuid",
+        "description": "应用Id"
+      },
+      "createdAt": {
+        "required": false,
+        "type": "datetime"
       }
     }
   },

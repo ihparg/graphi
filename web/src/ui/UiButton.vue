@@ -272,6 +272,7 @@ export default {
   position: relative; // IE: prevents shifting when the button is pressed
   transition: opacity 0.3s ease;
   z-index: 1;
+  outline: none;
 }
 
 .ui-button__icon {

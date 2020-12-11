@@ -8,6 +8,7 @@ import User from './views/user/index.vue'
 import NoAuth from './views/user/noauth.vue'
 import App from './views/app/index.vue'
 import Member from './views/member/index.vue'
+import Recycle from './views/app/recycle.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -22,6 +23,7 @@ const routes = [
       { path: 'route/:rid', component: RouteDetail },
       { path: 'users', component: User },
       { path: 'member', component: Member },
+      { path: 'recycle', component: Recycle },
     ],
   },
 ]

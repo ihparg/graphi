@@ -64,9 +64,8 @@
         ]
       },
       "_id": {
-        "type": "string",
-        "required": true,
-        "exampleValue": "@id"
+        "type": "uuid",
+        "required": true
       },
       "tokens": {
         "type": "array",

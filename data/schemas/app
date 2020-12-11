@@ -100,9 +100,8 @@
         "required": false
       },
       "_id": {
-        "type": "string",
-        "required": true,
-        "exampleValue": "@id"
+        "type": "uuid",
+        "required": true
       },
       "owner": {
         "required": true,

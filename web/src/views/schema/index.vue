@@ -1,6 +1,6 @@
 <template>
   <v-loading v-if="!data" />
-  <template v-else>
+  <div v-else class="schema-container">
     <router-link v-if="isDeveloper" class="add-button" :to="`/app/${aid}/schema/0`">
       <ui-fab color="primary">
         <v-icon name="add" size="2rem" />
@@ -20,7 +20,7 @@
         <v-table-col title="说明" name="description" />
       </v-table>
     </div>
-  </template>
+  </div>
 </template>
 
 <script>
@@ -61,9 +61,13 @@ export default {
   z-index: 10;
 }
 
+.schema-container {
+  flex: 1;
+}
+
 .schema-list {
   padding: 2rem;
-  width: 96rem;
+  max-width: 96rem;
   margin: 0 auto;
 }
 </style>

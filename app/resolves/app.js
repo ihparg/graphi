@@ -44,7 +44,7 @@ module.exports = {
     app.users.push({ role: data.role, user: data.user._id })
     app.save()
 
-    ctx.service.removeCache(data.user._id, data.aid)
+    ctx.service.app.removeCache(data.user._id, data.aid)
 
     return true
   },
@@ -54,9 +54,9 @@ module.exports = {
     ctx.assert(app, 404)
     ctx.assert(app.owner.toString() === ctx.user._id, '没有权限')
 
-    await ctx.model.App.update({ _id: data.aid }, { $pull: { users: { user: data._id } } })
+    await ctx.model.App.updateOne({ _id: data.aid }, { $pull: { users: { user: data._id } } })
 
-    ctx.service.removeCache(data._id, data.aid)
+    ctx.service.app.removeCache(data._id, data.aid)
 
     return true
   },
@@ -69,7 +69,7 @@ module.exports = {
     user.role = data.role
     app.save()
 
-    ctx.service.removeCache(data._id, data.aid)
+    ctx.service.app.removeCache(data._id, data.aid)
 
     return true
   },

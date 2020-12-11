@@ -30,7 +30,7 @@
         <v-table-col v-slot="scope" title="" width="8rem">
           <a v-if="isOwner && scope.user._id !== currentUser._id" href="javascript:;">
             <v-icon name="delete" />
-            <v-confirm :action="() => handleRemove(scope.user._id)">
+            <v-confirm @confirm="handleRemove(scope.user._id)">
               确定从项目里移除这个用户?
             </v-confirm>
           </a>

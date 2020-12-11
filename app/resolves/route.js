@@ -24,12 +24,7 @@ module.exports = {
 
     data.fullPath = getFullPath(data)
 
-    let exist
-    if (data._id) {
-      exist = await ctx.model.Route.exists({ aid: data.aid, fullPath: data.fullPath, _id: { $ne: data._id } })
-    } else {
-      exist = await ctx.model.Route.exists({ aid: data.aid, fullPath: data.fullPath })
-    }
+    const exist = await ctx.service.route.checkExist(data)
     ctx.assert(!exist, '接口路径已存在')
 
     let route
@@ -79,8 +74,13 @@ module.exports = {
     ctx.assert(route, '接口不存在')
     await route.delete()
 
-    const log = await ctx.model.Recycle({ cid: data._id, cname: 'route', deletedBy: ctx.user._id })
-    log.save()
+    await ctx.model.Recycle.create({
+      aid: data.aid,
+      cid: data._id,
+      cname: 'route',
+      content: route.title,
+      deletedBy: ctx.user._id,
+    })
 
     return true
   },
