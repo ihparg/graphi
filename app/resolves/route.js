@@ -38,10 +38,11 @@ module.exports = {
     } else {
       route = await ctx.model.Route(data)
     }
-    route.user = ctx.user._id
+    route.updatedBy = ctx.user._id
     // 编辑后接口状态变更为开发中
     route.status = 0
     route.save()
+    await route.populate('updatedBy').execPopulate()
 
     // 处理refs
     await ctx.model.RouteRefs.findOneAndUpdate(

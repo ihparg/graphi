@@ -137,7 +137,7 @@ export default {
     const groups = {}
     const { aid, rid } = this
     const existedPath = {}
-    let route = { aid }
+    let route = { aid, $undone: rid !== '0' ? true : undefined }
     this.routes.forEach(r => {
       if (r.tag) groups[r.tag] = true
       if (rid !== r._id) existedPath[r.fullPath] = true
@@ -248,6 +248,11 @@ export default {
     },
     cloneRoute() {
       if (this.rid === '0') return { aid: this.aid }
+      console.log(
+        'clone',
+        this.rid,
+        this.routes.find(r => r._id === this.rid),
+      )
       return fastClone(this.routes.find(r => r._id === this.rid))
     },
     pathChange(path) {
@@ -275,7 +280,9 @@ export default {
     handleRemove() {
       fetch.delete(`/api/route`, { aid: this.aid, _id: this.rid }).then(() => {
         this.$router.push(`/app/${this.aid}/route`)
-        this.$store.commit('route/REMOVE', this.rid)
+        setTimeout(() => {
+          this.$store.commit('route/REMOVE', this.rid)
+        })
       })
     },
   },

@@ -21,6 +21,8 @@ module.exports = class extends Service {
     const exist = await this.checkExist(route)
     this.ctx.assert(!exist, '存在另一个相同路径的接口，恢复失败')
     route.restore()
+
+    return route
   }
 }
 

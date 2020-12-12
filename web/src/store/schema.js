@@ -13,6 +13,9 @@ const mutations = {
   REMOVE(state, name) {
     delete state.data[name]
   },
+  SET_SCHEMA(state, schema) {
+    state.data[schema.name] = schema
+  },
 }
 
 const actions = {
