@@ -25,6 +25,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import fuzzysearch from 'fuzzysearch'
 
 export default {
   data() {
@@ -39,7 +40,13 @@ export default {
       return this.$route.params.aid
     },
     list() {
-      return Object.values(this.data).sort((a, b) => a.name.localeCompare(b.name))
+      const list = Object.values(this.data).sort((a, b) => a.name.localeCompare(b.name))
+      if (this.filter) {
+        return list.filter(
+          d => fuzzysearch(this.filter, d.tag || '') || fuzzysearch(this.filter, d.name),
+        )
+      }
+      return list
     },
   },
   created() {

@@ -43,7 +43,7 @@
       },
       "data": {
         "required": false,
-        "type": "boolean"
+        "type": "json"
       }
     },
     "ref": "response"

@@ -12,14 +12,15 @@ module.exports = {
     ctx.assert(log, '记录不存在')
     await ctx.service.app.checkPermission(log.aid, 'delete')
 
+    let result
     if (log.cname === 'route') {
-      await ctx.service.route.restore(log.cid)
+      result = await ctx.service.route.restore(log.cid)
     } else if (log.cname === 'schema') {
-      await ctx.service.schema.restore(log.cid)
+      result = await ctx.service.schema.restore(log.cid)
     }
 
     await ctx.model.Recycle.deleteOne({ _id })
 
-    return true
+    return result
   },
 }

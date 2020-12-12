@@ -21,5 +21,7 @@ module.exports = class extends Service {
     const exist = await this.checkExist(schema)
     this.ctx.assert(!exist, `存在另一个 ${schema.name}，恢复失败`)
     schema.restore()
+
+    return schema
   }
 }

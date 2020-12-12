@@ -45,8 +45,7 @@ export default {
     filterList() {
       if (this.filter) {
         return this.list.filter(
-          d =>
-            fuzzysearch(this.filter, d.tag || '') || fuzzysearch(this.filter, d.name.toLowerCase()),
+          d => fuzzysearch(this.filter, d.tag || '') || fuzzysearch(this.filter, d.name),
         )
       }
       return this.list
