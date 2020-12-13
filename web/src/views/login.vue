@@ -1,33 +1,43 @@
 <template>
   <div class="login">
-    <div class="form">
+    <v-form class="form" :data="value" :sending="sending" :submit="handleLogin">
       <div class="title">用户登录</div>
-      <v-form :data="value">
-        <div style="padding: 2rem">
-          <v-input name="name" label="用户名" :rules="[rule.required]" />
-          <v-input name="password" type="password" label="密码" :rules="[rule.required]" />
+      <div style="padding: 2rem">
+        <v-input name="name" label="用户名" :rules="[rule.required]" />
+        <v-input name="password" type="password" label="密码" :rules="[rule.required]" />
 
-          <br />
-          <v-submit :submit="handleLogin">登录</v-submit>
-        </div>
-      </v-form>
-    </div>
+        <br />
+        <v-submit>登录</v-submit>
+      </div>
+    </v-form>
   </div>
 </template>
 
 <script>
 import Rule from '@/utils/rule'
+import fetch from '@/utils/fetch'
+import { setToken } from '@/utils/localStorage'
 
 export default {
   data() {
     return {
       rule: Rule(),
       value: {},
+      sending: false,
     }
   },
   methods: {
     handleLogin() {
-      this.$store.dispatch('user/login', this.value)
+      this.sending = true
+      fetch
+        .post('/api/user/login', this.value)
+        .then(user => {
+          setToken(user.token)
+          window.location.reload()
+        })
+        .catch(() => {
+          this.sending = false
+        })
     },
   },
 }

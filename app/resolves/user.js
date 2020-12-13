@@ -2,6 +2,7 @@
 
 const jwt = require('jsonwebtoken')
 const { createPwd, checkPwd } = require('../utils/pwd')
+const { ROLES } = require('../utils/const')
 
 module.exports = {
   async init(ctx, data) {
@@ -10,7 +11,7 @@ module.exports = {
 
     data.password = createPwd(data.password)
     data.status = 1
-    data.role = 1 // 管理员
+    data.role = ROLES.admin
 
     const user = await ctx.model.User.create(data)
 
@@ -18,13 +19,13 @@ module.exports = {
   },
 
   async all(ctx) {
-    ctx.assert(ctx.user.role === 1)
+    ctx.assert(ctx.user.role === ROLES.admin)
     const users = await ctx.model.User.find({})
     return users
   },
 
   async normal(ctx, { name }) {
-    const query = { status: 1, role: 0 }
+    const query = { status: 1, role: ROLES.user }
     let limit = 1000
     if (name) {
       query.name = { $regex: new RegExp(name, 'i') }
@@ -44,7 +45,7 @@ module.exports = {
     ctx.assert(user && checkPwd(data.password, user.password), '用户名或密码不正确')
     ctx.assert(user.status === 1, '用户账号已停用')
 
-    const info = { _id: user._id, dt: Date.now(), role: user.role }
+    const info = { _id: user._id, dt: Date.now(), role: user.role, name: user.name }
     const token = jwt.sign(info, ctx.app.config.keys)
 
     user.lastLoginAt = Date.now()
@@ -70,7 +71,7 @@ module.exports = {
   },
 
   async create(ctx, data) {
-    ctx.assert(ctx.user.role === 1, '没有权限')
+    ctx.assert(ctx.user.role === ROLES.admin, '没有权限')
     data.password = createPwd(data.password)
     const user = await ctx.model.User(data)
     user.save()

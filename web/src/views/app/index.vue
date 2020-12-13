@@ -14,6 +14,7 @@ import { mapGetters, mapState } from 'vuex'
 export default {
   computed: {
     ...mapGetters('user', ['isAdmin']),
+    ...mapGetters('app', ['isMaintainer']),
     ...mapState('app', ['app', 'status']),
     aid() {
       return this.$route.params.aid
@@ -34,12 +35,19 @@ export default {
         ]
       }
 
-      return [
+      const routes = [
         { name: 'Schema', path: `/app/${this.aid}/schema`, icon: 'schema' },
         { name: '接口', path: `/app/${this.aid}/route`, icon: 'route' },
         { name: '用户', path: `/app/${this.aid}/member`, icon: 'account' },
-        { name: '回收站', path: `/app/${this.aid}/recycle`, icon: 'auto-delete' },
       ]
+
+      if (this.isMaintainer) {
+        routes.push({ name: 'Tokens', path: `/app/${this.aid}/tokens`, icon: 'key' })
+      }
+
+      routes.push({ name: '回收站', path: `/app/${this.aid}/recycle`, icon: 'auto-delete' })
+
+      return routes
     },
   },
   created() {

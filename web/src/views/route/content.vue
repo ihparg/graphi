@@ -76,29 +76,39 @@
 
       <div v-if="!isGuest" class="foot">
         <template v-if="editable">
-          <v-submit :submit="handleSubmit">
+          <v-submit :loading="sending" @submit="handleSave">
             保存
           </v-submit>
 
-          <ui-button v-if="rid !== '0'" button-type="button" @click="setEditable(false)">
+          <ui-button
+            v-if="rid !== '0'"
+            button-type="button"
+            :disabled="sending"
+            @click="setEditable(false)"
+          >
             取消
           </ui-button>
 
-          <ui-button v-if="isMaintainer && rid !== '0'" class="btn-remove">
+          <ui-button v-if="isMaintainer && rid !== '0'" class="btn-remove" :disabled="sending">
             删除
-            <v-confirm @confirm="handleRemove">
+            <v-confirm v-if="!sending" @confirm="handleRemove">
               确定删除?
             </v-confirm>
           </ui-button>
         </template>
         <template v-else>
-          <ui-button v-if="isDeveloper" button-type="button" @click="setEditable(true)">
+          <ui-button
+            v-if="isDeveloper"
+            :disabled="sending"
+            button-type="button"
+            @click="setEditable(true)"
+          >
             编辑
           </ui-button>
 
           <ui-button
             v-if="(isDeveloper && value.status === 0) || (isTester && value.status === 1)"
-            :loading="processing"
+            :loading="sending"
             :color="value.status === 0 ? 'orange' : 'green'"
             button-type="button"
             @click="handleProcess"
@@ -145,6 +155,7 @@ export default {
     })
 
     return {
+      sending: false,
       errors: {},
       existedPath,
       groups: Object.keys(groups),
@@ -168,7 +179,6 @@ export default {
         },
       ],
       value: fastClone(route),
-      processing: false,
     }
   },
   computed: {
@@ -227,32 +237,30 @@ export default {
 
       return refs
     },
-    handleSubmit(data) {
+    handleSave(data) {
       const refs = this.checkRefs()
       if (!refs) return
 
+      this.sending = true
       data.aid = this.aid
       data.refs = Object.keys(refs)
-
-      this.$store.dispatch('route/save', {
-        data,
-        success: res => {
+      fetch
+        .post(`/api/route/${this.aid}/save`, data)
+        .then(res => {
           this.$message.show('保存成功')
+          this.$store.commit('route/SET_ROUTE', res)
           if (!data._id) this.$router.push(`/app/${this.aid}/route/${res._id}`)
           else this.$emit('update:editable', false)
-        },
-      })
+        })
+        .finally(() => {
+          this.sending = false
+        })
     },
     setEditable(editable) {
       this.$emit('update:editable', editable)
     },
     cloneRoute() {
       if (this.rid === '0') return { aid: this.aid }
-      console.log(
-        'clone',
-        this.rid,
-        this.routes.find(r => r._id === this.rid),
-      )
       return fastClone(this.routes.find(r => r._id === this.rid))
     },
     pathChange(path) {
@@ -266,7 +274,7 @@ export default {
     },
     handleProcess() {
       if (!this.checkRefs()) return
-      this.processing = true
+      this.sending = true
       fetch
         .post(`/api/route/${this.aid}/process`, { _id: this.rid })
         .then(status => {
@@ -274,16 +282,22 @@ export default {
           this.$message.show('操作成功')
         })
         .finally(() => {
-          this.processing = false
+          this.sending = false
         })
     },
     handleRemove() {
-      fetch.delete(`/api/route`, { aid: this.aid, _id: this.rid }).then(() => {
-        this.$router.push(`/app/${this.aid}/route`)
-        setTimeout(() => {
-          this.$store.commit('route/REMOVE', this.rid)
+      this.sending = true
+      fetch
+        .delete(`/api/route`, { aid: this.aid, _id: this.rid })
+        .then(() => {
+          this.$router.push(`/app/${this.aid}/route`)
+          setTimeout(() => {
+            this.$store.commit('route/REMOVE', this.rid)
+          })
         })
-      })
+        .finally(() => {
+          this.sending = false
+        })
     },
   },
 }
