@@ -8,7 +8,8 @@
         <v-table-col title="描述" name="description" />
         <v-table-col title="创建时间" name="createdAt" />
         <v-table-col v-slot="scope" title="Token">
-          {{ formatToken(scope.token) }}
+          <span>{{ formatToken(scope.token) }}</span>
+          <v-clipboard :data="scope.token" />
         </v-table-col>
         <v-table-col v-slot="row" title="创建人">
           {{ row.createdBy }}
