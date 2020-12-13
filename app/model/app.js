@@ -19,6 +19,15 @@ module.exports = ({ mongoose }) => {
     ],
     status: { type: Number, default: 0, enum: [ 0, 2 ] },
     owner: { type: Schema.Types.ObjectId, ref: 'user' },
+    tokens: [
+      {
+        _id: { type: Schema.Types.ObjectId },
+        description: { type: String },
+        createdAt: { type: Date },
+        createdBy: { type: String },
+        token: { type: String },
+      },
+    ],
   }, {
     minimize: false,
     timestamps: {},

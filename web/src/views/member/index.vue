@@ -52,7 +52,7 @@
 
       <v-input name="role" type="select" label="角色" :options="roleOptions" :default-value="4" />
 
-      <v-submit :submit="handleSubmit">提交</v-submit>
+      <v-submit @submit="handleSubmit">提交</v-submit>
     </v-form>
   </v-drawer>
 </template>

@@ -1,5 +1,9 @@
 'use strict'
 
+const jwt = require('jsonwebtoken')
+const ObjectId = require('mongoose').Types.ObjectId
+const { ROLES } = require('../utils/const')
+
 module.exports = {
   async list(ctx) {
     const query = {}
@@ -22,7 +26,7 @@ module.exports = {
   },
 
   async one(ctx, data) {
-    const app = await ctx.model.App.findById(data.id).populate('owner').populate('users.user')
+    const app = await ctx.model.App.findOne({ _id: data.id }).populate('owner').populate('users.user')
     ctx.assert(app, 404)
 
     if (app.visibility === 0) {
@@ -34,9 +38,8 @@ module.exports = {
   },
 
   async addMember(ctx, data) {
+    await ctx.service.app.checkPermission(data.aid, 'owner')
     const app = await ctx.model.App.findById(data.aid)
-    ctx.assert(app, 404)
-    ctx.assert(app.owner.toString() === ctx.user._id, '没有权限')
 
     const exist = app.users.find(u => u.user.toString() === data.user._id)
     ctx.assert(!exist, '用户在项目内已存在')
@@ -50,26 +53,63 @@ module.exports = {
   },
 
   async removeMember(ctx, data) {
-    const app = await ctx.model.App.findById(data.aid)
-    ctx.assert(app, 404)
-    ctx.assert(app.owner.toString() === ctx.user._id, '没有权限')
+    await ctx.service.app.checkPermission(data.aid, 'owner')
 
     await ctx.model.App.updateOne({ _id: data.aid }, { $pull: { users: { user: data._id } } })
-
     ctx.service.app.removeCache(data._id, data.aid)
 
     return true
   },
 
   async changeMember(ctx, data) {
+    await ctx.service.app.checkPermission(data.aid, 'owner')
     const app = await ctx.model.App.findById(data.aid)
-    ctx.assert(app, 404)
-    ctx.assert(app.owner.toString() === ctx.user._id, '没有权限')
+
     const user = app.users.find(u => u.user.toString() === data._id)
     user.role = data.role
     app.save()
 
     ctx.service.app.removeCache(data._id, data.aid)
+
+    return true
+  },
+
+  async getTokens(ctx, data) {
+    await ctx.service.app.checkPermission(data.aid, 'maintainer')
+    const app = await ctx.model.App.findById(data.aid)
+    return app.tokens
+  },
+
+  async createToken(ctx, data) {
+    await ctx.service.app.checkPermission(data.aid, 'maintainer')
+    const app = await ctx.model.App.findById(data.aid)
+
+    const info = {
+      _id: app._id,
+      role: ROLES.app,
+      dt: Date.now(),
+    }
+    const token = jwt.sign(info, ctx.app.config.keys)
+    await ctx.cache.set(info._id + ':' + info.dt, info.dt, 3600 * 24)
+
+    app.tokens.push({
+      _id: ObjectId(),
+      description: data.description,
+      createdAt: info.dt,
+      createdBy: ctx.user.name,
+      token,
+    })
+    app.save()
+
+    return app.tokens
+  },
+
+  async removeToken(ctx, data) {
+    await ctx.service.app.checkPermission(data.aid, 'maintainer')
+
+    const result = await ctx.model.App.updateOne({ _id: data.aid }, { $pull: { tokens: { _id: data._id } } })
+    console.log(result)
+    await ctx.cache.delMatches(data.aid + ':*')
 
     return true
   },

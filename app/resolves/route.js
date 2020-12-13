@@ -8,7 +8,16 @@ module.exports = {
   async list(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'get')
 
-    const routes = await ctx.model.Route.find({ aid: data.aid }).populate('updatedBy')
+    const exclude = {
+      routeParams: 0,
+      queryString: 0,
+      requestHeaders: 0,
+      requestBody: 0,
+      responseHeaders: 0,
+      responseBody: 0,
+    }
+
+    const routes = await ctx.model.Route.find({ aid: data.aid }, exclude).populate('updatedBy')
     return routes
   },
 

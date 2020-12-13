@@ -1,11 +1,7 @@
 <template>
   <v-loading v-if="!isReady" />
   <template v-else>
-    <router-link v-if="isDeveloper" class="add-button" :to="`/app/${aid}/route/0`">
-      <ui-fab color="primary">
-        <v-icon name="add" size="2rem" />
-      </ui-fab>
-    </router-link>
+    <v-fab-add v-if="isDeveloper" :to="`/app/${aid}/route/0`" />
 
     <div class="route-list">
       <v-search v-model="filter" style="width: 20rem; margin-bottom: 2rem; padding: 0.5rem 0;" />
@@ -76,13 +72,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.add-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 10;
-}
-
 .route-list {
   width: 100%;
   padding: 2rem;

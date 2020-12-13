@@ -1,5 +1,4 @@
 import fetch from '@/utils/fetch'
-import { setToken } from '../utils/localStorage'
 
 const getters = {
   currentUser(state) {
@@ -17,13 +16,6 @@ const mutations = {
 }
 
 const actions = {
-  async login({ state }, data) {
-    state.status = 0
-    const user = await fetch.post('/api/user/login', data)
-    setToken(user.token)
-    window.location.reload()
-  },
-
   async fetchCurrentUser({ state }) {
     const user = await fetch.get('/api/user/info')
     state.currentUser = user

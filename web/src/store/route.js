@@ -9,6 +9,11 @@ const mutations = {
   REMOVE(state, _id) {
     state.data = state.data.filter(d => d._id !== _id)
   },
+  SET_ROUTE(state, route) {
+    const index = state.data.indexOf(d => d._id === route._id)
+    if (index >= 0) state.data[index] = route
+    else state.data.push(route)
+  },
 }
 
 const actions = {

@@ -1,7 +1,7 @@
 <template>
   <div class="bg-over" @click.self="bgClick">
     <div class="props">
-      <v-form ref="fieldset" :data="value">
+      <v-form ref="form" :data="value">
         <div class="fields-list">
           <v-input
             v-if="nodeType === ''"
@@ -16,7 +16,7 @@
 
           <div class="group">
             <v-input
-              v-if="nodeType !== 'root'"
+              v-if="nodeType !== 'root' && nodeType !== 'item'"
               type="checkbox"
               label="必填"
               name="required"
@@ -252,7 +252,7 @@ export default {
   },
   methods: {
     bgClick() {
-      this.$refs.fieldset
+      this.$refs.form
         .validate()
         .then(() => {
           const { name, ...value } = this.value

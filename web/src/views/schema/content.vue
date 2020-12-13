@@ -49,7 +49,7 @@
 
       <div v-if="isDeveloper" class="foot">
         <template v-if="editable">
-          <v-submit :submit="handleSubmit">
+          <v-submit :loading="sending" @submit="handleSubmit">
             保存
           </v-submit>
 
@@ -57,14 +57,15 @@
             v-if="name !== '0'"
             button-type="button"
             style="margin-left: 1rem;"
+            :disabled="sending"
             @click="setEditable(false)"
           >
             取消
           </ui-button>
 
-          <ui-button v-if="isMaintainer && name !== '0'" class="btn-remove">
+          <ui-button v-if="isMaintainer && name !== '0'" :disabled="sending" class="btn-remove">
             删除
-            <v-confirm @confirm="handleRemove">
+            <v-confirm :disabled="!sending" @confirm="handleRemove">
               确定删除?
             </v-confirm>
           </ui-button>
@@ -122,6 +123,7 @@ export default {
 
     return {
       allTypes,
+      sending: false,
       groups: Object.keys(groups),
       rule: new Rule({
         name: (value, form, callback) => {
@@ -179,18 +181,22 @@ export default {
       delete field.parent.properties[field.name]
     },
     handleSubmit() {
-      this.$store.dispatch('schema/save', {
-        data: this.value,
-        oldName: this.name,
-        success: schema => {
+      this.sending = true
+      fetch
+        .post(`/api/schema/${this.aid}/save`, this.value)
+        .then(res => {
+          if (this.name) this.$store.commit('schema/REMOVE', this.name)
+          this.$store.commit('schema/SET_SCHEMA', res)
           this.$message.show('Schema 保存成功')
-          if (schema.name !== this.name) {
-            this.$router.push(`/app/${this.aid}/schema/${schema.name}`)
+          if (res.name !== this.name) {
+            this.$router.push(`/app/${this.aid}/schema/${res.name}`)
           } else {
             this.$emit('update:editable', false)
           }
-        },
-      })
+        })
+        .finally(() => {
+          this.sending = false
+        })
     },
     fieldActive(path) {
       if (path == null) {
@@ -202,10 +208,16 @@ export default {
     },
     handleRemove() {
       const { aid, _id } = this.schema
-      fetch.delete(`/api/schema`, { aid, _id }).then(() => {
-        this.$router.push(`/app/${aid}/schema`)
-        this.$store.commit('schema/REMOVE', this.name)
-      })
+      this.sending = true
+      fetch
+        .delete(`/api/schema`, { aid, _id })
+        .then(() => {
+          this.$router.push(`/app/${aid}/schema`)
+          this.$store.commit('schema/REMOVE', this.name)
+        })
+        .finally(() => {
+          this.sending = false
+        })
     },
   },
 }

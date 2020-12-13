@@ -11,6 +11,7 @@ import NotFound from './not-found.vue'
 import Nav from './nav.vue'
 import Drawer from './drawer.vue'
 import Forbidden from './forbidden.vue'
+import FabAdd from './fab-add.vue'
 
 export default app => {
   app.component('VLoading', Loading)
@@ -25,6 +26,7 @@ export default app => {
   app.component('VNav', Nav)
   app.component('VDrawer', Drawer)
   app.component('VForbidden', Forbidden)
+  app.component('VFabAdd', FabAdd)
 
   registerForm(app)
 }

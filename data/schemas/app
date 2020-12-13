@@ -109,6 +109,43 @@
         "description": "应用所有者",
         "properties": {},
         "ref": "user"
+      },
+      "tokens": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "object",
+            "required": false,
+            "properties": {
+              "_id": {
+                "required": false,
+                "type": "uuid"
+              },
+              "description": {
+                "required": false,
+                "index": false,
+                "type": "string",
+                "description": "token描述"
+              },
+              "createdAt": {
+                "required": false,
+                "type": "datetime"
+              },
+              "createdBy": {
+                "required": false,
+                "type": "string",
+                "index": false
+              },
+              "token": {
+                "required": true,
+                "index": false,
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "description": "应用token,第三方服务验证用"
       }
     }
   },
