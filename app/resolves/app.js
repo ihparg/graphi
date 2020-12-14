@@ -7,7 +7,9 @@ const { ROLES } = require('../utils/const')
 module.exports = {
   async list(ctx) {
     const query = {}
-    if (ctx.user.role !== 1) {
+    if (!ctx.user) {
+      query.visibility = 2
+    } else if (ctx.user.role !== 1) {
       query.$or = [{ 'users.user': ctx.user._id }, { visibility: { $ne: 0 } }]
     }
 
@@ -20,19 +22,16 @@ module.exports = {
     const app = await ctx.model.App(data)
     app.owner = ctx.user._id
     app.users.push({ role: 1, user: ctx.user._id })
-    app.save()
+    await app.save()
 
     return app._id
   },
 
   async one(ctx, data) {
+    await ctx.service.app.checkPermission(data.id, 'get')
+
     const app = await ctx.model.App.findOne({ _id: data.id }).populate('owner').populate('users.user')
     ctx.assert(app, 404)
-
-    if (app.visibility === 0) {
-      const hasPermission = app.users.find(u => u.user._id.toString() === ctx.user._id)
-      ctx.assert(hasPermission, 403, '没有权限')
-    }
 
     return app
   },
@@ -45,7 +44,7 @@ module.exports = {
     ctx.assert(!exist, '用户在项目内已存在')
 
     app.users.push({ role: data.role, user: data.user._id })
-    app.save()
+    await app.save()
 
     ctx.service.app.removeCache(data.user._id, data.aid)
 
@@ -67,7 +66,7 @@ module.exports = {
 
     const user = app.users.find(u => u.user.toString() === data._id)
     user.role = data.role
-    app.save()
+    await app.save()
 
     ctx.service.app.removeCache(data._id, data.aid)
 
@@ -99,7 +98,7 @@ module.exports = {
       createdBy: ctx.user.name,
       token,
     })
-    app.save()
+    await app.save()
 
     return app.tokens
   },

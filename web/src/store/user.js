@@ -23,13 +23,13 @@ const actions = {
 
   async fetchUsers({ state }) {
     if (state.users) return
-    const users = await fetch.get('/api/user/normal')
+    const users = await fetch.get('/api/user/list')
     state.users = users
   },
 
   async fetchUsersCount({ state, dispatch }) {
     if (state.userCount == null) {
-      const count = await fetch.get('/api/user/normalCount')
+      const count = await fetch.get('/api/user/listCount')
       state.usersCount = count
       if (count < 1000) dispatch('fetchUsers')
     }

@@ -21,7 +21,7 @@ module.exports = {
       Object.keys(data).forEach(key => {
         if (key !== '_id') schema[key] = data[key]
       })
-      schema.save()
+      await schema.save()
 
       // todo: 标记所有引用此 schema 的接口状态为开发中
       const routeRefs = await ctx.model.RouteRefs.find({ aid: data.aid, refs: schema._id })
