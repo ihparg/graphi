@@ -27,10 +27,10 @@ module.exports = {
     return app._id
   },
 
-  async one(ctx, data) {
-    await ctx.service.app.checkPermission(data.id, 'get')
+  async findById(ctx, data) {
+    await ctx.service.app.checkPermission(data._id, 'get')
 
-    const app = await ctx.model.App.findOne({ _id: data.id }).populate('owner').populate('users.user')
+    const app = await ctx.model.App.findById(data._id).populate('owner').populate('users.user')
     ctx.assert(app, 404)
 
     return app
@@ -106,8 +106,7 @@ module.exports = {
   async removeToken(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'maintainer')
 
-    const result = await ctx.model.App.updateOne({ _id: data.aid }, { $pull: { tokens: { _id: data._id } } })
-    console.log(result)
+    await ctx.model.App.updateOne({ _id: data.aid }, { $pull: { tokens: { _id: data._id } } })
     await ctx.app.cache.delMatches(data.aid + ':*')
 
     return true

@@ -56,14 +56,14 @@ describe('resolves/user.js', () => {
 
     ctx.user = Users.admin
 
-    const fns = [ 'owner', 'maintainer', 'developer', 'tester', 'guest' ].map(name => {
+    const fns = [ 'owner', 'maintainer', 'developer', 'tester', 'guest', 'stranger' ].map(name => {
       return resolves.user.create(ctx, { ...Users[name], status: 1 })
     })
 
     await Promise.all(fns)
 
     const allUsers = await resolves.user.all(ctx)
-    assert(allUsers.length === 6)
+    assert(allUsers.length === 7)
   })
 
   it('user info', async () => {
@@ -82,13 +82,13 @@ describe('resolves/user.js', () => {
     const ctx = app.mockContext()
 
     const count = await resolves.user.listCount(ctx)
-    assert(count === 5)
+    assert(count === 6)
   })
 
   it('normal list', async () => {
     const ctx = app.mockContext()
     let list = await resolves.user.list(ctx, {})
-    assert(list.length === 5)
+    assert(list.length === 6)
     list = await resolves.user.list(ctx, { name: 'owne' })
     assert(list.length === 1)
     list = await resolves.user.list(ctx, { name: 'noexist' })

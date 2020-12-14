@@ -21,6 +21,9 @@ const users = {
   get guest() {
     return { name: 'guest', password: '123456', role: 0 }
   },
+  get stranger() {
+    return { name: 'stranger', password: '123456', role: 0 }
+  },
 }
 
 const loginUser = async (ctx, name) => {
