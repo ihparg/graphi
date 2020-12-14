@@ -3,7 +3,7 @@
 const assert = require('power-assert')
 const jwt = require('jsonwebtoken')
 const mock = require('egg-mock')
-const Users = require('./data').users
+const Users = require('../data').users
 const resolves = require('../../app/resolves').resolves
 
 describe('resolves/user.js', () => {

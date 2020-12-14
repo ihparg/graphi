@@ -1,6 +1,6 @@
 'use strict'
 
-const { login } = require('../../app/resolves').resolves.user
+const { login } = require('../app/resolves').resolves.user
 
 const users = {
   get admin() {
