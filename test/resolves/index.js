@@ -1,4 +1,6 @@
 'use strict'
 
-require('./user.js')
-require('./app.js')
+require('./user')
+require('./app')
+require('./schema')
+require('./route')

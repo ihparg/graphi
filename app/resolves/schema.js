@@ -7,6 +7,12 @@ module.exports = {
     return schemas
   },
 
+  async findOne(ctx, data) {
+    await ctx.service.app.checkPermission(data.aid, 'get')
+    const schema = await ctx.model.Schema.findOne({ _id: data._id })
+    return schema
+  },
+
   async save(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'update')
 
@@ -37,8 +43,11 @@ module.exports = {
   async remove(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'delete')
 
-    const exist = await ctx.model.RouteRefs.exists({ aid: data.aid, refs: data._id })
-    ctx.assert(!exist, '有接口引用了这个Schema，不能删除')
+    const ref = await ctx.model.RouteRefs.findOne({ aid: data.aid, refs: data._id })
+    if (ref) {
+      const route = await ctx.model.Route.findById(ref.rid)
+      ctx.throw(new Error(`接口${route.title}引用了此Schema，不能删除`))
+    }
     const schema = await ctx.model.Schema.findById(data._id)
     ctx.assert(schema, 'Schema 不存在')
     await schema.delete()

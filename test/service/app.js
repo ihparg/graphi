@@ -35,7 +35,7 @@ describe('service/app.js', () => {
       return
     }
 
-    assert(false, 'should has no permission')
+    assert(false, 'should not pass')
   }
 
   it('owner permission', async () => {

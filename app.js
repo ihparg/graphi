@@ -13,5 +13,6 @@ module.exports = class App {
 
   async willReady() {
     this.app.cache = createCache(this.app.redis)
+    this.app.mongoose.set('useFindAndModify', false)
   }
 }

@@ -17,10 +17,10 @@ module.exports = class extends Service {
 
   async restore(_id) {
     const schema = await this.ctx.model.Schema.findOneDeleted({ _id })
-    this.ctx.assert(schema, '记录不存在')
+    this.ctx.assert(schema, 404, '记录不存在')
     const exist = await this.checkExist(schema)
-    this.ctx.assert(!exist, `存在另一个 ${schema.name}，恢复失败`)
-    schema.restore()
+    this.ctx.assert(!exist, 503, `存在另一个 ${schema.name}，恢复失败`)
+    await schema.restore()
 
     return schema
   }
