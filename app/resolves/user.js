@@ -51,14 +51,14 @@ module.exports = {
     user.lastLoginAt = Date.now()
     user.save()
 
-    await ctx.cache.set(user._id + ':' + info.dt, info.dt, 3600 * 24)
+    await ctx.app.cache.set(user._id + ':' + info.dt, info.dt, 3600 * 24)
     user.token = token
 
     return user
   },
 
   async logout(ctx) {
-    ctx.cache.del(ctx.user._id + ':' + ctx.user.dt)
+    ctx.app.cache.del(ctx.user._id + ':' + ctx.user.dt)
     return true
   },
 

@@ -40,8 +40,9 @@
             name="path"
             label="路径"
             required
-            :rules="[rule.required, rule.pathExist]"
+            :rules="[rule.required, rule.path, rule.pathExist]"
             style="flex: 1; margin-right: 1rem;"
+            help="以 / 开头，不要包含域名"
             @input="pathChange"
           />
 
@@ -165,6 +166,7 @@ export default {
           if (fullPath in this.existedPath) callback(new Error('路径已存在'))
           else callback(true)
         },
+        path: { regExp: '^/[A-Za-z0-9-_:/]+$', message: '不是一个正确的Url' },
       }),
       tabs: [
         {

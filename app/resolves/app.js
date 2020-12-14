@@ -90,7 +90,7 @@ module.exports = {
       dt: Date.now(),
     }
     const token = jwt.sign(info, ctx.app.config.keys)
-    await ctx.cache.set(info._id + ':' + info.dt, info.dt, 3600 * 24)
+    await ctx.app.cache.set(info._id + ':' + info.dt, info.dt, 3600 * 24)
 
     app.tokens.push({
       _id: ObjectId(),
@@ -109,7 +109,7 @@ module.exports = {
 
     const result = await ctx.model.App.updateOne({ _id: data.aid }, { $pull: { tokens: { _id: data._id } } })
     console.log(result)
-    await ctx.cache.delMatches(data.aid + ':*')
+    await ctx.app.cache.delMatches(data.aid + ':*')
 
     return true
   },

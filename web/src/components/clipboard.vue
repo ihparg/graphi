@@ -1,5 +1,5 @@
 <template>
-  <a href="javascript:;" @click="handleCopy">
+  <a href="javascript:;" class="btn-copy" @click="handleCopy">
     <v-icon name="copy" />
   </a>
 </template>
@@ -26,9 +26,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.copy-input {
-  font-size: 1px;
-  height: 1px;
-  width: 1px;
+.btn-copy {
+  color: $brand-primary-color;
 }
 </style>
