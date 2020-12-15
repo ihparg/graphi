@@ -21,7 +21,7 @@ module.exports = {
     return routes
   },
 
-  async fetchOne(ctx, data) {
+  async findOne(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'get')
     const route = await ctx.model.Route.findById(data._id).populate('updatedBy')
     ctx.assert(route)
@@ -50,15 +50,17 @@ module.exports = {
     route.updatedBy = ctx.user._id
     // 编辑后接口状态变更为开发中
     route.status = 0
-    route.save()
+    await route.save()
     await route.populate('updatedBy').execPopulate()
 
     // 处理refs
-    await ctx.model.RouteRefs.findOneAndUpdate(
-      { aid: route.aid, rid: route._id },
-      { refs: data.refs },
-      { new: true, upsert: true }
-    )
+    if (data.refs) {
+      await ctx.model.RouteRefs.findOneAndUpdate(
+        { aid: route.aid, rid: route._id },
+        { refs: data.refs },
+        { new: true, upsert: true }
+      )
+    }
 
     return route
   },
@@ -72,7 +74,7 @@ module.exports = {
     await ctx.service.app.checkPermission(data.aid, op)
 
     route.status += 1
-    route.save()
+    await route.save()
 
     return route.status
   },

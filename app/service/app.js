@@ -15,7 +15,7 @@ module.exports = class extends Service {
     const { ctx } = this
     const key = ctx.user._id + ':app:' + aid
 
-    let role = await ctx.cache.get(key)
+    let role = await this.app.cache.get(key)
 
     if (role == null) {
       const app = await ctx.model.App.findById(aid)
@@ -32,7 +32,7 @@ module.exports = class extends Service {
       }
 
       // 缓存1小时
-      ctx.cache.set(key, role, 3600)
+      this.app.cache.set(key, role, 3600)
     }
 
     if (op === 'owner') {
@@ -63,6 +63,6 @@ module.exports = class extends Service {
 
   async removeCache(_id, aid) {
     const key = _id + ':app:' + aid
-    this.ctx.cache.del(key)
+    this.app.cache.del(key)
   }
 }

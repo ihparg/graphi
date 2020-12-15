@@ -3,7 +3,7 @@
   "title": "用户列表",
   "method": "GET",
   "tag": "user",
-  "path": "/api/user/list",
+  "path": "/api/user/all",
   "requestHeaders": {
     "type": "ref",
     "properties": {
@@ -69,5 +69,26 @@
   },
   "_id": "5fbbcacf5e169d275936d3b1",
   "resolve": "user.all",
-  "fullPath": "GET:/api/user/list"
+  "fullPath": "GET:/api/user/all",
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {}
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "refs": [
+    "requestHeaders",
+    "response",
+    "user"
+  ]
 }

@@ -11,7 +11,7 @@ module.exports = app => {
 
   config.keys = process.env.APP_KEYS || (app.name + '_1602347723076_8844')
 
-  config.middleware = [ 'cache' ]
+  config.middleware = [ 'error' ]
 
   config.static = {
     prefix: '/public/',

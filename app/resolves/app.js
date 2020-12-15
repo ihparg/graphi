@@ -7,7 +7,9 @@ const { ROLES } = require('../utils/const')
 module.exports = {
   async list(ctx) {
     const query = {}
-    if (ctx.user.role !== 1) {
+    if (!ctx.user) {
+      query.visibility = 2
+    } else if (ctx.user.role !== 1) {
       query.$or = [{ 'users.user': ctx.user._id }, { visibility: { $ne: 0 } }]
     }
 
@@ -20,19 +22,16 @@ module.exports = {
     const app = await ctx.model.App(data)
     app.owner = ctx.user._id
     app.users.push({ role: 1, user: ctx.user._id })
-    app.save()
+    await app.save()
 
     return app._id
   },
 
-  async one(ctx, data) {
-    const app = await ctx.model.App.findOne({ _id: data.id }).populate('owner').populate('users.user')
-    ctx.assert(app, 404)
+  async findById(ctx, data) {
+    await ctx.service.app.checkPermission(data._id, 'get')
 
-    if (app.visibility === 0) {
-      const hasPermission = app.users.find(u => u.user._id.toString() === ctx.user._id)
-      ctx.assert(hasPermission, 403, '没有权限')
-    }
+    const app = await ctx.model.App.findById(data._id).populate('owner').populate('users.user')
+    ctx.assert(app, 404)
 
     return app
   },
@@ -45,7 +44,7 @@ module.exports = {
     ctx.assert(!exist, '用户在项目内已存在')
 
     app.users.push({ role: data.role, user: data.user._id })
-    app.save()
+    await app.save()
 
     ctx.service.app.removeCache(data.user._id, data.aid)
 
@@ -67,7 +66,7 @@ module.exports = {
 
     const user = app.users.find(u => u.user.toString() === data._id)
     user.role = data.role
-    app.save()
+    await app.save()
 
     ctx.service.app.removeCache(data._id, data.aid)
 
@@ -90,7 +89,7 @@ module.exports = {
       dt: Date.now(),
     }
     const token = jwt.sign(info, ctx.app.config.keys)
-    await ctx.cache.set(info._id + ':' + info.dt, info.dt, 3600 * 24)
+    await ctx.app.cache.set(info._id + ':' + info.dt, info.dt, 3600 * 24)
 
     app.tokens.push({
       _id: ObjectId(),
@@ -99,7 +98,7 @@ module.exports = {
       createdBy: ctx.user.name,
       token,
     })
-    app.save()
+    await app.save()
 
     return app.tokens
   },
@@ -107,9 +106,8 @@ module.exports = {
   async removeToken(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'maintainer')
 
-    const result = await ctx.model.App.updateOne({ _id: data.aid }, { $pull: { tokens: { _id: data._id } } })
-    console.log(result)
-    await ctx.cache.delMatches(data.aid + ':*')
+    await ctx.model.App.updateOne({ _id: data.aid }, { $pull: { tokens: { _id: data._id } } })
+    await ctx.app.cache.delMatches(data.aid + ':*')
 
     return true
   },

@@ -24,7 +24,7 @@ module.exports = {
     return users
   },
 
-  async normal(ctx, { name }) {
+  async list(ctx, { name }) {
     const query = { status: 1, role: ROLES.user }
     let limit = 1000
     if (name) {
@@ -35,8 +35,8 @@ module.exports = {
     return users
   },
 
-  async normalCount(ctx) {
-    const count = await ctx.model.User.count({ status: 1, role: 0 })
+  async listCount(ctx) {
+    const count = await ctx.model.User.countDocuments({ status: 1, role: ROLES.user })
     return count
   },
 
@@ -49,21 +49,21 @@ module.exports = {
     const token = jwt.sign(info, ctx.app.config.keys)
 
     user.lastLoginAt = Date.now()
-    user.save()
+    await user.save()
 
-    await ctx.cache.set(user._id + ':' + info.dt, info.dt, 3600 * 24)
+    await ctx.app.cache.set(user._id + ':' + info.dt, info.dt, 3600 * 24)
     user.token = token
 
     return user
   },
 
   async logout(ctx) {
-    ctx.cache.del(ctx.user._id + ':' + ctx.user.dt)
+    ctx.app.cache.del(ctx.user._id + ':' + ctx.user.dt)
     return true
   },
 
   async info(ctx, data) {
-    const id = data.id || ctx.user._id
+    const id = data._id || ctx.user._id
     const user = await ctx.model.User.findById(id)
     ctx.assert(user, '用户不存在')
 
@@ -74,7 +74,7 @@ module.exports = {
     ctx.assert(ctx.user.role === ROLES.admin, '没有权限')
     data.password = createPwd(data.password)
     const user = await ctx.model.User(data)
-    user.save()
+    await user.save()
     return user
   },
 }

@@ -16,7 +16,8 @@
     "egg-scripts": "^2.11.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose-delete": "^0.5.3",
-    "nunjucks": "^3.2.2"
+    "nunjucks": "^3.2.2",
+    "ylru": "^1.2.1"
   },
   "devDependencies": {
     "autod": "^3.0.1",
@@ -25,7 +26,8 @@
     "egg-ci": "^1.11.0",
     "egg-mock": "^3.21.0",
     "eslint": "^7.14.0",
-    "eslint-config-egg": "^7.1.0"
+    "eslint-config-egg": "^7.1.0",
+    "power-assert": "^1.6.1"
   },
   "engines": {
     "node": ">=12.0.0"

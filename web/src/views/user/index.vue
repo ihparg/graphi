@@ -46,7 +46,7 @@ export default {
     },
   },
   created() {
-    fetch.get('/api/user/list').then(res => {
+    fetch.get('/api/user/all').then(res => {
       this.users = res
     })
   },

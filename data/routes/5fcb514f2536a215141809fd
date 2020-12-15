@@ -3,12 +3,12 @@
   "title": "获取单个应用信息",
   "method": "GET",
   "tag": "app",
-  "path": "/api/app/:id",
-  "resolve": "app.one",
+  "path": "/api/app/:_id",
+  "resolve": "app.findById",
   "routeParams": {
     "type": "object",
     "properties": {
-      "id": {
+      "_id": {
         "type": "string"
       }
     }
@@ -109,11 +109,23 @@
     "ref": "response"
   },
   "_id": "5fcb514f2536a215141809fd",
-  "fullPath": "GET:/api/app/:id",
+  "fullPath": "GET:/api/app/:_id",
   "refs": [
     "requestHeaders",
     "response",
     "app",
     "user"
-  ]
+  ],
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  }
 }

@@ -44,6 +44,11 @@ function exec(url, options = {}) {
     })
     .then(res => {
       if (res.code === 200) return res.data
+      if (res.code === 401) {
+        store.commit('user/SET_LOGIN_STATE', 0)
+        throw new FetchError('need login.', 401)
+      }
+
       message.show(res.message, 'error')
       throw new FetchError(res.message, res.code)
     })

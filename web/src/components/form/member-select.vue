@@ -71,7 +71,7 @@ export default {
       this.users = []
       if (query) {
         this.loading = true
-        fetch.get(`/api/user/normal?name=${query}`).then(res => {
+        fetch.get(`/api/user/list?name=${query}`).then(res => {
           this.users = res
           this.loading = false
         })
