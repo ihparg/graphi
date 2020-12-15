@@ -17,30 +17,30 @@ describe('utils/cache', () => {
     await cache.set(_a, 12345678)
     assert((await cache.get(_a)) === 12345678)
 
-    await cache.set(_b, 654321, 1)
+    await cache.set(_b, 654321, 0.01)
     assert((await cache.get(_b)) === 654321)
-    await sleep(1000)
-    assert((await cache.get(_b)) === undefined)
+    await sleep(20)
+    assert((await cache.get(_b)) == null)
 
-    cache.del(_a)
-    assert((await cache.get(_a)) === undefined)
+    await cache.del(_a)
+    assert((await cache.get(_a)) == null)
 
-    cache.set(_a, 123456)
-    cache.set(_b, 654321)
+    await cache.set(_a, 123456)
+    await cache.set(_b, 654321)
     assert((await cache.get(_b)) === 654321)
 
-    cache.delMatches(K('*'))
-    assert((await cache.get(_a)) === undefined)
-    assert((await cache.get(_b)) === undefined)
+    await cache.delMatches(K('*'))
+    assert((await cache.get(_a)) == null)
+    assert((await cache.get(_b)) == null)
   }
 
   it('redis cache', async () => {
     const redis = new Redis()
-    testCase(createCache(redis))
+    await testCase(createCache(redis))
   })
 
   it('lru cache', async () => {
-    testCase(createCache())
+    await testCase(createCache())
   })
 })
 

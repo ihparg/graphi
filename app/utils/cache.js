@@ -10,7 +10,7 @@ const createRedis = redis => ({
   async set(key, value, ex) {
     const data = JSON.stringify(value)
     let args = [ key, data ]
-    if (ex) args = [ ...args, 'EX', ex ]
+    if (ex) args = [ ...args, 'PX', ex * 1000 ]
     await redis.set(...args)
   },
   async del(key) {
@@ -18,15 +18,19 @@ const createRedis = redis => ({
   },
   delMatches(match) {
     const stream = redis.scanStream({ match })
-    stream.on('data', function(keys) {
-      if (keys.length) {
-        const pipeline = redis.pipeline()
-        keys.forEach(function(key) {
-          pipeline.del(key)
-        })
-        pipeline.exec()
-      }
+    return new Promise(resolve => {
+      stream.on('data', function(keys) {
+        if (keys.length) {
+          const pipeline = redis.pipeline()
+          keys.forEach(function(key) {
+            pipeline.del(key)
+          })
+          pipeline.exec()
+        }
+        resolve()
+      })
     })
+
   },
 })
 
@@ -43,7 +47,7 @@ const createLRU = () => {
     async del(key) {
       lru.get(key, { maxAge: -1 })
     },
-    delMatches(str) {
+    async delMatches(str) {
       const reg = new RegExp('^' + str)
       lru.keys().forEach(key => {
         if (reg.test(key)) lru.get(key, { maxAge: -1 })

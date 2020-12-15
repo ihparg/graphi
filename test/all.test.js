@@ -2,3 +2,4 @@
 
 require('./resolves')
 require('./service/app')
+require('./controller')

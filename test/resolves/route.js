@@ -4,6 +4,7 @@ const assert = require('power-assert')
 const mock = require('egg-mock')
 const ObjectId = require('mongoose').Types.ObjectId
 const { loginUser } = require('../data')
+const testData = require('./test.json')
 const resolves = require('../../app/resolves').resolves
 const _ = resolves.route
 
@@ -25,6 +26,7 @@ describe('resolves/route.js', () => {
 
   it('create route', async () => {
     const ctx = app.mockContext({ user: maintainer })
+    /*
     const getShop = {
       aid: _aid,
       title: 'get shop',
@@ -33,15 +35,17 @@ describe('resolves/route.js', () => {
       method: 'GET',
       path: '/api/shop',
     }
-    const _id = (await _.save(ctx, getShop))._id.toString()
+    */
+    testData.aid = _aid
+    const _id = (await _.save(ctx, testData))._id.toString()
 
     const list = await _.list(ctx, { aid: _aid })
     assert(list.length === 1)
     assert(list[0]._id.toString() === _id)
-    assert(list[0].fullPath === 'GET:/api/shop')
+    assert(list[0].fullPath === 'GET:/api/route/:aid/:_id')
 
     try {
-      await _.save(ctx, getShop)
+      await _.save(ctx, testData)
       throw new Error('should not pass')
     } catch (err) {
       assert(err.status === 500)
@@ -66,7 +70,7 @@ describe('resolves/route.js', () => {
     assert(list.length === 2)
 
     try {
-      await _.save(ctx, { aid: _aid, _id, method: 'GET', path: '/api/shop' })
+      await _.save(ctx, { aid: _aid, _id, method: 'GET', path: '/api/route/:aid/:_id' })
       throw new Error('should not pass')
     } catch (err) {
       assert(err.status === 500)
