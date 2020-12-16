@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ihparg/tools#readme",
   "dependencies": {
+    "@graphi/mockjs": "^1.0.0",
     "graphql": "^15.4.0"
   },
   "devDependencies": {
