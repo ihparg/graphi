@@ -11,7 +11,7 @@ module.exports = needLogin => async (ctx, next) => {
     try {
       const user = await jwt.verify(token, ctx.app.config.keys)
 
-      const rk = await ctx.cache.get(user._id + ':' + user.dt)
+      const rk = await ctx.app.cache.get(user._id + ':' + user.dt)
       ctx.assert(rk, 401, '登录超时，请重新登录')
 
       ctx.user = user

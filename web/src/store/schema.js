@@ -13,6 +13,9 @@ const mutations = {
   REMOVE(state, name) {
     delete state.data[name]
   },
+  SET_SCHEMA(state, schema) {
+    state.data[schema.name] = schema
+  },
 }
 
 const actions = {
@@ -22,14 +25,6 @@ const actions = {
     const res = await fetch.get(`/api/schema/${aid}/list`)
     state.aid = aid
     state.data = array2Object(res, 'name')
-  },
-
-  async save({ state }, { data, oldName, success }) {
-    const schema = await fetch.post(`/api/schema/${data.aid}/save`, data)
-
-    delete state.data[oldName]
-    state.data[schema.name] = schema
-    if (success) success(schema)
   },
 }
 

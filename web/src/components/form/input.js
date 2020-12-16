@@ -61,6 +61,7 @@ export default {
     const props = {
       disabled: this.form.disabled,
       ...this.$attrs,
+      help: this.form.disabled ? undefined : this.$attrs.help,
       name: this.name,
       value: this.value,
       invalid: !!this.form.errors[this.name],

@@ -4,10 +4,8 @@
     <div class="list">
       <v-search v-model="filter" style="width: 20rem; margin-bottom: 2rem; padding: 0.5rem 0;" />
 
-      <v-table :data="logs" class="table">
-        <v-table-col v-slot="row" title="类型">
-          {{ cnames[row.cname] }}
-        </v-table-col>
+      <v-table :data="list" class="table">
+        <v-table-col title="类型" name="cname" />
         <v-table-col title="内容" name="content" />
         <v-table-col title="删除时间" name="createdAt" />
         <v-table-col v-slot="row" title="删除人">
@@ -16,7 +14,7 @@
         <v-table-col v-if="isMaintainer" v-slot="row" width="100px">
           <a href="javascript:;">
             <v-icon name="replay" /> 恢复
-            <v-confirm @confirm="handleRestore(row._id)">确定恢复这条数据？</v-confirm>
+            <v-confirm @confirm="handleRestore(row)">确定恢复这条数据？</v-confirm>
           </a>
         </v-table-col>
       </v-table>
@@ -26,6 +24,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import fuzzysearch from 'fuzzysearch'
 import fetch from '@/utils/fetch'
 
 export default {
@@ -44,6 +43,12 @@ export default {
     aid() {
       return this.$route.params.aid
     },
+    list() {
+      if (!this.filter) return this.logs
+      return this.logs.filter(
+        l => fuzzysearch(this.filter, l.cname) || fuzzysearch(this.filter, l.content),
+      )
+    },
   },
   created() {
     fetch.get(`/api/app/${this.aid}/recycle`).then(res => {
@@ -51,10 +56,14 @@ export default {
     })
   },
   methods: {
-    handleRestore(_id) {
-      fetch.post('/api/app/restore', { _id }).then(() => {
-        this.logs = this.logs.filter(l => l._id !== _id)
+    handleRestore(row) {
+      fetch.post('/api/app/restore', { _id: row._id }).then(res => {
         this.$message.show('操作成功')
+        if (row.cname === 'schema') {
+          this.$store.commit('schema/SET_SCHEMA', res)
+        }
+        const url = `/app/${row.aid}/${row.cname}/${row.cname === 'schema' ? res.name : res._id}`
+        this.$router.push(url)
       })
     },
   },

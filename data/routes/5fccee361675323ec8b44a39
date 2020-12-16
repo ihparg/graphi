@@ -162,6 +162,18 @@
           "name": {
             "required": false,
             "ref": "route.name"
+          },
+          "updatedBy": {
+            "required": false,
+            "ref": "route.updatedBy",
+            "properties": {
+              "_id": {
+                "ref": "user._id"
+              },
+              "name": {
+                "ref": "user.name"
+              }
+            }
           }
         },
         "ref": "route"
@@ -172,7 +184,8 @@
   "refs": [
     "route",
     "requestHeaders",
-    "response"
+    "response",
+    "user"
   ],
   "queryString": {
     "type": "object",

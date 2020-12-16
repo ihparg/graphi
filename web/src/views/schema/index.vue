@@ -1,11 +1,7 @@
 <template>
   <v-loading v-if="!data" />
   <div v-else class="schema-container">
-    <router-link v-if="isDeveloper" class="add-button" :to="`/app/${aid}/schema/0`">
-      <ui-fab color="primary">
-        <v-icon name="add" size="2rem" />
-      </ui-fab>
-    </router-link>
+    <v-fab-add v-if="isDeveloper" :to="`/app/${aid}/schema/0`" />
 
     <div class="schema-list">
       <v-search v-model="filter" style="width: 20rem; margin-bottom: 2rem; padding: 0.5rem 0;" />
@@ -25,6 +21,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
+import fuzzysearch from 'fuzzysearch'
 
 export default {
   data() {
@@ -39,7 +36,13 @@ export default {
       return this.$route.params.aid
     },
     list() {
-      return Object.values(this.data).sort((a, b) => a.name.localeCompare(b.name))
+      const list = Object.values(this.data).sort((a, b) => a.name.localeCompare(b.name))
+      if (this.filter) {
+        return list.filter(
+          d => fuzzysearch(this.filter, d.tag || '') || fuzzysearch(this.filter, d.name),
+        )
+      }
+      return list
     },
   },
   created() {
@@ -54,13 +57,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.add-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 10;
-}
-
 .schema-container {
   flex: 1;
 }

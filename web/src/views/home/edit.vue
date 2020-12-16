@@ -15,7 +15,7 @@
       />
 
       <div style="margin-top: 2rem;">
-        <v-submit :submit="handleSubmit">提交</v-submit>
+        <v-submit @submit="handleSubmit">提交</v-submit>
         <ui-button style="margin-left: 1rem;" @click="handleClose">取消</ui-button>
       </div>
     </v-form>

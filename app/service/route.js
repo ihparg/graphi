@@ -17,10 +17,12 @@ module.exports = class extends Service {
 
   async restore(_id) {
     const route = await this.ctx.model.Route.findOneDeleted({ _id })
-    this.ctx.assert(route, '记录不存在')
+    this.ctx.assert(route, 404, '记录不存在')
     const exist = await this.checkExist(route)
-    this.ctx.assert(!exist, '存在另一个相同路径的接口，恢复失败')
-    route.restore()
+    this.ctx.assert(!exist, 503, '存在另一个相同路径的接口，恢复失败')
+    await route.restore()
+
+    return route
   }
 }
 

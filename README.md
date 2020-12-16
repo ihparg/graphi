@@ -15,7 +15,7 @@ $ cd web
 $ npm i
 $ cd ..
 $ npm run dev
-$ open http://localhost:7001/
+$ open http://localhost:7000/
 ```
 
 ### Deploy

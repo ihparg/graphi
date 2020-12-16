@@ -2,6 +2,7 @@
 
 const jwt = require('jsonwebtoken')
 const { createPwd, checkPwd } = require('../utils/pwd')
+const { ROLES } = require('../utils/const')
 
 module.exports = {
   async init(ctx, data) {
@@ -10,7 +11,7 @@ module.exports = {
 
     data.password = createPwd(data.password)
     data.status = 1
-    data.role = 1 // 管理员
+    data.role = ROLES.admin
 
     const user = await ctx.model.User.create(data)
 
@@ -18,13 +19,13 @@ module.exports = {
   },
 
   async all(ctx) {
-    ctx.assert(ctx.user.role === 1)
+    ctx.assert(ctx.user.role === ROLES.admin)
     const users = await ctx.model.User.find({})
     return users
   },
 
-  async normal(ctx, { name }) {
-    const query = { status: 1, role: 0 }
+  async list(ctx, { name }) {
+    const query = { status: 1, role: ROLES.user }
     let limit = 1000
     if (name) {
       query.name = { $regex: new RegExp(name, 'i') }
@@ -34,8 +35,8 @@ module.exports = {
     return users
   },
 
-  async normalCount(ctx) {
-    const count = await ctx.model.User.count({ status: 1, role: 0 })
+  async listCount(ctx) {
+    const count = await ctx.model.User.countDocuments({ status: 1, role: ROLES.user })
     return count
   },
 
@@ -44,25 +45,25 @@ module.exports = {
     ctx.assert(user && checkPwd(data.password, user.password), '用户名或密码不正确')
     ctx.assert(user.status === 1, '用户账号已停用')
 
-    const info = { _id: user._id, dt: Date.now(), role: user.role }
+    const info = { _id: user._id, dt: Date.now(), role: user.role, name: user.name }
     const token = jwt.sign(info, ctx.app.config.keys)
 
     user.lastLoginAt = Date.now()
-    user.save()
+    await user.save()
 
-    await ctx.cache.set(user._id + ':' + info.dt, info.dt, 3600 * 24)
+    await ctx.app.cache.set(user._id + ':' + info.dt, info.dt, 3600 * 24)
     user.token = token
 
     return user
   },
 
   async logout(ctx) {
-    ctx.cache.del(ctx.user._id + ':' + ctx.user.dt)
+    ctx.app.cache.del(ctx.user._id + ':' + ctx.user.dt)
     return true
   },
 
   async info(ctx, data) {
-    const id = data.id || ctx.user._id
+    const id = data._id || ctx.user._id
     const user = await ctx.model.User.findById(id)
     ctx.assert(user, '用户不存在')
 
@@ -70,10 +71,10 @@ module.exports = {
   },
 
   async create(ctx, data) {
-    ctx.assert(ctx.user.role === 1, '没有权限')
+    ctx.assert(ctx.user.role === ROLES.admin, '没有权限')
     data.password = createPwd(data.password)
     const user = await ctx.model.User(data)
-    user.save()
+    await user.save()
     return user
   },
 }

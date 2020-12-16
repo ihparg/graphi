@@ -2,9 +2,7 @@
   <div v-auth:page="1" class="user-container">
     <v-search v-model="filter" style="width: 20rem; margin-bottom: 2rem; padding: 0.5rem 0;" />
 
-    <ui-fab class="add-button" color="primary" @click="showEdit = true">
-      <v-icon name="add" size="2rem" />
-    </ui-fab>
+    <v-fab-add @click="showEdit = true" />
 
     <v-table :data="list">
       <v-table-col title="用户名" name="name" />
@@ -48,7 +46,7 @@ export default {
     },
   },
   created() {
-    fetch.get('/api/user/list').then(res => {
+    fetch.get('/api/user/all').then(res => {
       this.users = res
     })
   },
@@ -68,11 +66,5 @@ export default {
   height: calc(100vh - 3.5rem);
   overflow: auto;
   padding: 2rem;
-}
-
-.add-button {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
 }
 </style>

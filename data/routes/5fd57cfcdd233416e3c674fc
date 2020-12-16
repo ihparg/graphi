@@ -1,0 +1,95 @@
+{
+  "aid": "0",
+  "method": "POST",
+  "tag": "app",
+  "resolve": "app.createToken",
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "description": {
+        "required": false,
+        "type": "string"
+      }
+    }
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "object",
+            "required": false,
+            "properties": {
+              "_id": {
+                "required": false,
+                "type": "uuid"
+              },
+              "createdAt": {
+                "required": false,
+                "type": "datetime"
+              },
+              "createdBy": {
+                "required": false,
+                "type": "string"
+              },
+              "token": {
+                "required": true,
+                "type": "string"
+              },
+              "description": {
+                "required": false,
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "创建应用token",
+  "path": "/api/app/:aid/token",
+  "refs": [
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5fd57cfcdd233416e3c674fc",
+  "fullPath": "POST:/api/app/:aid/token"
+}

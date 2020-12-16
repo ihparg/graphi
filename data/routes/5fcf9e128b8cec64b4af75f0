@@ -3,8 +3,8 @@
   "title": "获取普通用户列表",
   "method": "GET",
   "tag": "user",
-  "path": "/api/user/normal",
-  "resolve": "user.normal",
+  "path": "/api/user/list",
+  "resolve": "user.list",
   "routeParams": {
     "type": "object",
     "properties": {}
@@ -60,7 +60,7 @@
     "user"
   ],
   "_id": "5fcf9e128b8cec64b4af75f0",
-  "fullPath": "GET:/api/user/normal",
+  "fullPath": "GET:/api/user/list",
   "requestBody": {
     "type": "object",
     "properties": {
@@ -69,5 +69,13 @@
         "type": "string"
       }
     }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
   }
 }

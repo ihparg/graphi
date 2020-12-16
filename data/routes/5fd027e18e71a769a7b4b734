@@ -3,8 +3,8 @@
   "title": "获取用户列表数量",
   "method": "GET",
   "tag": "user",
-  "path": "/api/user/normalCount",
-  "resolve": "user.normalCount",
+  "path": "/api/user/listCount",
+  "resolve": "user.listCount",
   "routeParams": {
     "type": "object",
     "properties": {}
@@ -42,5 +42,17 @@
     "response"
   ],
   "_id": "5fd027e18e71a769a7b4b734",
-  "fullPath": "GET:/api/user/normalcount"
+  "fullPath": "GET:/api/user/listcount",
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  }
 }

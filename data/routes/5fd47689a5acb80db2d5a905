@@ -1,0 +1,90 @@
+{
+  "aid": "0",
+  "method": "GET",
+  "tag": "app",
+  "resolve": "app.getTokens",
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "object",
+            "required": false,
+            "properties": {
+              "_id": {
+                "required": false,
+                "type": "uuid"
+              },
+              "token": {
+                "required": true,
+                "type": "string"
+              },
+              "createdBy": {
+                "required": false,
+                "type": "string"
+              },
+              "createdAt": {
+                "required": false,
+                "type": "datetime"
+              },
+              "description": {
+                "required": false,
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "获取应用tokens",
+  "path": "/api/app/:aid/tokens",
+  "refs": [
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5fd47689a5acb80db2d5a905",
+  "fullPath": "GET:/api/app/:aid/tokens"
+}
