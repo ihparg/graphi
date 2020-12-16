@@ -1,15 +1,17 @@
 'use strict'
 const Mock = require('@graphi/mockjs')
+const ROUND = 10
+
 
 const getTpl = (v, word) => {
   if (v.exampleValue) return v.exampleValue
   if (v.enum) return `@pick([${(v.enum.map(r => r.value)).join(', ')}])`
-  if (v.minimum || v.maximum) return `@${word}(${v.minimum}, ${v.maximum})`
+  if (v.minimum && v.maximum) return `@${word}(${v.minimum}, ${Math.floor(Math.random() * ROUND) + v.minimum})`
+  if (v.minimum) return `@${word}(0, ${v.maximum})`
   return `@${word}()`
 }
 
 const getKey = function(key, v) {
-  const ROUND = 10
   switch (v.type) {
     case 'array':
       if (v.minItems && v.maxItems) return `${key}|${v.minItems}-${v.maxItems}`
