@@ -18,6 +18,7 @@ module.exports = app => {
 
   router.get('/schema/0/list', jsonWrapper, auth(true), controller.system.schema.index)
   router.get('/route/0', jsonWrapper, auth(true), controller.system.route.index)
+  router.get('/route/0/flatten', jsonWrapper, controller.system.route.flatten)
   router.get('/resolve/0/list', jsonWrapper, auth(true), controller.system.resolve.list)
 
   // 只有本地开发模式可以保存
