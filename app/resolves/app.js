@@ -89,7 +89,7 @@ module.exports = {
       dt: Date.now(),
     }
     const token = jwt.sign(info, ctx.app.config.keys)
-    await ctx.app.cache.set(info._id + ':' + info.dt, info.dt, 3600 * 24)
+    await ctx.app.cache.set(info._id + ':' + info.dt, info.dt)
 
     app.tokens.push({
       _id: ObjectId(),
@@ -109,6 +109,12 @@ module.exports = {
     await ctx.model.App.updateOne({ _id: data.aid }, { $pull: { tokens: { _id: data._id } } })
     await ctx.app.cache.delMatches(data.aid + ':*')
 
+    return true
+  },
+
+  async registerDevServer(ctx, data) {
+    ctx.assert(data._id === ctx.user._id, '没有权限')
+    await ctx.app.cache.set(`${data._id}:dev-server`, data)
     return true
   },
 }

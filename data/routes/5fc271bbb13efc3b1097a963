@@ -4,7 +4,7 @@
   "method": "POST",
   "tag": "user",
   "path": "/api/user/init",
-  "resolve": "user.init",
+  "resolve": "func:user@init",
   "requestBody": {
     "type": "ref",
     "properties": {

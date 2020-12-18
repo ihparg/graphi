@@ -1,10 +1,12 @@
 {
   "aid": "0",
-  "title": "接口列表",
   "method": "GET",
   "tag": "route",
-  "path": "/api/route/:aid",
-  "resolve": "func:route@list",
+  "resolve": "func:route@getFlattenList",
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
   "routeParams": {
     "type": "object",
     "properties": {
@@ -12,6 +14,10 @@
         "type": "string"
       }
     }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
   },
   "requestHeaders": {
     "type": "ref",
@@ -40,7 +46,6 @@
         "items": [
           {
             "type": "ref",
-            "required": false,
             "properties": {
               "tag": {
                 "ref": "route.tag"
@@ -57,42 +62,41 @@
               "createdAt": {
                 "ref": "route.createdAt"
               },
+              "routeParams": {
+                "ref": "route.routeParams"
+              },
+              "queryStrings": {
+                "ref": "route.queryStrings"
+              },
+              "requestHeaders": {
+                "ref": "route.requestHeaders"
+              },
+              "requestBody": {
+                "ref": "route.requestBody"
+              },
+              "responseHeaders": {
+                "ref": "route.responseHeaders"
+              },
+              "responseBody": {
+                "ref": "route.responseBody"
+              },
               "status": {
                 "ref": "route.status"
               },
               "_id": {
                 "ref": "route._id"
               },
+              "fullPath": {
+                "ref": "route.fullPath"
+              },
               "aid": {
                 "ref": "route.aid"
               },
-              "updatedAt": {
-                "required": false,
-                "ref": "route.updatedAt"
-              },
-              "fullPath": {
-                "required": false,
-                "ref": "route.fullPath"
-              },
               "title": {
-                "required": true,
                 "ref": "route.title"
               },
               "name": {
-                "required": false,
                 "ref": "route.name"
-              },
-              "updatedBy": {
-                "required": false,
-                "ref": "route.updatedBy",
-                "properties": {
-                  "_id": {
-                    "ref": "user._id"
-                  },
-                  "name": {
-                    "ref": "user.name"
-                  }
-                }
               }
             },
             "ref": "route"
@@ -102,24 +106,17 @@
     },
     "ref": "response"
   },
-  "_id": "5fcb95aa5a1fdb1ebe963e7d",
-  "fullPath": "GET:/api/route/:aid",
-  "refs": [
-    "requestHeaders",
-    "response",
-    "route",
-    "user"
-  ],
-  "requestBody": {
-    "type": "object",
-    "properties": {}
-  },
-  "queryString": {
-    "type": "object",
-    "properties": {}
-  },
   "responseHeaders": {
     "type": "object",
     "properties": {}
-  }
+  },
+  "title": "获取处理完引用之后的接口列表",
+  "path": "/api/route/:aid/flatten",
+  "refs": [
+    "requestHeaders",
+    "response",
+    "route"
+  ],
+  "_id": "5fdaf7aef71ca203b5ee04ec",
+  "fullPath": "GET:/api/route/:aid/flatten"
 }

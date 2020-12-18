@@ -2,13 +2,23 @@
   "aid": "0",
   "method": "POST",
   "tag": "app",
-  "resolve": "func:recycle@restore",
+  "resolve": "func:app@registerDevServer",
   "requestBody": {
     "type": "object",
     "properties": {
       "_id": {
         "required": true,
-        "type": "uuid"
+        "type": "uuid",
+        "description": "应用Id"
+      },
+      "host": {
+        "required": true,
+        "type": "string"
+      },
+      "token": {
+        "required": false,
+        "type": "string",
+        "description": "校验密钥，随机生成，每次不重复"
       }
     }
   },
@@ -43,7 +53,7 @@
       },
       "data": {
         "required": false,
-        "type": "json"
+        "type": "boolean"
       }
     },
     "ref": "response"
@@ -52,12 +62,12 @@
     "type": "object",
     "properties": {}
   },
-  "title": "恢复已删除数据",
-  "path": "/api/app/restore",
+  "title": "注册开发服务器",
+  "path": "/api/app/registerDevServer",
   "refs": [
     "requestHeaders",
     "response"
   ],
-  "_id": "5fd3688435e4e277a6a7603e",
-  "fullPath": "POST:/api/app/restore"
+  "_id": "5fd9f513ee5ba338cdd67ea5",
+  "fullPath": "POST:/api/app/registerdevserver"
 }

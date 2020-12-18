@@ -4,7 +4,7 @@
   "method": "POST",
   "tag": "app",
   "path": "/api/app/addMember",
-  "resolve": "app.addMember",
+  "resolve": "func:app@addMember",
   "requestBody": {
     "type": "object",
     "properties": {

@@ -4,7 +4,7 @@
   "method": "POST",
   "tag": "schema",
   "path": "/api/schema/:aid/save",
-  "resolve": "schema.save",
+  "resolve": "func:schema@save",
   "requestBody": {
     "type": "ref",
     "properties": {

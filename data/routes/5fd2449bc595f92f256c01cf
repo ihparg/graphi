@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "POST",
   "tag": "route",
-  "resolve": "route.process",
+  "resolve": "func:route@process",
   "requestBody": {
     "type": "object",
     "properties": {

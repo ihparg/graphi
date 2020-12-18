@@ -14,7 +14,7 @@ module.exports = {
     package: 'egg-mongoose',
   },
   redis: {
-    enable: true,
+    enable: !!process.env.REDIS_URL,
     package: 'egg-redis',
   },
 }

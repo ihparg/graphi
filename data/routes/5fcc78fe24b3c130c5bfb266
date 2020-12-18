@@ -4,7 +4,7 @@
   "method": "GET",
   "tag": "resolve",
   "path": "/api/resolve/:aid/list",
-  "resolve": "resolve.list",
+  "resolve": "func:resolve@list",
   "routeParams": {
     "type": "object",
     "properties": {
@@ -42,13 +42,7 @@
       },
       "data": {
         "required": false,
-        "type": "array",
-        "items": [
-          {
-            "type": "json",
-            "required": false
-          }
-        ]
+        "type": "json"
       }
     },
     "ref": "response"
@@ -56,5 +50,13 @@
   "refs": [
     "requestHeaders",
     "response"
-  ]
+  ],
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  }
 }

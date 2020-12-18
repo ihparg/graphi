@@ -57,7 +57,7 @@
     "ref": "response"
   },
   "_id": "5fbfc95e8c273a61b52fe29c",
-  "resolve": "user.login",
+  "resolve": "func:user@login",
   "requestHeaders": {
     "type": "ref",
     "properties": {

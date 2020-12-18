@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "POST",
   "tag": "app",
-  "resolve": "app.removeMember",
+  "resolve": "func:app@removeMember",
   "title": "删除应用用户",
   "path": "/api/app/removeMember",
   "routeParams": {

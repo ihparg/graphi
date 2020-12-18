@@ -24,9 +24,9 @@ module.exports = app => {
 
   config.redis = {
     client: {
-      port: 6379,
+      port: process.env.REDIS_PORT || 6379,
       host: process.env.REDIS_URL || '127.0.0.1',
-      password: null,
+      password: process.env.REDIS_PASSWORD || null,
       db: 0,
     },
   }

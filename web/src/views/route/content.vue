@@ -41,12 +41,12 @@
             label="路径"
             required
             :rules="[rule.required, rule.path, rule.pathExist]"
-            style="flex: 1; margin-right: 1rem;"
+            style="flex: 1;"
             help="以 / 开头，不要包含域名"
             @input="pathChange"
           />
 
-          <v-input
+          <!-- v-input
             name="resolve"
             label="resolve"
             style="width: 15rem"
@@ -54,6 +54,13 @@
             :has-search="true"
             :options="resolves"
             :clearable="true"
+          / -->
+          <v-input
+            v-if="resolves"
+            :resolves="resolves"
+            name="resolve"
+            style="width: 20rem"
+            type="resolve"
           />
         </div>
 
@@ -131,9 +138,11 @@ import fetch from '@/utils/fetch'
 import { registerInput } from '@/components/form'
 import Fields from './fields.vue'
 import Params from './params.vue'
+import Rosolve from './resolve.vue'
 
 registerInput('route-fields', Fields)
 registerInput('route-params', Params)
+registerInput('resolve', Rosolve)
 
 export default {
   props: {
