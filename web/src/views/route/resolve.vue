@@ -59,11 +59,12 @@ export default {
       if (!this.type) return null
       const fs = this.resolves[this.type]
       if (Array.isArray(fs)) return fs
-      return Object.keys(fs)
+      return Object.keys(fs).sort()
     },
     versions() {
       if (!this.func) return null
-      return this.resolves[this.type][this.func]
+      const versions = this.resolves[this.type][this.func]
+      return versions ? [...versions].sort() : null
     },
     formatValue() {
       return `${this.type}:${this.func}${this.version ? `@${this.version}` : ''}`

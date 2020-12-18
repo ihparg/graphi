@@ -4,7 +4,7 @@
   "method": "GET",
   "tag": "resolve",
   "path": "/api/resolve/:aid/list",
-  "resolve": "resolve.list",
+  "resolve": "func:resolve@list",
   "routeParams": {
     "type": "object",
     "properties": {

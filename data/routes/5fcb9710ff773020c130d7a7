@@ -4,7 +4,7 @@
   "method": "GET",
   "tag": "schema",
   "path": "/api/schema/:aid/list",
-  "resolve": "schema.list",
+  "resolve": "func:schema@list",
   "routeParams": {
     "type": "object",
     "properties": {

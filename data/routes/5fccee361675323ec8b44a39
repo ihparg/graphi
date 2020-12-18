@@ -4,7 +4,7 @@
   "method": "POST",
   "tag": "route",
   "path": "/api/route/:aid/save",
-  "resolve": "route.save",
+  "resolve": "func:route@save",
   "routeParams": {
     "type": "object",
     "properties": {

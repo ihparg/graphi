@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "DELETE",
   "tag": "app",
-  "resolve": "app.removeToken",
+  "resolve": "func:app@removeToken",
   "requestBody": {
     "type": "object",
     "properties": {

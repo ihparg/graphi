@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "GET",
   "tag": "app",
-  "resolve": "app.getTokens",
+  "resolve": "func:app@getTokens",
   "requestBody": {
     "type": "object",
     "properties": {}

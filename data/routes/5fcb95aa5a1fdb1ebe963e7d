@@ -4,7 +4,7 @@
   "method": "GET",
   "tag": "route",
   "path": "/api/route/:aid",
-  "resolve": "route.list",
+  "resolve": "func:route@list",
   "routeParams": {
     "type": "object",
     "properties": {

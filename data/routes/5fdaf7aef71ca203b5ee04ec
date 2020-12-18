@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "GET",
   "tag": "route",
-  "resolve": "route.getFlattenList",
+  "resolve": "func:route@getFlattenList",
   "requestBody": {
     "type": "object",
     "properties": {}

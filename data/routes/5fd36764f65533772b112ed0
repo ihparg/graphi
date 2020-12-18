@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "GET",
   "tag": "app",
-  "resolve": "recycle.list",
+  "resolve": "func:recycle@list",
   "requestBody": {
     "type": "object",
     "properties": {}
