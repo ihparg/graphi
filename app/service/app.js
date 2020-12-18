@@ -15,7 +15,7 @@ module.exports = class extends Service {
     const { ctx } = this
     const key = ctx.user._id + ':app:' + aid
 
-    let role = await this.app.cache.get(key)
+    let role = ctx.user._id === aid ? ROLES.guest : await this.app.cache.get(key)
 
     if (role == null) {
       const app = await ctx.model.App.findById(aid)
@@ -64,5 +64,15 @@ module.exports = class extends Service {
   async removeCache(_id, aid) {
     const key = _id + ':app:' + aid
     this.app.cache.del(key)
+  }
+
+  async checkToken(obj, token) {
+    const app = await this.ctx.model.App.findOne({ _id: obj._id })
+    const exist = app.tokens.find(t => t.token === token)
+
+    if (!exist) return false
+
+    await this.app.cache.set(`${obj._id}:${obj.dt}`, Date.now())
+    return true
   }
 }

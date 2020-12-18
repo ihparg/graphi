@@ -142,8 +142,14 @@ describe('resolves/app.js', () => {
     const payload = await jwt.verify(token.token, app.config.keys)
     assert(payload.role === 2)
 
+    let checked = await ctx.service.app.checkToken(_id, token.token)
+    assert(checked)
+
     await _.removeToken(ctx, { aid: _id, _id: token._id })
     tokens = await _.getTokens(ctx, { aid: _id })
     assert(tokens.length === 0)
+
+    checked = await ctx.service.app.checkToken(_id, token.token)
+    assert(!checked)
   })
 })

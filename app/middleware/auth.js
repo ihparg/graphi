@@ -1,6 +1,7 @@
 'use strict'
 
 const jwt = require('jsonwebtoken')
+const { ROLES } = require('../utils/const')
 
 module.exports = needLogin => async (ctx, next) => {
   if (needLogin) {
@@ -12,10 +13,18 @@ module.exports = needLogin => async (ctx, next) => {
       const user = await jwt.verify(token, ctx.app.config.keys)
 
       const rk = await ctx.app.cache.get(user._id + ':' + user.dt)
-      ctx.assert(rk, 401, '登录超时，请重新登录')
+      if (!rk) {
+        if (user.role === ROLES.app) {
+          const checked = await ctx.service.app.checkToken(user, token)
+          if (!checked) ctx.throw(401, 'Token验证失败')
+        } else {
+          ctx.throw(401, '登录超时，请重新登录')
+        }
+      }
 
       ctx.user = user
     } catch (e) {
+      console.error(e)
       ctx.throw(401, '登录超时，请重新登录')
     }
   }

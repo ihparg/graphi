@@ -1,0 +1,122 @@
+{
+  "aid": "0",
+  "method": "GET",
+  "tag": "route",
+  "resolve": "route.getFlattenList",
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "ref",
+            "properties": {
+              "tag": {
+                "ref": "route.tag"
+              },
+              "path": {
+                "ref": "route.path"
+              },
+              "method": {
+                "ref": "route.method"
+              },
+              "description": {
+                "ref": "route.description"
+              },
+              "createdAt": {
+                "ref": "route.createdAt"
+              },
+              "routeParams": {
+                "ref": "route.routeParams"
+              },
+              "queryStrings": {
+                "ref": "route.queryStrings"
+              },
+              "requestHeaders": {
+                "ref": "route.requestHeaders"
+              },
+              "requestBody": {
+                "ref": "route.requestBody"
+              },
+              "responseHeaders": {
+                "ref": "route.responseHeaders"
+              },
+              "responseBody": {
+                "ref": "route.responseBody"
+              },
+              "status": {
+                "ref": "route.status"
+              },
+              "_id": {
+                "ref": "route._id"
+              },
+              "fullPath": {
+                "ref": "route.fullPath"
+              },
+              "aid": {
+                "ref": "route.aid"
+              },
+              "title": {
+                "ref": "route.title"
+              },
+              "name": {
+                "ref": "route.name"
+              }
+            },
+            "ref": "route"
+          }
+        ]
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "获取处理完引用之后的接口列表",
+  "path": "/api/route/:aid/flatten",
+  "refs": [
+    "requestHeaders",
+    "response",
+    "route"
+  ],
+  "_id": "5fdaf7aef71ca203b5ee04ec",
+  "fullPath": "GET:/api/route/:aid/flatten"
+}

@@ -3,7 +3,7 @@
   "title": "获取单个接口信息",
   "method": "GET",
   "tag": "route",
-  "path": "/api/route/:aid/:_id",
+  "path": "/api/route/:aid/detail/:_id",
   "resolve": "route.findOne",
   "routeParams": {
     "type": "object",
@@ -115,7 +115,7 @@
     "ref": "response"
   },
   "_id": "5fce16ef0742e84632df6da6",
-  "fullPath": "GET:/api/route/:aid/:_id",
+  "fullPath": "GET:/api/route/:aid/detail/:_id",
   "$incomplete": true,
   "refs": [
     "requestHeaders",

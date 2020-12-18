@@ -35,7 +35,7 @@ const actions = {
   },
 
   async fetchOne({ state }, { aid, id }) {
-    const route = await fetch.get(`/api/route/${aid}/${id}`)
+    const route = await fetch.get(`/api/route/${aid}/detail/${id}`)
     const index = state.data.indexOf(d => d.id === id)
     state.data[index] = route
 

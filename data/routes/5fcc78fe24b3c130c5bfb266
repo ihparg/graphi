@@ -42,13 +42,7 @@
       },
       "data": {
         "required": false,
-        "type": "array",
-        "items": [
-          {
-            "type": "json",
-            "required": false
-          }
-        ]
+        "type": "json"
       }
     },
     "ref": "response"
@@ -56,5 +50,13 @@
   "refs": [
     "requestHeaders",
     "response"
-  ]
+  ],
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  }
 }

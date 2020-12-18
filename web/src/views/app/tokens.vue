@@ -9,7 +9,7 @@
         <v-table-col title="创建时间" name="createdAt" />
         <v-table-col v-slot="scope" title="Token">
           <span>{{ formatToken(scope.token) }}</span>
-          <v-clipboard :data="scope.token" />
+          <v-clipboard :data="'Bearer ' + scope.token" />
         </v-table-col>
         <v-table-col v-slot="row" title="创建人">
           {{ row.createdBy }}
@@ -82,7 +82,7 @@ export default {
       })
     },
     formatToken(token) {
-      return `${token.substr(0, 4)}****${token.substr(-4)}`
+      return `Bearer ${token.substr(0, 4)}****${token.substr(-4)}`
     },
   },
 }

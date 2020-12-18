@@ -1,5 +1,8 @@
 'use strict'
 
+const { flattenRoute } = require('@graphi/tools/src/route')
+const { flattenSchemas } = require('@graphi/tools/src/schema')
+
 const getFullPath = route => {
   return route.method + ':' + route.path.toLowerCase()
 }
@@ -95,6 +98,16 @@ module.exports = {
     })
 
     return true
+  },
+
+  async getFlattenList(ctx, data) {
+    await ctx.service.app.checkPermission(data.aid, 'get')
+
+    const routes = await ctx.model.Route.find({ aid: data.aid })
+    let schemas = await ctx.model.Schema.find({ aid: data.aid })
+    schemas = flattenSchemas(schemas)
+
+    return routes.map(r => flattenRoute(r, schemas))
   },
 }
 
