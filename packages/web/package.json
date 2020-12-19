@@ -1,6 +1,6 @@
 {
-  "name": "graphi",
-  "version": "1.0.0",
+  "name": "@graphi/web",
+  "version": "0.1.0",
   "description": "## Project setup ``` yarn install ```",
   "main": "src/index.js",
   "scripts": {

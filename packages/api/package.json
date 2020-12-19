@@ -1,0 +1,50 @@
+{
+  "name": "@graphi/api",
+  "version": "0.1.0",
+  "description": "api gateway of graphi",
+  "private": true,
+  "egg": {
+    "declarations": true
+  },
+  "dependencies": {
+    "egg": "^2.29.1",
+    "egg-redis": "^2.4.0",
+    "egg-scripts": "^2.13.0",
+    "http-proxy-middleware": "^1.0.6",
+    "koa-connect": "^2.1.0",
+    "ylru": "^1.2.1"
+  },
+  "devDependencies": {
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "egg-bin": "^4.11.0",
+    "egg-ci": "^1.11.0",
+    "egg-mock": "^3.21.0",
+    "eslint": "^7.15.0",
+    "eslint-config-egg": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --daemon --title=graphi-api",
+    "stop": "egg-scripts stop --title=graphi-api",
+    "dev": "GRAPHI_MODE=dev egg-bin dev --port 7002",
+    "debug": "egg-bin debug",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint . --fix",
+    "ci": "npm run lint && npm run cov",
+    "autod": "autod"
+  },
+  "ci": {
+    "version": "12"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "loboos841@gmail.com",
+  "license": "GPL-3.0"
+}

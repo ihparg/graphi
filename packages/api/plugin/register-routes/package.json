@@ -1,0 +1,7 @@
+{
+  "name": "register-routes",
+  "eggPlugin": {
+    "name": "register-routes",
+    "dependencies": []
+  }
+}
