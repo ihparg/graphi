@@ -78,6 +78,10 @@
       "name": {
         "required": false,
         "ref": "route.name"
+      },
+      "resolve": {
+        "required": false,
+        "ref": "route.resolve"
       }
     },
     "ref": "route"
@@ -174,6 +178,10 @@
                 "ref": "user.name"
               }
             }
+          },
+          "resolve": {
+            "required": false,
+            "ref": "route.resolve"
           }
         },
         "ref": "route"

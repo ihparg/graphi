@@ -136,6 +136,12 @@
         "type": "ref",
         "ref": "user",
         "description": "最后修改用户"
+      },
+      "resolve": {
+        "required": false,
+        "index": false,
+        "type": "string",
+        "exampleValue": "type:func@version"
       }
     }
   },
