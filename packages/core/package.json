@@ -1,0 +1,56 @@
+{
+  "name": "@graphi/core",
+  "version": "0.1.0",
+  "description": "",
+  "private": true,
+  "egg": {
+    "declarations": true
+  },
+  "dependencies": {
+    "@graphi/tools": "file:../tools",
+    "dayjs": "^1.9.6",
+    "egg": "^2.15.1",
+    "egg-mongoose": "^3.3.1",
+    "egg-redis": "^2.4.0",
+    "egg-router-plus": "^1.3.1",
+    "egg-scripts": "^2.11.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose-delete": "^0.5.3",
+    "nunjucks": "^3.2.2",
+    "ylru": "^1.2.1"
+  },
+  "devDependencies": {
+    "autod": "^3.0.1",
+    "autod-egg": "^1.1.0",
+    "egg-bin": "^4.11.0",
+    "egg-ci": "^1.11.0",
+    "egg-mock": "^3.21.0",
+    "eslint": "^7.14.0",
+    "eslint-config-egg": "^7.1.0",
+    "power-assert": "^1.6.1"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "scripts": {
+    "start": "egg-scripts start --daemon --title=egg-server-graphi",
+    "stop": "egg-scripts stop --title=egg-server-graphi",
+    "dev": "sh scripts/dev.sh",
+    "debug": "egg-bin debug",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "test-local": "egg-bin test",
+    "cov": "egg-bin cov",
+    "lint": "eslint . --fix",
+    "ci": "npm run cov",
+    "autod": "autod"
+  },
+  "ci": {
+    "version": "12"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ihparg/graphi"
+  },
+  "author": "lobos841@gmail.com",
+  "license": "GPL-3.0"
+}

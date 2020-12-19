@@ -4,7 +4,8 @@
   "description": "graphi tool lib",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --require intelli-espower-loader"
+    "test": "mocha --require intelli-espower-loader",
+    "lint": "eslint . --fix"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,8 @@
     "graphql": "^15.4.0"
   },
   "devDependencies": {
+    "eslint": "^7.15.0",
+    "eslint-config-egg": "^9.0.0",
     "intelli-espower-loader": "^1.0.1",
     "mocha": "^8.2.1",
     "power-assert": "^1.6.1"
