@@ -1,0 +1,7 @@
+{
+  "name": "txcloud",
+  "eggPlugin": {
+    "name": "txcloud",
+    "dependencies": []
+  }
+}

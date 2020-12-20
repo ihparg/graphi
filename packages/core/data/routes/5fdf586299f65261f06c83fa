@@ -1,0 +1,80 @@
+{
+  "aid": "0",
+  "method": "POST",
+  "tag": "resolve",
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "required": true,
+        "type": "string",
+        "description": "函数类型",
+        "exampleValue": "faas-tx"
+      },
+      "func": {
+        "required": true,
+        "type": "string",
+        "description": "函数名称",
+        "exampleValue": "functionName"
+      }
+    }
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "string"
+          }
+        ]
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "获取函数版本",
+  "path": "/api/resolve/:aid/versions",
+  "resolve": "func:resolve@versions",
+  "refs": [
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5fdf586299f65261f06c83fa",
+  "fullPath": "POST:/api/resolve/:aid/versions"
+}

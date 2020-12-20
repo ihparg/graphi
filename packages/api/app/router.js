@@ -8,4 +8,5 @@ module.exports = app => {
 
   router.get('/_/health', controller.home.health)
   router.get('/_/resolve', controller.home.resolves)
+  router.post('/_/versions', controller.home.versions)
 }

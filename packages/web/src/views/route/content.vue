@@ -58,6 +58,7 @@
           <v-input
             v-if="resolves"
             :resolves="resolves"
+            :aid="aid"
             name="resolve"
             style="width: 20rem"
             type="resolve"

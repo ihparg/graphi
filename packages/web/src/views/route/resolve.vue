@@ -14,14 +14,17 @@
         </a>
       </div>
       <div v-if="versions" class="list">
-        <a
-          v-for="v in versions"
-          :key="v"
-          :class="{ active: v === version }"
-          @click="versionChange(v)"
-        >
-          {{ v }}
-        </a>
+        <v-loading v-if="versions === 'loading'" size="24" />
+        <template v-else>
+          <a
+            v-for="v in versions"
+            :key="v"
+            :class="{ active: v === version }"
+            @click="versionChange(v)"
+          >
+            {{ v }}
+          </a>
+        </template>
       </div>
     </div>
   </div>
@@ -30,6 +33,7 @@
 <script>
 export default {
   props: {
+    aid: String,
     disabled: Boolean,
     resolves: Object,
     value: String,
@@ -63,8 +67,7 @@ export default {
     },
     versions() {
       if (!this.func) return null
-      const versions = this.resolves[this.type][this.func]
-      return versions ? [...versions].sort() : null
+      return this.resolves[this.type][this.func]
     },
     formatValue() {
       return `${this.type}:${this.func}${this.version ? `@${this.version}` : ''}`
@@ -104,6 +107,8 @@ export default {
       this.version = undefined
       if (Array.isArray(this.resolves[this.type])) {
         this.setValue()
+      } else {
+        this.$store.dispatch('route/fetchVersions', { type: this.type, func })
       }
     },
     versionChange(version) {
@@ -189,6 +194,7 @@ export default {
 }
 
 .list {
+  position: relative;
   height: 100%;
   overflow: hidden;
   border-right: solid 1px #eee;

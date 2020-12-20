@@ -7,24 +7,36 @@ class HomeController extends Controller {
     this.ctx.body = 'ok'
   }
 
+  async versions() {
+    const token = await this.app.cache.get('graphi:token')
+    this.ctx.assert(this.ctx.request.headers.token === token)
+
+    const { type, func } = this.ctx.request.body
+    let versions
+
+    if (type === 'faas-tx') {
+      versions = await this.app.txcloud.listVersions(func)
+    }
+
+    this.ctx.body = versions
+  }
+
   // 获取resolves
   async resolves() {
     const token = await this.app.cache.get('graphi:token')
     this.ctx.assert(this.ctx.request.headers.token === token)
 
-    let resolves = await this.app.cache.get('resolves')
-    if (!resolves) {
-      resolves = {}
-      const config = this.app.config.graphi.resolve
-      Object.keys(config).forEach(key => {
-        if (key === 'proxy') {
-          resolves[key] = Object.keys(config[key])
-        }
-      })
+    const resolves = {}
+    const config = this.app.config.graphi.resolve
 
-      await this.app.cache.set('resolves', resolves, 600)
+    if (config.proxy) {
+      resolves.proxy = Object.keys(config.proxy)
     }
-    console.log(resolves)
+
+    if (config['faas-tx']) {
+      resolves['faas-tx'] = await this.app.txcloud.listFunctions()
+    }
+
     this.ctx.body = resolves
   }
 }

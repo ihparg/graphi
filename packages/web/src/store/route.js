@@ -1,4 +1,5 @@
 import fetch from '@/utils/fetch'
+import message from '@/components/message'
 
 const mutations = {
   CHANGE_STATUS(state, { _id, status }) {
@@ -11,7 +12,6 @@ const mutations = {
   },
   SET_ROUTE(state, route) {
     const index = state.data.findIndex(d => d._id === route._id)
-    console.log(route._id, index)
     if (index >= 0) state.data[index] = route
     else state.data.push(route)
   },
@@ -27,7 +27,13 @@ const actions = {
         d.$undone = true
       })
     }
-    const resolves = await fetch.get(`/api/resolve/${aid}/list`)
+
+    let resolves = null
+    try {
+      resolves = await fetch.get(`/api/resolve/${aid}/list`)
+    } catch (e) {
+      message.show('resolve 获取失败', 'error')
+    }
 
     state.aid = aid
     state.data = data
@@ -50,6 +56,16 @@ const actions = {
     state.data = [...state.data, route]
 
     if (success) success(route)
+  },
+
+  async fetchVersions({ state }, { type, func }) {
+    const versions = state.resolves[type][func]
+    if (versions === 'loading' || versions.length > 0) return
+    state.resolves[type][func] = 'loading'
+    state.resolves[type][func] = await fetch.post(`/api/resolve/${state.aid}/versions`, {
+      type,
+      func,
+    })
   },
 }
 
