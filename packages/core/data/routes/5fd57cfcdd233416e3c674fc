@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "POST",
   "tag": "app",
-  "resolve": "func:app@createToken",
+  "resolve": "func:app.createToken",
   "requestBody": {
     "type": "object",
     "properties": {

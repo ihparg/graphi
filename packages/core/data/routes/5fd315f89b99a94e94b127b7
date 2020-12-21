@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "DELETE",
   "tag": "schema",
-  "resolve": "func:schema@remove",
+  "resolve": "func:schema.remove",
   "requestBody": {
     "type": "object",
     "properties": {

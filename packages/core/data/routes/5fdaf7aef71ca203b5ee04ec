@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "GET",
   "tag": "route",
-  "resolve": "func:route@getFlattenList",
+  "resolve": "func:route.getFlattenList",
   "requestBody": {
     "type": "object",
     "properties": {}
@@ -97,6 +97,10 @@
               },
               "name": {
                 "ref": "route.name"
+              },
+              "resolve": {
+                "required": false,
+                "ref": "route.resolve"
               }
             },
             "ref": "route"

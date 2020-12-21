@@ -17,7 +17,7 @@ const resolves = {
 }
 
 const execute = async (name, _, args, ctx) => {
-  const [ , m, f ] = name.split(/[:@]/)
+  const [ m, f ] = name.replace('func:', '').split('.')
   try {
     const data = await resolves[m][f](ctx, args.data)
     return { code: 200, data }

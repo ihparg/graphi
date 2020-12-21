@@ -70,7 +70,7 @@
   },
   "title": "获取函数版本",
   "path": "/api/resolve/:aid/versions",
-  "resolve": "func:resolve@versions",
+  "resolve": "func:resolve.versions",
   "refs": [
     "requestHeaders",
     "response"

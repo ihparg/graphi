@@ -60,7 +60,7 @@
             :resolves="resolves"
             :aid="aid"
             name="resolve"
-            style="width: 20rem"
+            style="width: 25rem"
             type="resolve"
           />
         </div>

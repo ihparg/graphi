@@ -4,7 +4,7 @@
   "method": "POST",
   "tag": "user",
   "path": "/api/user/logout",
-  "resolve": "func:user@logout",
+  "resolve": "func:user.logout",
   "requestHeaders": {
     "type": "ref",
     "properties": {

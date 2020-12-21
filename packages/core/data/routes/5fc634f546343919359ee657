@@ -4,7 +4,7 @@
   "method": "POST",
   "tag": "user",
   "path": "/api/user/create",
-  "resolve": "func:user@create",
+  "resolve": "func:user.create",
   "requestBody": {
     "type": "ref",
     "properties": {

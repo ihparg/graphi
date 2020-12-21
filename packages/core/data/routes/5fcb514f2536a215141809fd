@@ -4,7 +4,7 @@
   "method": "GET",
   "tag": "app",
   "path": "/api/app/:_id",
-  "resolve": "func:app@findById",
+  "resolve": "func:app.findById",
   "routeParams": {
     "type": "object",
     "properties": {

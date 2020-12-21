@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "POST",
   "tag": "app",
-  "resolve": "func:app@changeMember",
+  "resolve": "func:app.changeMember",
   "title": "应用变更用户权限",
   "path": "/api/app/changeMember",
   "routeParams": {
