@@ -100,7 +100,7 @@ module.exports = {
     return true
   },
 
-  async getFlattenList(ctx, data) {
+  async getListByVersion(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'get')
 
     const routes = await ctx.model.Route.find({ aid: data.aid })

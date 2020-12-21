@@ -17,7 +17,7 @@ module.exports = (app, routes) => {
 
     const exec = app.router[r.method.toLowerCase()]
 
-    if (r.status === 0 && app.config.graphi.mode === 'dev') {
+    if (r.status === 0 && app.config.graphi.env === 'dev') {
       // 未完成的接口,使用mock数据
       exec(r.path, ctx => {
         ctx.body = mock(tpl)
