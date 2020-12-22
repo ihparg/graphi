@@ -1,0 +1,90 @@
+{
+  "aid": "0",
+  "method": "GET",
+  "tag": "version",
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "ref",
+            "properties": {
+              "_id": {
+                "ref": "version._id"
+              },
+              "createdAt": {
+                "ref": "version.createdAt"
+              },
+              "aid": {
+                "ref": "version.aid"
+              },
+              "createdBy": {
+                "ref": "version.createdBy"
+              },
+              "description": {
+                "ref": "version.description"
+              },
+              "tag": {
+                "required": true,
+                "ref": "version.tag"
+              }
+            },
+            "ref": "version"
+          }
+        ]
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "获取版本列表",
+  "path": "/api/version/:aid",
+  "refs": [
+    "requestHeaders",
+    "response",
+    "version"
+  ],
+  "_id": "5fe0ab4e3205535bc204ba12",
+  "fullPath": "GET:/api/version/:aid",
+  "resolve": "func:version.list"
+}

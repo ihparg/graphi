@@ -6,6 +6,7 @@ const schema = require('./schema')
 const user = require('./user')
 const resolve = require('./resolve')
 const recycle = require('./recycle')
+const version = require('./version')
 
 const resolves = {
   app,
@@ -14,6 +15,7 @@ const resolves = {
   schema,
   user,
   recycle,
+  version,
 }
 
 const execute = async (name, _, args, ctx) => {

@@ -1,0 +1,95 @@
+{
+  "aid": "0",
+  "method": "POST",
+  "tag": "version",
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "tag": {
+        "required": true,
+        "type": "string",
+        "exampleValue": "1.0.0"
+      },
+      "description": {
+        "required": false,
+        "type": "string"
+      }
+    }
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "ref",
+        "properties": {
+          "_id": {
+            "ref": "version._id"
+          },
+          "createdAt": {
+            "ref": "version.createdAt"
+          },
+          "aid": {
+            "ref": "version.aid"
+          },
+          "createdBy": {
+            "ref": "version.createdBy"
+          },
+          "description": {
+            "ref": "version.description"
+          },
+          "tag": {
+            "required": true,
+            "ref": "version.tag"
+          }
+        },
+        "ref": "version"
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "创建新版本",
+  "path": "/api/version/:aid/create",
+  "resolve": "func:version.create",
+  "refs": [
+    "requestHeaders",
+    "response",
+    "version"
+  ],
+  "_id": "5fe0aeab3ac89c6144592f55",
+  "fullPath": "POST:/api/version/:aid/create"
+}

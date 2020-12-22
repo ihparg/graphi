@@ -63,7 +63,6 @@ export default {
 
 .schema-list {
   padding: 2rem;
-  max-width: 96rem;
   margin: 0 auto;
 }
 </style>

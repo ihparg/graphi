@@ -60,6 +60,7 @@ const actions = {
 
   async fetchVersions({ state }, { type, func }) {
     const versions = state.resolves[type][func]
+    if (versions == null) return
     if (versions === 'loading' || versions.length > 0) return
     state.resolves[type][func] = 'loading'
     state.resolves[type][func] = await fetch.post(`/api/resolve/${state.aid}/versions`, {

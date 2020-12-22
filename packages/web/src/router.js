@@ -10,6 +10,7 @@ import App from './views/app/index.vue'
 import Member from './views/member/index.vue'
 import Recycle from './views/app/recycle.vue'
 import Tokens from './views/app/tokens.vue'
+import Versions from './views/app/version.vue'
 
 const routes = [
   { path: '/', component: Home },
@@ -26,6 +27,7 @@ const routes = [
       { path: 'member', component: Member },
       { path: 'recycle', component: Recycle },
       { path: 'tokens', component: Tokens },
+      { path: 'version', component: Versions },
     ],
   },
 ]

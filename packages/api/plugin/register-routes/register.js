@@ -39,6 +39,7 @@ module.exports = (app, routes) => {
         })
       }
     } catch (e) {
+      console.log(r)
       app.logger.error(e)
     }
   })

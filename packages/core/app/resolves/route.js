@@ -72,11 +72,16 @@ module.exports = {
     const route = await ctx.model.Route.findById(data._id)
     ctx.assert(route, '接口不存在')
     ctx.assert(route.status < 2, '接口状态不正确')
+    ctx.assert(route.resolve, '接口没有resolve')
 
     const op = [ 'update', 'test' ][route.status]
     await ctx.service.app.checkPermission(data.aid, op)
 
     route.status += 1
+    if (route.status === 2) {
+      ctx.assert(!route.resolve.endsWith('$LATEST'), '测试通过的版本不能为 LATEST')
+    }
+
     await route.save()
 
     return route.status

@@ -12,7 +12,7 @@ module.exports = ({ mongoose }) => {
     deletedAt: { type: Date },
     content: {},
     tag: { type: String },
-    aid: { type: Schema.Types.ObjectId },
+    aid: { type: Schema.Types.ObjectId, index: true },
     updatedBy: { type: Schema.Types.ObjectId, ref: 'user' },
   }, {
     minimize: false,

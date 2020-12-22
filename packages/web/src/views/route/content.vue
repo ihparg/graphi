@@ -46,15 +46,6 @@
             @input="pathChange"
           />
 
-          <!-- v-input
-            name="resolve"
-            label="resolve"
-            style="width: 15rem"
-            type="select"
-            :has-search="true"
-            :options="resolves"
-            :clearable="true"
-          / -->
           <v-input
             v-if="resolves"
             :resolves="resolves"
@@ -116,7 +107,7 @@
           </ui-button>
 
           <ui-button
-            v-if="(isDeveloper && value.status === 0) || (isTester && value.status === 1)"
+            v-if="isShowProcessButton"
             :loading="sending"
             :color="value.status === 0 ? 'orange' : 'green'"
             button-type="button"
@@ -216,6 +207,12 @@ export default {
         }
       })
       return length
+    },
+    isShowProcessButton() {
+      if (!this.value.resolve) return false
+      if (this.isDeveloper && this.value.status === 0) return true
+      if (this.isTester && this.value.status === 1) return true
+      return false
     },
   },
   watch: {
