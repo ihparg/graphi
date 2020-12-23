@@ -71,6 +71,10 @@
           "tag": {
             "required": true,
             "ref": "version.tag"
+          },
+          "routeCount": {
+            "required": false,
+            "ref": "version.routeCount"
           }
         },
         "ref": "version"

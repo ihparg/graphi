@@ -5,6 +5,8 @@
 
     <div class="list">
       <v-table :data="versions" class="table">
+        <v-table-col title="版本号" name="tag" />
+        <v-table-col title="接口数" name="routeCount" />
         <v-table-col title="描述" name="description" />
         <v-table-col title="创建时间" name="createdAt" />
         <v-table-col v-slot="row" title="创建人">
@@ -12,9 +14,9 @@
         </v-table-col>
 
         <v-table-col v-slot="row" width="100px">
-          <a href="javascript:;">
+          <a v-if="isMaintainer" href="javascript:;">
             <v-icon name="delete" /> 删除
-            <v-confirm @confirm="handleRemove(row)">确定删除这个 token 吗？</v-confirm>
+            <v-confirm @confirm="handleRemove(row)">确定删除这个版本吗？</v-confirm>
           </a>
         </v-table-col>
       </v-table>
@@ -25,6 +27,7 @@
         <v-input
           name="tag"
           label="版本号"
+          required
           :rules="[rule.required, rule.tag]"
           help="只允许英文字符，数字，下划线"
         />
@@ -84,14 +87,25 @@ export default {
   methods: {
     handleCreate() {
       this.sending = true
-      fetch.post(`/api/version/${this.aid}/create`, this.form).then(res => {
-        this.versions.unshift(res)
-        this.sending = false
-        this.showCreate = false
-      })
+      fetch
+        .post(`/api/version/${this.aid}/create`, this.form)
+        .then(res => {
+          this.versions.unshift(res)
+          this.showCreate = false
+          this.form = {}
+          this.$message.show('版本创建成功')
+        })
+        .finally(() => {
+          this.sending = false
+        })
     },
     handleRemove(row) {
-      console.log(row)
+      fetch.delete(`/api/version/${this.aid}`, { _id: row._id }).then(res => {
+        if (res) {
+          this.versions = this.versions.filter(v => v._id !== row._id)
+          this.$message.show('版本已删除，可以在回收站中恢复')
+        }
+      })
     },
   },
 }

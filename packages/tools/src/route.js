@@ -1,5 +1,7 @@
 'use strict'
 
+const { flattenSchemas } = require('./schema')
+
 const getRefType = (schemas, key) => {
   const ref = schemas[key]
 
@@ -40,6 +42,8 @@ const flattenProperty = (property, schemas) => {
 }
 
 const flattenRoute = (route, schemas) => {
+  if (Array.isArray(schemas)) schemas = flattenSchemas(schemas)
+
   route = JSON.parse(JSON.stringify(route))
   const keys = [ 'requestHeaders', 'requestBody', 'queryString', 'responseHeaders', 'responseBody' ]
   keys.forEach(k => {

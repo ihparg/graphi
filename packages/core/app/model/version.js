@@ -7,14 +7,17 @@ const mongooseDelete = require('mongoose-delete')
 module.exports = ({ mongoose }) => {
   const Schema = mongoose.Schema
   const version = new Schema({
-  routes: [
-   {},
-  ],
-  schemas: {},
-  aid: { type: Schema.Types.ObjectId, index: true },
-  createdBy: { type: String },
-  description: { type: String },
-  tag: { type: String, index: true },
+    routes: [
+      {},
+    ],
+    schemas: [
+      {},
+    ],
+    aid: { type: Schema.Types.ObjectId, index: true },
+    createdBy: { type: String },
+    description: { type: String },
+    tag: { type: String, index: true },
+    routeCount: { type: Number },
   }, {
     minimize: false,
     timestamps: {},

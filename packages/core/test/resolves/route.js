@@ -61,6 +61,7 @@ describe('resolves/route.js', () => {
       description: 'shop description',
       tag: 'shop',
       method: 'POST',
+      resolve: 'proxy:default',
       path: '/api/shop',
       requestBoy: {},
     }

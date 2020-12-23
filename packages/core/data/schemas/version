@@ -22,7 +22,12 @@
       },
       "schemas": {
         "required": false,
-        "type": "json"
+        "type": "array",
+        "items": [
+          {
+            "type": "json"
+          }
+        ]
       },
       "aid": {
         "required": true,
@@ -44,6 +49,12 @@
         "required": true,
         "index": true,
         "type": "string"
+      },
+      "routeCount": {
+        "required": false,
+        "index": false,
+        "type": "integer",
+        "description": "接口数量"
       }
     }
   },

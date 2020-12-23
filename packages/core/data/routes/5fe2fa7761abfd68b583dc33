@@ -1,0 +1,67 @@
+{
+  "aid": "0",
+  "method": "DELETE",
+  "tag": "version",
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "required": true,
+        "type": "uuid"
+      }
+    }
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "boolean"
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "删除版本",
+  "path": "/api/version/:aid",
+  "resolve": "func:version.remove",
+  "refs": [
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5fe2fa7761abfd68b583dc33",
+  "fullPath": "DELETE:/api/version/:aid"
+}
