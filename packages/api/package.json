@@ -30,7 +30,7 @@
   "scripts": {
     "start": "egg-scripts start --daemon --title=graphi-api",
     "stop": "egg-scripts stop --title=graphi-api",
-    "dev": "GRAPHI_MODE=dev egg-bin dev --port 7002",
+    "dev": "GRAPHI_ENV=dev egg-bin dev --port 7002",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
     "test-local": "egg-bin test",

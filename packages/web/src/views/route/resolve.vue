@@ -8,12 +8,13 @@
           {{ t }}
         </a>
       </div>
-      <div v-if="funcs" class="list">
+      <div v-if="funcs" class="func list">
+        <v-search v-model="funcFilter" class="search" />
         <a v-for="f in funcs" :key="f" :class="{ active: f === func }" @click="funcChange(f)">
           {{ f }}
         </a>
       </div>
-      <div v-if="versions" class="list">
+      <div v-if="versions" class="version list">
         <v-loading v-if="versions === 'loading'" size="24" />
         <template v-else>
           <a
@@ -31,6 +32,8 @@
 </template>
 
 <script>
+import fuzzysearch from 'fuzzysearch'
+
 export default {
   props: {
     aid: String,
@@ -50,6 +53,7 @@ export default {
     }
 
     return {
+      funcFilter: '',
       focused: false,
       isRender: false,
       type,
@@ -61,12 +65,16 @@ export default {
   computed: {
     funcs() {
       if (!this.type) return null
+      let funcs
       const fs = this.resolves[this.type]
-      if (Array.isArray(fs)) return fs
-      return Object.keys(fs).sort()
+      if (Array.isArray(fs)) funcs = fs
+      else funcs = Object.keys(fs)
+
+      return funcs.filter(f => fuzzysearch(this.funcFilter, f)).sort()
     },
     versions() {
       if (!this.func) return null
+      this.$store.dispatch('route/fetchVersions', { type: this.type, func: this.func })
       return this.resolves[this.type][this.func]
     },
     formatValue() {
@@ -107,8 +115,6 @@ export default {
       this.version = undefined
       if (Array.isArray(this.resolves[this.type])) {
         this.setValue()
-      } else {
-        this.$store.dispatch('route/fetchVersions', { type: this.type, func })
       }
     },
     versionChange(version) {
@@ -185,8 +191,8 @@ export default {
   position: absolute;
   display: none;
   right: 0;
-  width: 30rem;
-  height: 10rem;
+  width: 40rem;
+  height: 16rem;
   background: #fff;
   z-index: 20;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
@@ -198,7 +204,6 @@ export default {
   height: 100%;
   overflow: hidden;
   border-right: solid 1px #eee;
-  flex: 1;
 
   &:hover {
     overflow-y: auto;
@@ -217,7 +222,21 @@ export default {
 }
 
 .type {
-  flex: none;
+  width: 8rem;
+}
+
+.func {
+  flex: 1;
+}
+
+.search {
+  position: sticky;
+  top: 0;
+  padding: 4px 8px;
+  background: #ffffff;
+}
+
+.version {
   width: 8rem;
 }
 </style>

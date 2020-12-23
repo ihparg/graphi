@@ -3,7 +3,6 @@
 const fs = require('fs/promises')
 const { ObjectId } = require('mongodb')
 const { flattenRoute } = require('@graphi/tools/src/route')
-const { flattenSchemas } = require('@graphi/tools/src/schema')
 const Controller = require('egg').Controller
 const { loadDir } = require('../../utils/file')
 const { getFullPath } = require('../../utils/route')
@@ -28,11 +27,10 @@ module.exports = class extends Controller {
     ctx.body = body
   }
 
-  async flatten() {
+  async latest() {
     const { ctx, app } = this
     const routes = await loadDir(app.config.routePath)
-    let schemas = await loadDir(app.config.schemaPath)
-    schemas = flattenSchemas(schemas)
+    const schemas = await loadDir(app.config.schemaPath)
 
     ctx.body = routes.map(r => flattenRoute(r, schemas))
   }

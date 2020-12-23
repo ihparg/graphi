@@ -1,16 +1,10 @@
 {
   "aid": "0",
-  "method": "POST",
-  "tag": "app",
-  "resolve": "func:app.createToken",
+  "method": "GET",
+  "tag": "version",
   "requestBody": {
     "type": "object",
-    "properties": {
-      "description": {
-        "required": false,
-        "type": "string"
-      }
-    }
+    "properties": {}
   },
   "routeParams": {
     "type": "object",
@@ -50,30 +44,33 @@
         "type": "array",
         "items": [
           {
-            "type": "object",
-            "required": false,
+            "type": "ref",
             "properties": {
               "_id": {
-                "required": false,
-                "type": "uuid"
+                "ref": "version._id"
               },
               "createdAt": {
-                "required": false,
-                "type": "datetime"
+                "ref": "version.createdAt"
+              },
+              "aid": {
+                "ref": "version.aid"
               },
               "createdBy": {
-                "required": false,
-                "type": "string"
-              },
-              "token": {
-                "required": true,
-                "type": "string"
+                "ref": "version.createdBy"
               },
               "description": {
+                "ref": "version.description"
+              },
+              "tag": {
+                "required": true,
+                "ref": "version.tag"
+              },
+              "routeCount": {
                 "required": false,
-                "type": "string"
+                "ref": "version.routeCount"
               }
-            }
+            },
+            "ref": "version"
           }
         ]
       }
@@ -84,12 +81,14 @@
     "type": "object",
     "properties": {}
   },
-  "title": "创建应用token",
-  "path": "/api/app/:aid/token",
+  "title": "获取版本列表",
+  "path": "/api/version/:aid",
   "refs": [
     "requestHeaders",
-    "response"
+    "response",
+    "version"
   ],
-  "_id": "5fd57cfcdd233416e3c674fc",
-  "fullPath": "POST:/api/app/:aid/token"
+  "_id": "5fe0ab4e3205535bc204ba12",
+  "fullPath": "GET:/api/version/:aid",
+  "resolve": "func:version.list"
 }

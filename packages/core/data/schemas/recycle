@@ -11,7 +11,8 @@
       "cid": {
         "required": true,
         "type": "uuid",
-        "description": "被删除资源 Id"
+        "description": "被删除资源 Id",
+        "index": true
       },
       "deletedBy": {
         "required": false,
@@ -35,7 +36,8 @@
       "aid": {
         "required": true,
         "type": "uuid",
-        "description": "应用Id"
+        "description": "应用Id",
+        "index": true
       },
       "createdAt": {
         "required": false,

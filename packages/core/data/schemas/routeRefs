@@ -10,12 +10,14 @@
       "rid": {
         "required": true,
         "type": "uuid",
-        "description": "route Id"
+        "description": "route Id",
+        "index": true
       },
       "aid": {
         "required": true,
         "type": "uuid",
-        "description": "app Id"
+        "description": "app Id",
+        "index": true
       },
       "refs": {
         "required": false,

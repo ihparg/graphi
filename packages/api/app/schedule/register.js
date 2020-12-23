@@ -5,7 +5,7 @@ const crypto = require('crypto')
 module.exports = app => {
   return {
     schedule: {
-      disabled: app.config.graphi.mode !== 'dev',
+      disabled: app.config.graphi.env !== 'dev',
       interval: '10m',
       type: 'worker',
       immediate: true,

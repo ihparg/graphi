@@ -20,7 +20,7 @@ describe('controller/route', () => {
     const ctx = app.mockContext()
     const route = await ctx.model.Route.findOne({})
 
-    const result = await app.httpRequest().get(`/api/route/${route.aid}/${route._id}`)
+    const result = await app.httpRequest().get(`/api/route/${route.aid}/detail/${route._id}`)
       .set('authorization', authorization)
       .expect(200)
 

@@ -3,7 +3,7 @@
 module.exports = {
   async list(ctx, { aid }) {
     await ctx.service.app.checkPermission(aid, 'get')
-    const result = await ctx.model.Recycle.find({ aid }).populate('deletedBy')
+    const result = await ctx.model.Recycle.find({ aid }).sort({ _id: -1 }).populate('deletedBy')
     return result
   },
 
@@ -17,6 +17,8 @@ module.exports = {
       result = await ctx.service.route.restore(log.cid)
     } else if (log.cname === 'schema') {
       result = await ctx.service.schema.restore(log.cid)
+    } else if (log.cname === 'version') {
+      result = await ctx.service.version.restore(log.cid)
     }
 
     await ctx.model.Recycle.deleteOne({ _id })

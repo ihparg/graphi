@@ -1,10 +1,16 @@
 {
   "aid": "0",
-  "title": "获取resolves列表",
-  "method": "GET",
-  "tag": "resolve",
-  "path": "/api/resolve/:aid/list",
-  "resolve": "func:resolve.list",
+  "method": "DELETE",
+  "tag": "version",
+  "requestBody": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "required": true,
+        "type": "uuid"
+      }
+    }
+  },
   "routeParams": {
     "type": "object",
     "properties": {
@@ -13,9 +19,7 @@
       }
     }
   },
-  "_id": "5fcc78fe24b3c130c5bfb266",
-  "fullPath": "GET:/api/resolve/:aid/list",
-  "requestBody": {
+  "queryString": {
     "type": "object",
     "properties": {}
   },
@@ -42,21 +46,22 @@
       },
       "data": {
         "required": false,
-        "type": "json"
+        "type": "boolean"
       }
     },
     "ref": "response"
   },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "删除版本",
+  "path": "/api/version/:aid",
+  "resolve": "func:version.remove",
   "refs": [
     "requestHeaders",
     "response"
   ],
-  "queryString": {
-    "type": "object",
-    "properties": {}
-  },
-  "responseHeaders": {
-    "type": "object",
-    "properties": {}
-  }
+  "_id": "5fe2fa7761abfd68b583dc33",
+  "fullPath": "DELETE:/api/version/:aid"
 }

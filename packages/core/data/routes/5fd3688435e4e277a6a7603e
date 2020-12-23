@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "POST",
   "tag": "app",
-  "resolve": "func:recycle@restore",
+  "resolve": "func:recycle.restore",
   "requestBody": {
     "type": "object",
     "properties": {

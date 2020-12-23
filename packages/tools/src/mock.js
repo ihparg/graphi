@@ -3,8 +3,9 @@ const Mock = require('@graphi/mockjs')
 const ROUND = 10
 
 
-const getTpl = (v, word) => {
+const getItem = (v, word) => {
   if (v.exampleValue) return v.exampleValue
+  if (v.defaultValue) return v.defaultValue
   if (v.enum) return `@pick([${(v.enum.map(r => r.value)).join(', ')}])`
   if (v.minimum && v.maximum) return `@${word}(${v.minimum}, ${Math.floor(Math.random() * ROUND) + v.minimum})`
   if (v.minimum) return `@${word}(0, ${v.maximum})`
@@ -24,27 +25,27 @@ const getKey = function(key, v) {
 }
 
 // mockjs 枚举用pick
-const getValue = function(v) {
+const getTpl = function(v) {
   switch (v.type) {
     case 'integer' :
-      return getTpl(v, 'natural')
+      return getItem(v, 'natural')
     case 'decial' || 'double':
-      return getTpl(v, 'float')
+      return getItem(v, 'float')
     case 'string':
-      return getTpl(v, 'word')
+      return getItem(v, 'word')
     case 'text':
-      return getTpl(v, 'text')
+      return getItem(v, 'text')
     case 'datetime':
-      return getTpl(v, 'datetime')
+      return getItem(v, 'datetime')
     case 'uuid':
-      return getTpl(v, 'id')
+      return getItem(v, 'id')
     case 'map':
-      return { map: getValue(v.items[0]) }
+      return { map: getTpl(v.items[0]) }
     case 'array':
-      return [ getValue(v.items[0]) ]
+      return [ getTpl(v.items[0]) ]
     case 'object':
       return Object.keys(v.properties).reduce((prev, k) => {
-        prev[getKey(k, v)] = getValue(v.properties[k])
+        prev[getKey(k, v)] = getTpl(v.properties[k])
         return prev
       }, {})
     default:
@@ -52,20 +53,13 @@ const getValue = function(v) {
   }
 }
 
-const getMock = function(route) {
-  const { responseBody } = route
-  const { properties } = responseBody
-
-  const mockTpl = Object.keys(properties).reduce((prev, k) => {
-    prev[getKey(k, properties[k])] = getValue(properties[k])
-    return prev
-  }, {})
-
-  const mockValue = Mock.mock(mockTpl)
-  return mockValue
+const getValue = obj => {
+  const tpl = getTpl(obj)
+  return Mock.mock(tpl)
 }
 
-
 module.exports = {
-  getMock,
+  getTpl,
+  getValue,
+  mock: Mock.mock,
 }

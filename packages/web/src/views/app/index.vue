@@ -38,6 +38,7 @@ export default {
       const routes = [
         { name: 'Schema', path: `/app/${this.aid}/schema`, icon: 'schema' },
         { name: '接口', path: `/app/${this.aid}/route`, icon: 'route' },
+        { name: '版本', path: `/app/${this.aid}/version`, icon: 'version' },
         { name: '用户', path: `/app/${this.aid}/member`, icon: 'account' },
       ]
 

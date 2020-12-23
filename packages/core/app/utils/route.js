@@ -1,7 +1,6 @@
 'use strict'
 
 const { flattenRoute } = require('@graphi/tools/src/route')
-const { flattenSchemas } = require('@graphi/tools/src/schema')
 const graphql = require('@graphi/tools/src/graphql')
 const auth = require('../middleware/auth')
 const resolve = require('../resolves')
@@ -9,8 +8,7 @@ const { loadDir } = require('./file')
 const { filterProps } = require('./objects')
 
 const registerRoutes = async (router, config) => {
-  let schemas = await loadDir(config.schemaPath)
-  schemas = flattenSchemas(schemas)
+  const schemas = await loadDir(config.schemaPath)
   const routes = await loadDir(config.routePath)
 
   routes.forEach(r => {

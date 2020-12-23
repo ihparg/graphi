@@ -1,0 +1,65 @@
+{
+  "aid": "0",
+  "content": {
+    "type": "object",
+    "properties": {
+      "_id": {
+        "required": false,
+        "type": "uuid"
+      },
+      "createdAt": {
+        "required": false,
+        "type": "datetime"
+      },
+      "routes": {
+        "required": true,
+        "type": "array",
+        "items": [
+          {
+            "type": "json"
+          }
+        ]
+      },
+      "schemas": {
+        "required": false,
+        "type": "array",
+        "items": [
+          {
+            "type": "json"
+          }
+        ]
+      },
+      "aid": {
+        "required": true,
+        "type": "uuid",
+        "description": "app Id",
+        "index": true
+      },
+      "createdBy": {
+        "required": false,
+        "index": false,
+        "type": "string"
+      },
+      "description": {
+        "required": false,
+        "index": false,
+        "type": "string"
+      },
+      "tag": {
+        "required": true,
+        "index": true,
+        "type": "string"
+      },
+      "routeCount": {
+        "required": false,
+        "index": false,
+        "type": "integer",
+        "description": "接口数量"
+      }
+    }
+  },
+  "tag": "mongodb",
+  "name": "version",
+  "description": "发布版本",
+  "_id": "version"
+}

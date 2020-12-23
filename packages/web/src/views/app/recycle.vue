@@ -62,8 +62,13 @@ export default {
         if (row.cname === 'schema') {
           this.$store.commit('schema/SET_SCHEMA', res)
         }
-        const url = `/app/${row.aid}/${row.cname}/${row.cname === 'schema' ? res.name : res._id}`
-        this.$router.push(url)
+
+        if (row.cname === 'version') {
+          this.$router.push(`/app/${row.aid}/version`)
+        } else {
+          const url = `/app/${row.aid}/${row.cname}/${row.cname === 'schema' ? res.name : res._id}`
+          this.$router.push(url)
+        }
       })
     },
   },

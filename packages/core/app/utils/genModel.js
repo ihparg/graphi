@@ -84,7 +84,7 @@ const genField = (name, data, schemas) => {
       result.children = [ genField('', data.items[0], schemas) ]
       break
     case 'uuid':
-      result.text = '{ type: Schema.Types.ObjectId },'
+      result.text = `{ type: Schema.Types.ObjectId${getIndex(data)} },`
       break
     default:
       result.text = `{ type: String${dv ? ", default: '" + dv + "'" : ''}${getEnum(data.enum, "'")}${getIndex(data)} },`

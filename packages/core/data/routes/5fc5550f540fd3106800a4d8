@@ -4,7 +4,7 @@
   "method": "GET",
   "tag": "user",
   "path": "/api/user/info",
-  "resolve": "func:user@info",
+  "resolve": "func:user.info",
   "requestBody": {
     "type": "object",
     "properties": {}

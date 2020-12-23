@@ -118,7 +118,8 @@
       "aid": {
         "required": true,
         "type": "uuid",
-        "description": "应用 ID"
+        "description": "应用 ID",
+        "index": true
       },
       "title": {
         "required": true,

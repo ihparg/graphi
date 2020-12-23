@@ -2,9 +2,9 @@
   <label class="search">
     <v-icon name="search" color="rgba(0,0,0,0.8)" />
     <input :value="modelValue" @input="updateValue" />
-    <a href="javascript:;" @click="clearValue">
+    <span @click="clearValue">
       <v-icon v-if="!!modelValue" name="close" color="rgba(0,0,0,0.4)" />
-    </a>
+    </span>
     <div class="hr" />
   </label>
 </template>

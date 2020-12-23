@@ -26,6 +26,9 @@ export const getProps = t => {
     case 'object':
       props = [...props, 'properties']
       break
+    case 'uuid':
+      props = [...props, 'index']
+      break
     default:
   }
 

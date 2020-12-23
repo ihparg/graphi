@@ -27,7 +27,7 @@ module.exports = app => {
       while (Offset < count) {
         const result = await client.ListFunctions({ Offset, Limit: 100 })
         result.Functions.forEach(f => {
-          funcs[f.FunctionName] = []
+          funcs[f.Namespace + '.' + f.FunctionName] = []
         })
         count = result.TotalCount
         Offset += result.Functions.length
@@ -36,10 +36,14 @@ module.exports = app => {
     },
 
     async listVersions(func) {
-      const result = await client.ListVersionByFunction({ FunctionName: func, Order: 'DESC' })
-      console.log(result)
-
+      const [ Namespace, FunctionName ] = func.split('.')
+      const result = await client.ListVersionByFunction({ FunctionName, Namespace, Order: 'DESC' })
       return result.FunctionVersion
+    },
+
+    async invoke(data) {
+      const response = await client.Invoke(data)
+      return response.Result
     },
   }
 }

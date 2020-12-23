@@ -9,7 +9,12 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(r, i) in data" :key="r[rowkey] || i" @click="rowClick(r)">
+      <tr
+        v-for="(r, i) in data"
+        :key="r[rowkey] || i"
+        :class="{ 'has-event': hasRowClick }"
+        @click="rowClick(r)"
+      >
         <v-td v-for="c in columns" :key="c.$id" :column="c" :data="r" />
       </tr>
     </tbody>
@@ -32,15 +37,21 @@ export default {
       default: '_id',
     },
   },
-  emits: ['row-click'],
   setup() {
     const columns = reactive([])
     provide(TABLE_SYMBOL, columns)
 
     return { columns }
   },
+  computed: {
+    hasRowClick() {
+      return !!this.$attrs.onRowClick
+    },
+  },
   methods: {
     rowClick(row) {
+      // 不要申明 emit，否则 this.$attrs.onRowClick  取不到值
+      // eslint-disable-next-line vue/require-explicit-emits
       this.$emit('row-click', row)
     },
   },
@@ -70,6 +81,10 @@ export default {
     &:hover {
       background: rgba(0, 0, 0, 0.04);
     }
+  }
+
+  .has-event {
+    cursor: pointer;
   }
 }
 </style>

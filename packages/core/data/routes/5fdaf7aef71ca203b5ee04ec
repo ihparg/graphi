@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "GET",
   "tag": "route",
-  "resolve": "func:route@getFlattenList",
+  "resolve": "func:route.getListByVersion",
   "requestBody": {
     "type": "object",
     "properties": {}
@@ -12,6 +12,11 @@
     "properties": {
       "aid": {
         "type": "string"
+      },
+      "version": {
+        "type": "string",
+        "required": false,
+        "defaultValue": "latest"
       }
     }
   },
@@ -97,6 +102,10 @@
               },
               "name": {
                 "ref": "route.name"
+              },
+              "resolve": {
+                "required": false,
+                "ref": "route.resolve"
               }
             },
             "ref": "route"
@@ -111,12 +120,12 @@
     "properties": {}
   },
   "title": "获取处理完引用之后的接口列表",
-  "path": "/api/route/:aid/flatten",
+  "path": "/api/route/:aid/version/:version",
   "refs": [
     "requestHeaders",
     "response",
     "route"
   ],
   "_id": "5fdaf7aef71ca203b5ee04ec",
-  "fullPath": "GET:/api/route/:aid/flatten"
+  "fullPath": "GET:/api/route/:aid/version/:version"
 }

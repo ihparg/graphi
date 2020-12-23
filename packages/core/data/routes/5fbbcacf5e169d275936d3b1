@@ -68,7 +68,7 @@
     "ref": "response"
   },
   "_id": "5fbbcacf5e169d275936d3b1",
-  "resolve": "func:user@all",
+  "resolve": "func:user.all",
   "fullPath": "GET:/api/user/all",
   "requestBody": {
     "type": "object",

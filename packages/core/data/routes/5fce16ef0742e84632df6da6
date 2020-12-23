@@ -4,7 +4,7 @@
   "method": "GET",
   "tag": "route",
   "path": "/api/route/:aid/detail/:_id",
-  "resolve": "func:route@findOne",
+  "resolve": "func:route.findOne",
   "routeParams": {
     "type": "object",
     "properties": {

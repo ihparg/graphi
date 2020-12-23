@@ -48,7 +48,8 @@
       },
       "aid": {
         "required": true,
-        "type": "uuid"
+        "type": "uuid",
+        "index": true
       },
       "updatedBy": {
         "required": false,

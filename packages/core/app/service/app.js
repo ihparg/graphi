@@ -44,8 +44,10 @@ module.exports = class extends Service {
 
     switch (op) {
       case 'get':
+      case 'guest':
         ctx.assert(role !== 0, 403, '没有权限')
         break
+      case 'dev':
       case 'update':
         ctx.assert(role === ROLES.developer, 403, '没有权限')
         break

@@ -2,7 +2,7 @@
   "aid": "0",
   "method": "DELETE",
   "tag": "route",
-  "resolve": "func:route@remove",
+  "resolve": "func:route.remove",
   "requestBody": {
     "type": "object",
     "properties": {
