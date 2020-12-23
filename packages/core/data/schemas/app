@@ -146,6 +146,10 @@
           }
         ],
         "description": "应用token,第三方服务验证用"
+      },
+      "deletedAt": {
+        "required": false,
+        "type": "datetime"
       }
     }
   },

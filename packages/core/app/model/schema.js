@@ -9,7 +9,6 @@ module.exports = ({ mongoose }) => {
   const schema = new Schema({
     name: { type: String },
     description: { type: String },
-    deletedAt: { type: Date },
     content: {},
     tag: { type: String },
     aid: { type: Schema.Types.ObjectId, index: true },

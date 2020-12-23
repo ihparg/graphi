@@ -4,7 +4,7 @@ const fs = require('fs/promises')
 const path = require('path')
 const Controller = require('egg').Controller
 const { loadDir } = require('../../utils/file')
-const genModel = require('../../utils/genModel')
+// const genModel = require('../../utils/genModel')
 
 class SchemaController extends Controller {
   async index() {
@@ -28,7 +28,11 @@ class SchemaController extends Controller {
       return obj
     }, {})
 
-    if (body.tag === 'mongodb') genModel(filePath, body.name, schemas)
+    if (body.tag === 'mongodb') {
+      // genModel(filePath, body.name, schemas)
+      const content = await app.nodejs.mongodb.createModel(body, schemas)
+      await fs.writeFile(path.resolve(app.baseDir, 'app/model', body.name + '.js'), content)
+    }
 
     ctx.body = body
   }

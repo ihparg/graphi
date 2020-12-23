@@ -1,5 +1,7 @@
 'use strict'
 
+const path = require('path')
+
 module.exports = {
   // had enabled by egg
   // static: {
@@ -16,5 +18,9 @@ module.exports = {
   redis: {
     enable: !!process.env.REDIS_URL,
     package: 'egg-redis',
+  },
+  nodejs: {
+    enable: true,
+    path: path.resolve(__dirname, '../plugin/nodejs'),
   },
 }

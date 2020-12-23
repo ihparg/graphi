@@ -11,8 +11,9 @@ module.exports = () => {
 
   config.development = {
     watchDirs: [
-      './tools/src',
+      '../tools/src',
       './data/routes',
+      './plugin',
     ],
   }
 

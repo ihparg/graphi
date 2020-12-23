@@ -2,6 +2,10 @@
 
 const crypto = require('crypto')
 
+/**
+ * 每10分钟重置一次token
+ */
+
 module.exports = app => {
   return {
     schedule: {
@@ -30,7 +34,7 @@ module.exports = app => {
         })
 
         if (result.data.code !== 200) {
-          console.log(result.data)
+          app.logger.error(new Error(result.data))
         }
         app.cache.set('graphi:token', token)
       } catch (e) {

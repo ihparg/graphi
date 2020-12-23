@@ -147,6 +147,7 @@ export default {
 .path {
   margin-top: 0.5rem;
   font-size: 0.85rem;
+  height: 1rem;
   color: #777;
   overflow: hidden;
   text-overflow: ellipsis;
