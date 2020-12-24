@@ -18,11 +18,11 @@ const resolves = {
   version,
 }
 
-const execute = async (name, _, args, ctx) => {
+const execute = async (name, obj, args, ctx) => {
   const [ m, f ] = name.replace('func:', '').split('.')
   try {
     const data = await resolves[m][f](ctx, args.data)
-    return { code: 200, data }
+    return obj === 'noWrap' ? data : { code: 200, data }
   } catch (e) {
     ctx.logger.error(e)
     return { code: e.status || 500, message: e.message }

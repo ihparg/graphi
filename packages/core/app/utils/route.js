@@ -12,8 +12,16 @@ const registerRoutes = async (router, config) => {
   const routes = await loadDir(config.routePath)
 
   routes.forEach(r => {
+    if (!r.responseBody) {
+      console.error(`${r.name} has no response body.`)
+      return
+    }
     const route = flattenRoute(r, schemas)
-    const execute = graphql(route, resolve.execute)
+    const isGraphql = ([ 'ref', 'object' ].includes(route.responseBody.type))
+
+    const execute = isGraphql
+      ? graphql(route, resolve.execute)
+      : (data, ctx) => resolve.execute(route.resolve, 'noWrap', { data }, ctx)
     const needLogin = route.requestHeaders && route.requestHeaders.properties.Authorization
 
     const inputSchemaKeys = Object.keys(Object.assign(
@@ -29,11 +37,15 @@ const registerRoutes = async (router, config) => {
       filterProps(args, inputSchemaKeys)
       const res = await execute(args, ctx)
 
-      if (res.errors) {
-        ctx.body = { code: 500, message: res.errors[0].message }
-        ctx.logger.error(new Error(res.errors))
+      if (isGraphql) {
+        if (res.errors) {
+          ctx.body = { code: 500, message: res.errors[0].message }
+          ctx.logger.error(new Error(res.errors))
+        } else {
+          ctx.body = res.data.result
+        }
       } else {
-        ctx.body = res.data.result
+        ctx.body = res
       }
     })
   })

@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@graphi/tools": "file:../tools",
+    "archiver": "^5.1.0",
     "dayjs": "^1.9.6",
     "egg": "^2.15.1",
     "egg-mongoose": "^3.3.1",

@@ -1,9 +1,11 @@
 'use strict'
 
-const mongodb = require('./mongodb')
+const mongoose = require('./moogoose')
+const sequelize = require('./sequelize')
 
 module.exports = app => {
   app.nodejs = {
-    mongodb,
+    mongoose,
+    sequelize,
   }
 }

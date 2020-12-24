@@ -65,7 +65,7 @@
 
           <ui-button v-if="isMaintainer && name !== '0'" :disabled="sending" class="btn-remove">
             删除
-            <v-confirm :disabled="!sending" @confirm="handleRemove">
+            <v-confirm v-if="!sending" @confirm="handleRemove">
               确定删除?
             </v-confirm>
           </ui-button>

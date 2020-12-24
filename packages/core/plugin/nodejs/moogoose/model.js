@@ -61,7 +61,6 @@ const genField = (name, data, schemas) => {
 }
 
 const createModel = async (data, schemas) => {
-  if (data.tag !== 'mongodb') return
   const tpl = await fs.readFile(path.resolve(__dirname, './model.njk'), 'utf8')
   const name = data.name
 

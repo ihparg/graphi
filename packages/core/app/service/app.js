@@ -59,7 +59,7 @@ module.exports = class extends Service {
         ctx.assert(role === ROLES.maintainer, 403, '没有权限')
         break
       default:
-        ctx.throw(new Error('没有权限'))
+        ctx.throw(403, new Error('没有权限'))
     }
   }
 

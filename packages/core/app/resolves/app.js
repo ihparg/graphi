@@ -1,6 +1,8 @@
 'use strict'
 
 const jwt = require('jsonwebtoken')
+const Stream = require('stream')
+const Archiver = require('archiver')
 const ObjectId = require('mongoose').Types.ObjectId
 const { ROLES } = require('../utils/const')
 
@@ -116,6 +118,50 @@ module.exports = {
     ctx.assert(data._id === ctx.user._id, '没有权限')
     await ctx.app.cache.set(`${data._id}:dev-server`, data)
     return true
+  },
+
+  async getModules(ctx, data) {
+    // await ctx.service.app.checkPermission(data.aid, 'get')
+    const archive = Archiver('zip')
+    const stream = new Stream.PassThrough()
+
+    archive.on('error', function(err) {
+      ctx.throw(500, err)
+    })
+    archive.on('end', function() {
+      console.log('Archive wrote %d bytes', archive.pointer())
+    })
+    archive.pipe(stream)
+
+    const schemas = await ctx.model.Schema.find({ aid: data.aid })
+
+    const sequelizeModels = []
+
+    const fns = []
+    schemas.forEach(schema => {
+      if ([ 'mysql', 'postgres', 'sqlite', 'sequelize' ].includes(schema.tag)) {
+        fns.push(new Promise((resolve, reject) => {
+          ctx.app.nodejs.sequelize.createModel(schema, schemas).then(content => {
+            archive.append(content, { name: 'node_modules/models/' + schema.name + '.js' })
+            resolve(true)
+          }).catch(reject)
+        }))
+        sequelizeModels.push(schema.name)
+      }
+    })
+
+    if (sequelizeModels.length > 0) {
+      const dbContent = await ctx.app.nodejs.sequelize.createDatabase(sequelizeModels)
+      archive.append(dbContent, { name: 'node_modules/database/sequelize.js' })
+    }
+
+    await Promise.all(fns)
+    archive.finalize()
+
+    ctx.attachment('module.zip')
+    ctx.set('Content-Type', 'application/zip')
+
+    return stream
   },
 }
 

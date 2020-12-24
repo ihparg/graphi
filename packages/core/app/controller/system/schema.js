@@ -30,7 +30,7 @@ class SchemaController extends Controller {
 
     if (body.tag === 'mongodb') {
       // genModel(filePath, body.name, schemas)
-      const content = await app.nodejs.mongodb.createModel(body, schemas)
+      const content = await app.nodejs.mongoose.createModel(body, schemas)
       await fs.writeFile(path.resolve(app.baseDir, 'app/model', body.name + '.js'), content)
     }
 
