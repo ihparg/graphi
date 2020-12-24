@@ -40,6 +40,25 @@ function exec(url, options = {}) {
         throw new FetchError(error, res.status)
       }
 
+      const cd = res.headers.get('content-disposition')
+        ? res.headers.get('content-disposition').split(';')
+        : null
+      if (cd && cd[0] === 'attachment') {
+        res.blob().then(blob => {
+          const match = /filename="(.*)"/.exec(cd[1])
+          const link = document.createElement('a')
+          link.style.display = 'none'
+          link.download = match ? match[1] : 'file'
+          link.href = URL.createObjectURL(blob)
+          document.body.appendChild(link)
+          link.click()
+          URL.revokeObjectURL(link.href)
+          document.body.removeChild(link)
+        })
+
+        return { code: 200 }
+      }
+
       return res.json()
     })
     .then(res => {

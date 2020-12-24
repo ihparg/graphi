@@ -93,7 +93,13 @@ const createModel = async (data, schemas) => {
   })
 
   const template = nunjucks.compile(tpl)
-  const content = template.render({ name, description: data.description, timestamps: time === 2, fieldList, softDelete })
+  const content = template.render({
+    name: name.charAt(0).toUpperCase() + name.slice(1),
+    description: data.description,
+    timestamps: time === 2,
+    fieldList,
+    softDelete,
+  })
   return content.replace(/(\n[\s\t]*\r*\n)/g, '\n').replace(/^[\n\r\n\t]*|[\n\r\n\t]*$/g, '')
 }
 

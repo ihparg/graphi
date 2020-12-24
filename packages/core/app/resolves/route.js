@@ -107,9 +107,17 @@ module.exports = {
 
   async getListByVersion(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'get')
-
-    const routes = await ctx.model.Route.find({ aid: data.aid })
-    let schemas = await ctx.model.Schema.find({ aid: data.aid })
+    let routes
+    let schemas
+    if (data.tag === '$latest') {
+      routes = await ctx.model.Route.find({ aid: data.aid })
+      schemas = await ctx.model.Schema.find({ aid: data.aid })
+    } else {
+      const version = await ctx.model.Version.find({ aid: data.aid, tag: data.tag })
+      ctx.assert(version, 404, '版本不存在')
+      routes = version.routes
+      schemas = version.schemas
+    }
     schemas = flattenSchemas(schemas)
 
     return routes.map(r => flattenRoute(r, schemas))

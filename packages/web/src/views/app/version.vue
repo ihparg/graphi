@@ -4,6 +4,10 @@
     <v-fab-add @click="showCreate = true" />
 
     <div class="list">
+      <div style="margin-bottom: 2rem;">
+        <a href="javascript:;" @click="handleDownload('$latest')">$latest modules</a>
+      </div>
+
       <v-table :data="versions" class="table">
         <v-table-col title="版本号" name="tag" />
         <v-table-col title="接口数" name="routeCount" />
@@ -13,7 +17,11 @@
           {{ row.createdBy }}
         </v-table-col>
 
-        <v-table-col v-slot="row" width="100px">
+        <v-table-col v-slot="row">
+          <a href="javascript:;" @click="handleDownload(row.tag)">
+            modules
+          </a>
+
           <a v-if="isMaintainer" href="javascript:;">
             <v-icon name="delete" /> 删除
             <v-confirm @confirm="handleRemove(row)">确定删除这个版本吗？</v-confirm>
@@ -105,6 +113,11 @@ export default {
           this.versions = this.versions.filter(v => v._id !== row._id)
           this.$message.show('版本已删除，可以在回收站中恢复')
         }
+      })
+    },
+    handleDownload(tag) {
+      fetch.get(`/api/app/${this.aid}/modules?tag=${tag}`).then(res => {
+        console.log(res)
       })
     },
   },

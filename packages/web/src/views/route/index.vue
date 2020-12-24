@@ -42,11 +42,7 @@ export default {
       const { filter } = this
       if (!filter) return this.sortedRoutes
       return this.sortedRoutes.filter(route => {
-        return (
-          route.tag === filter ||
-          fuzzysearch(filter, route.title) ||
-          fuzzysearch(filter, route.path)
-        )
+        return route.tag === filter || fuzzysearch(filter, route.title + route.path)
       })
     },
     aid() {

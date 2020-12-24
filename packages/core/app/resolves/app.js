@@ -121,7 +121,7 @@ module.exports = {
   },
 
   async getModules(ctx, data) {
-    // await ctx.service.app.checkPermission(data.aid, 'get')
+    await ctx.service.app.checkPermission(data.aid, 'get')
     const archive = Archiver('zip')
     const stream = new Stream.PassThrough()
 
@@ -133,7 +133,14 @@ module.exports = {
     })
     archive.pipe(stream)
 
-    const schemas = await ctx.model.Schema.find({ aid: data.aid })
+    let schemas
+    if (data.tag === '$latest') {
+      schemas = await ctx.model.Schema.find({ aid: data.aid })
+    } else {
+      const version = await ctx.model.Version.findOne({ aid: data.aid, tag: data.tag })
+      ctx.assert(version, 403, '版本不存在')
+      schemas = version.schemas
+    }
 
     const sequelizeModels = []
 
@@ -158,7 +165,7 @@ module.exports = {
     await Promise.all(fns)
     archive.finalize()
 
-    ctx.attachment('module.zip')
+    ctx.attachment(data.tag + '.zip')
     ctx.set('Content-Type', 'application/zip')
 
     return stream

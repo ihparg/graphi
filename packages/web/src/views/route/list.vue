@@ -41,12 +41,7 @@ export default {
     filterList() {
       const { filter } = this
       if (filter) {
-        return this.list.filter(
-          d =>
-            d.tag === filter ||
-            fuzzysearch(filter, d.title.toLowerCase()) ||
-            fuzzysearch(filter, d.path.toLowerCase()),
-        )
+        return this.list.filter(d => d.tag === filter || fuzzysearch(filter, d.title + d.path))
       }
       return this.list
     },

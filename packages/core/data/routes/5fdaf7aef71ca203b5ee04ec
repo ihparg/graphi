@@ -13,10 +13,8 @@
       "aid": {
         "type": "string"
       },
-      "version": {
-        "type": "string",
-        "required": false,
-        "defaultValue": "latest"
+      "tag": {
+        "type": "string"
       }
     }
   },
@@ -120,12 +118,12 @@
     "properties": {}
   },
   "title": "获取处理完引用之后的接口列表",
-  "path": "/api/route/:aid/version/:version",
+  "path": "/api/route/:aid/version/:tag",
   "refs": [
     "requestHeaders",
     "response",
     "route"
   ],
   "_id": "5fdaf7aef71ca203b5ee04ec",
-  "fullPath": "GET:/api/route/:aid/version/:version"
+  "fullPath": "GET:/api/route/:aid/version/:tag"
 }

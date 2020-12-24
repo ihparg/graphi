@@ -4,7 +4,18 @@
   "tag": "app",
   "requestBody": {
     "type": "object",
-    "properties": {}
+    "properties": {
+      "tag": {
+        "required": true,
+        "type": "string",
+        "defaultValue": "$latest"
+      },
+      "lang": {
+        "required": false,
+        "type": "string",
+        "defaultValue": "nodejs"
+      }
+    }
   },
   "routeParams": {
     "type": "object",
@@ -19,8 +30,16 @@
     "properties": {}
   },
   "requestHeaders": {
-    "type": "object",
-    "properties": {}
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
   },
   "responseBody": {
     "type": "blob"
@@ -31,7 +50,9 @@
   },
   "title": "获取应用 modules",
   "path": "/api/app/:aid/modules",
-  "refs": [],
+  "refs": [
+    "requestHeaders"
+  ],
   "_id": "5fe437fe0085dd5688efdf9f",
   "fullPath": "GET:/api/app/:aid/modules",
   "resolve": "func:app.getModules"
