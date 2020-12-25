@@ -148,7 +148,7 @@ module.exports = {
     schemas.forEach(schema => {
       if ([ 'mysql', 'postgres', 'sqlite', 'sequelize' ].includes(schema.tag)) {
         fns.push(new Promise((resolve, reject) => {
-          ctx.app.nodejs.sequelize.createModel(schema, schemas).then(content => {
+          ctx.app.database.sequelize.createModel(schema, schemas).then(content => {
             archive.append(content, { name: 'node_modules/models/' + schema.name + '.js' })
             resolve(true)
           }).catch(reject)
@@ -158,7 +158,7 @@ module.exports = {
     })
 
     if (sequelizeModels.length > 0) {
-      const dbContent = await ctx.app.nodejs.sequelize.createDatabase(sequelizeModels)
+      const dbContent = await ctx.app.database.sequelize.createDatabase(sequelizeModels)
       archive.append(dbContent, { name: 'node_modules/database/sequelize.js' })
     }
 

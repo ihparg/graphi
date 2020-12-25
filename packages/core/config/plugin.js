@@ -19,8 +19,8 @@ module.exports = {
     enable: !!process.env.REDIS_URL,
     package: 'egg-redis',
   },
-  nodejs: {
+  database: {
     enable: true,
-    path: path.resolve(__dirname, '../plugin/nodejs'),
+    path: path.resolve(__dirname, '../plugin/database'),
   },
 }

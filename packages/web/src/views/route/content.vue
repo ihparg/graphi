@@ -321,14 +321,14 @@ export default {
 }
 
 .form {
-  min-height: calc(100vh - 8rem + 2px);
+  min-height: calc(100vh - 7.5rem);
   padding: 2rem;
 }
 
 .foot {
   position: sticky;
   bottom: 0;
-  height: 4.2rem;
+  height: 4rem;
   padding: 1rem 2rem;
   background: #f2f2f2;
   box-shadow: $box-shadow;

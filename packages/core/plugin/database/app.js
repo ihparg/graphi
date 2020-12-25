@@ -4,7 +4,7 @@ const mongoose = require('./moogoose')
 const sequelize = require('./sequelize')
 
 module.exports = app => {
-  app.nodejs = {
+  app.database = {
     mongoose,
     sequelize,
   }

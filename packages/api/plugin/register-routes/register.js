@@ -34,7 +34,11 @@ module.exports = (app, routes) => {
       if (type === 'faas-tx') {
         const [ Namespace, FunctionName ] = func.split('.')
         exec(r.path, async ctx => {
-          const result = await app.txcloud.invoke({ Namespace, FunctionName, Qualifier: version }, {})
+          const body = Object.assign({}, ctx.query, ctx.params, ctx.request.body)
+
+          const ClientContext = JSON.stringify({ body, env: app.config.graphi.env })
+
+          const result = await app.txcloud.invoke({ Namespace, FunctionName, Qualifier: version, ClientContext })
           ctx.body = JSON.parse(result.RetMsg)
         })
       }

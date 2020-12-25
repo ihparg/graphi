@@ -78,8 +78,7 @@ const genField = (name, data, schemas) => {
   return result
 }
 
-const createModel = async (data, schemas) => {
-  const tpl = await fs.readFile(path.resolve(__dirname, './model.njk'), 'utf8')
+const getOptions = (data, schemas) => {
   const name = data.name
   const fieldList = []
   let softDelete = false
@@ -88,18 +87,24 @@ const createModel = async (data, schemas) => {
   Object.keys(data.content.properties).forEach(k => {
     if (k === 'deletedAt') softDelete = true
     if (k === 'createdAt' || k === 'updatedAt') time += 1
-    // if ([ 'createdAt', 'updatedAt', 'deletedAt' ].includes(k)) return
     fieldList.push(genField(k, data.content.properties[k], schemas))
   })
 
-  const template = nunjucks.compile(tpl)
-  const content = template.render({
+  return {
     name: name.charAt(0).toUpperCase() + name.slice(1),
     description: data.description,
     timestamps: time === 2,
     fieldList,
     softDelete,
-  })
+  }
+}
+
+const createModel = async (data, schemas) => {
+  const options = getOptions(data, schemas)
+  const tpl = await fs.readFile(path.resolve(__dirname, './model.njk'), 'utf8')
+
+  const template = nunjucks.compile(tpl)
+  const content = template.render(options)
   return content.replace(/(\n[\s\t]*\r*\n)/g, '\n').replace(/^[\n\r\n\t]*|[\n\r\n\t]*$/g, '')
 }
 

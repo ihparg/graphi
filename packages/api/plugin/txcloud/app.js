@@ -18,19 +18,18 @@ module.exports = app => {
   }
 
   const client = new ScfClient(clientConfig)
+  const namespace = config.namespace || [ 'default' ]
 
   app.txcloud = {
     async listFunctions() {
       const funcs = {}
-      let Offset = 0
-      let count = 100
-      while (Offset < count) {
-        const result = await client.ListFunctions({ Offset, Limit: 100 })
+      let ns = namespace.pop()
+      while (ns) {
+        const result = await client.ListFunctions({ Limit: 100, Namespace: ns })
         result.Functions.forEach(f => {
           funcs[f.Namespace + '.' + f.FunctionName] = []
         })
-        count = result.TotalCount
-        Offset += result.Functions.length
+        ns = namespace.pop()
       }
       return funcs
     },

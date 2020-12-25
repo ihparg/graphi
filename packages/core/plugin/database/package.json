@@ -1,7 +1,7 @@
 {
-  "name": "nodejs",
+  "name": "database",
   "eggPlugin": {
-    "name": "nodejs",
+    "name": "database",
     "dependencies": []
   }
 }
