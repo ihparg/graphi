@@ -53,7 +53,12 @@
   ],
   "queryString": {
     "type": "object",
-    "properties": {}
+    "properties": {
+      "force": {
+        "required": false,
+        "type": "boolean"
+      }
+    }
   },
   "responseHeaders": {
     "type": "object",

@@ -15,6 +15,9 @@ const mutations = {
     if (index >= 0) state.data[index] = route
     else state.data.push(route)
   },
+  SET_RESOLVES(state, resolves) {
+    state.resolves = resolves
+  },
 }
 
 const actions = {

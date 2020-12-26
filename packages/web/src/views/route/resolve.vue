@@ -3,29 +3,38 @@
     <div class="label">resolve</div>
     <div class="value">{{ value }}</div>
     <div v-if="isRender" class="panel">
-      <div class="type list">
-        <a v-for="t in types" :key="t" :class="{ active: t === type }" @click="typeChange(t)">
-          {{ t }}
-        </a>
-      </div>
-      <div v-if="funcs" class="func list">
-        <v-search v-model="funcFilter" class="search" />
-        <a v-for="f in funcs" :key="f" :class="{ active: f === func }" @click="funcChange(f)">
-          {{ f }}
-        </a>
-      </div>
-      <div v-if="versions" class="version list">
-        <v-loading v-if="versions === 'loading'" size="24" />
-        <template v-else>
-          <a
-            v-for="v in versions"
-            :key="v"
-            :class="{ active: v === version }"
-            @click="versionChange(v)"
-          >
-            {{ v }}
+      <v-loading v-if="refreshing" />
+      <div v-else class="panel-inner">
+        <div class="type list">
+          <a v-for="t in types" :key="t" :class="{ active: t === type }" @click="typeChange(t)">
+            {{ t }}
           </a>
-        </template>
+        </div>
+        <div v-if="funcs" class="func list">
+          <v-search v-model="funcFilter" class="search" />
+          <a v-for="f in funcs" :key="f" :class="{ active: f === func }" @click="funcChange(f)">
+            {{ f }}
+          </a>
+        </div>
+        <div v-if="versions" class="version list">
+          <v-loading v-if="versions === 'loading'" size="24" />
+          <template v-else>
+            <a
+              v-for="v in versions"
+              :key="v"
+              :class="{ active: v === version }"
+              @click="versionChange(v)"
+            >
+              {{ v }}
+            </a>
+          </template>
+        </div>
+      </div>
+      <div class="footer">
+        <a @click="forceRefresh">
+          <v-icon name="refresh" size="1rem" />
+          刷新
+        </a>
       </div>
     </div>
   </div>
@@ -33,6 +42,7 @@
 
 <script>
 import fuzzysearch from 'fuzzysearch'
+import fetch from '@/utils/fetch'
 
 export default {
   props: {
@@ -60,6 +70,7 @@ export default {
       types,
       func,
       version,
+      refreshing: false,
     }
   },
   computed: {
@@ -121,6 +132,13 @@ export default {
       this.version = version
       this.setValue()
     },
+    forceRefresh() {
+      this.refreshing = true
+      fetch.get(`/api/resolve/${this.aid}/list?force=true`).then(res => {
+        this.$store.commit('route/SET_RESOLVES', res)
+        this.refreshing = false
+      })
+    },
   },
 }
 </script>
@@ -148,7 +166,7 @@ export default {
       border-bottom-width: $ui-input-border-width--active;
     }
     .panel {
-      display: flex;
+      display: block;
     }
   }
 }
@@ -192,7 +210,7 @@ export default {
   display: none;
   right: 0;
   width: 40rem;
-  height: 16rem;
+  height: 18rem;
   background: #fff;
   z-index: 20;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
@@ -218,6 +236,25 @@ export default {
   .active {
     color: #fff;
     background: $brand-primary-color;
+  }
+}
+
+.panel-inner {
+  display: flex;
+  height: 16rem;
+}
+
+.footer {
+  position: absolute;
+  height: 2rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-top: 1px solid #eee;
+  line-height: 2rem;
+
+  a {
+    cursor: pointer;
   }
 }
 

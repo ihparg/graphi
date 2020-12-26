@@ -18,11 +18,11 @@ module.exports = app => {
   }
 
   const client = new ScfClient(clientConfig)
-  const namespace = config.namespace || [ 'default' ]
 
   app.txcloud = {
     async listFunctions() {
       const funcs = {}
+      const namespace = config.namespace ? [ ...config.namespace ] : [ 'default' ]
       let ns = namespace.pop()
       while (ns) {
         const result = await client.ListFunctions({ Limit: 100, Namespace: ns })

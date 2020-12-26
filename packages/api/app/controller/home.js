@@ -37,6 +37,8 @@ class HomeController extends Controller {
       resolves['faas-tx'] = await this.app.txcloud.listFunctions()
     }
 
+    console.log(resolves)
+
     this.ctx.body = resolves
   }
 }
