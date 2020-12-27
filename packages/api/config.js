@@ -27,7 +27,8 @@ module.exports = {
        *   secretId: '',
        *   secretKey: '',
        *   region: '',
-       *  },
+       *   namespace: ['default'],
+       * },
        */
       'faas-tx': JSON.parse(process.env.GRAPHI_FAAS_TX || 'null'),
 

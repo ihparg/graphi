@@ -148,6 +148,8 @@ export default {
           return '{}'
         case 'uuid':
           return `"${mock('@id')}"`
+        case 'blob':
+          return 'blob'
         default:
           return `"${value || ''}"`
       }

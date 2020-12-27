@@ -45,9 +45,7 @@ export default {
     },
     list() {
       if (!this.filter) return this.logs
-      return this.logs.filter(
-        l => fuzzysearch(this.filter, l.cname) || fuzzysearch(this.filter, l.content),
-      )
+      return this.logs.filter(l => fuzzysearch(this.filter, l.cname + l.content))
     },
   },
   created() {

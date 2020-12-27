@@ -46,14 +46,7 @@
             @input="pathChange"
           />
 
-          <v-input
-            v-if="resolves"
-            :resolves="resolves"
-            :aid="aid"
-            name="resolve"
-            style="width: 25rem"
-            type="resolve"
-          />
+          <v-input v-if="resolves" :resolves="resolves" :aid="aid" name="resolve" type="resolve" />
         </div>
 
         <v-tabs v-for="(tab, i) in tabs" :key="i" style="margin-bottom: 1rem;">
@@ -321,14 +314,14 @@ export default {
 }
 
 .form {
-  min-height: calc(100vh - 8rem + 2px);
+  min-height: calc(100vh - 7.5rem);
   padding: 2rem;
 }
 
 .foot {
   position: sticky;
   bottom: 0;
-  height: 4.2rem;
+  height: 4rem;
   padding: 1rem 2rem;
   background: #f2f2f2;
   box-shadow: $box-shadow;

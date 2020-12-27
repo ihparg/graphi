@@ -4,34 +4,34 @@
   </div>
   <div v-else class="schema-content">
     <v-form :data="editable ? value : schema" :disabled="!editable">
-      <div class="baseinfo">
-        <v-input
-          name="name"
-          required
-          label="名称"
-          style="width: 20rem;"
-          :rules="[
-            rule.required,
-            rule.name,
-            rule.regExp(
-              /(^_([a-zA-Z0-9]_?)*$)|(^[a-zA-Z](_?[a-zA-Z0-9])*_?$)/,
-              '名称只支持英文，数字和 _ ',
-            ),
-          ]"
-        />
-        <v-input
-          name="tag"
-          label="Tag"
-          type="autocomplete"
-          :suggestions="groups"
-          default-value=""
-          style="width: 10rem;"
-        />
+      <div class="form">
+        <div class="baseinfo">
+          <v-input
+            name="name"
+            required
+            label="名称"
+            style="width: 20rem;"
+            :rules="[
+              rule.required,
+              rule.name,
+              rule.regExp(
+                /(^_([a-zA-Z0-9]_?)*$)|(^[a-zA-Z](_?[a-zA-Z0-9])*_?$)/,
+                '名称只支持英文，数字和 _ ',
+              ),
+            ]"
+          />
+          <v-input
+            name="tag"
+            label="Tag"
+            type="autocomplete"
+            :suggestions="groups"
+            default-value=""
+            style="width: 10rem;"
+          />
 
-        <v-input name="description" label="描述" style="flex: 1;" />
-      </div>
+          <v-input name="description" label="描述" style="flex: 1;" />
+        </div>
 
-      <div class="list">
         <div class="field">
           <Field
             :disabled="!editable"
@@ -65,7 +65,7 @@
 
           <ui-button v-if="isMaintainer && name !== '0'" :disabled="sending" class="btn-remove">
             删除
-            <v-confirm :disabled="!sending" @confirm="handleRemove">
+            <v-confirm v-if="!sending" @confirm="handleRemove">
               确定删除?
             </v-confirm>
           </ui-button>
@@ -232,7 +232,6 @@ export default {
 
 .baseinfo {
   display: flex;
-  padding: 2rem 2rem 0;
 
   & > * {
     margin-right: 1.5rem;
@@ -243,9 +242,9 @@ export default {
   }
 }
 
-.list {
-  min-height: calc(100vh - 14rem);
-  padding: 0 2rem 1rem;
+.form {
+  min-height: calc(100vh - 7.5rem);
+  padding: 2rem;
 }
 
 .error {
@@ -262,7 +261,7 @@ export default {
   position: sticky;
   bottom: 0;
   padding: 1rem 2rem;
-  height: 4.2rem;
+  height: 4rem;
   background: #f2f2f2;
   box-shadow: $box-shadow;
 

@@ -122,6 +122,24 @@ const createSchema = (route, args, body, resolve) => {
   return new GraphQLObjectType(schema)
 }
 
+// 只处理基础类型的数据
+const convertQuery = (data, route) => {
+  const fields = Object.assign(
+    {},
+    (route.queryString || {}).properties,
+    (route.routeParams || {}).properties
+  )
+  Object.keys(fields).forEach(key => {
+    const type = fields[key].type
+    const val = data[key]
+    if (val) {
+      if (type === 'boolean') data[key] = val === 'true' || val === '1'
+      if (type === 'integer') data[key] = parseInt(val)
+      if (type === 'decimal') data[key] = parseFloat(val)
+    }
+  })
+}
+
 module.exports = (route, resolve) => {
   const args = {
     type: 'object',
@@ -141,5 +159,8 @@ module.exports = (route, resolve) => {
     ? new GraphQLSchema({ query: rootType })
     : new GraphQLSchema({ query: emptyQuery, mutation: rootType })
 
-  return (data, ctx) => graphql(schema, query, null, ctx, { data })
+  return (data, ctx) => {
+    convertQuery(data, route)
+    return graphql(schema, query, null, ctx, { data })
+  }
 }

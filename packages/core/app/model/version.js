@@ -1,6 +1,6 @@
 /**
  * model: version
- * 由 modelGenerator 自动生成，不要修改
+ * 由 graphi-plugin 自动生成，不要修改
  */
 'use strict'
 const mongooseDelete = require('mongoose-delete')

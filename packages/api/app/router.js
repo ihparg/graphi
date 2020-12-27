@@ -1,12 +1,15 @@
 'use strict'
 
-/**
- * @param {Egg.Application} app - egg application
- */
+const devAuth = require('./middleware/devAuth')
+
 module.exports = app => {
   const { router, controller } = app
 
   router.get('/_/health', controller.home.health)
-  router.get('/_/resolve', controller.home.resolves)
-  router.post('/_/versions', controller.home.versions)
+
+  if (app.config.graphi.env === 'dev') {
+    router.get('/_/resolve', devAuth, controller.dev.resolves)
+    router.post('/_/versions', devAuth, controller.dev.versions)
+    router.post('/_/refresh/route', devAuth, controller.dev.refreshRoute)
+  }
 }

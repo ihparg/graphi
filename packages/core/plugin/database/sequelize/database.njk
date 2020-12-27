@@ -1,0 +1,17 @@
+/**
+ * 由 graphi-plugin 自动生成，不要手动修改
+ */
+'use strict'
+
+const Sequelize = require('sequelize')
+
+module.exports = async (path) => {
+  const database = new Sequelize(path)
+
+  const args = { model: database, Sequelize }
+  {% for name in models -%}
+  require('models/{{name}}.js')(args)
+  {% endfor -%}
+
+  return database
+}

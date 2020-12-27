@@ -1,0 +1,22 @@
+/**
+ * model: {{name}}
+ * description: {{description}}
+ * 由 graphi-plugin 自动生成，不要手动修改
+ */
+'use strict'
+
+module.exports = ({ model, Sequelize }) => {
+  const fields = {
+  {% for field in fieldList -%}
+  {{field.name}}: {{field.text | safe }},
+  {% endfor -%}
+  }
+
+  const config = {
+    timestamps: {{timestamps}},
+    underscored: true,
+    {% if (softDelete) %}paranoid: true,{% endif %}
+  }
+
+  return model.define('{{name}}', fields, config)
+}

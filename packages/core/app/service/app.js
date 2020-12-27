@@ -59,7 +59,7 @@ module.exports = class extends Service {
         ctx.assert(role === ROLES.maintainer, 403, '没有权限')
         break
       default:
-        ctx.throw(new Error('没有权限'))
+        ctx.throw(403, new Error('没有权限'))
     }
   }
 
@@ -76,5 +76,26 @@ module.exports = class extends Service {
 
     await this.app.cache.set(`${obj._id}:${obj.dt}`, Date.now())
     return true
+  }
+
+  async refreshPub(aid) {
+    const { ctx } = this
+    const devServer = await ctx.app.cache.get(`${aid}:dev-server`)
+    if (!devServer) return null
+
+    const options = {
+      headers: { token: devServer.token },
+      dataType: 'json',
+      method: 'post',
+    }
+
+    try {
+      const res = await ctx.curl(devServer.host + '/_/refresh/route', options)
+      if (res.data !== true) {
+        ctx.logger(res)
+      }
+    } catch (e) {
+      ctx.logger.error(e)
+    }
   }
 }

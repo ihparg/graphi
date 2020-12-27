@@ -37,6 +37,9 @@ module.exports = {
       schema = await ctx.model.Schema.create(data)
     }
 
+    // 不要 await
+    ctx.service.app.refreshPub(schema.aid)
+
     return schema
   },
 
@@ -59,6 +62,9 @@ module.exports = {
       deletedBy: ctx.user._id,
       content: schema.name,
     })
+
+    // 不要 await
+    ctx.service.app.refreshPub(schema.aid)
 
     return true
   },

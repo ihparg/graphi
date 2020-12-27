@@ -11,6 +11,7 @@
         <v-table-col title="方法" name="method" />
         <v-table-col title="路径" name="path" />
         <v-table-col title="Tag" name="tag" />
+        <v-table-col title="resolve" name="resolve" />
         <v-table-col v-slot="scope" title="最后修改">
           {{ scope.updatedBy && scope.updatedBy.name }}
         </v-table-col>
@@ -42,11 +43,7 @@ export default {
       const { filter } = this
       if (!filter) return this.sortedRoutes
       return this.sortedRoutes.filter(route => {
-        return (
-          route.tag === filter ||
-          fuzzysearch(filter, route.title) ||
-          fuzzysearch(filter, route.path)
-        )
+        return route.tag === filter || fuzzysearch(filter, route.title + route.path)
       })
     },
     aid() {

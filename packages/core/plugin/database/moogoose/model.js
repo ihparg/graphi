@@ -3,39 +3,6 @@
 const fs = require('fs/promises')
 const path = require('path')
 const nunjucks = require('nunjucks')
-const { loadJsonFile } = require('./file')
-
-const templateStr = `
-{%- macro fieldBlock(fs) %}
-  {% for field in fs -%}
-  {% if (field.name) %}{{field.name}}:{% endif %} {{field.text | safe }}
-  {% if (field.children) %}{{fieldBlock(field.children)}}{% endif %}
-  {% if (field.text === '{') -%}},{% endif %}
-  {% if (field.text === '[') -%}],{% endif %}
-  {% endfor -%}
-{% endmacro -%}
-/**
- * model: {{name}}
- * 由 modelGenerator 自动生成，不要修改
- */
-'use strict'
-
-const mongooseDelete = require('mongoose-delete')
- 
-module.exports = ({ mongoose }) => {
-  const Schema = mongoose.Schema
-  const {{name}} = new Schema({
-    {{- fieldBlock(fields) -}}
-  }, {
-    minimize: false,
-    timestamps: {},
-  })
-
-  {{name}}.plugin(mongooseDelete, { deletedAt: true, overrideMethods: true })
-
-  return mongoose.model('{{name}}', {{name}})
-}
-`
 
 const getEnum = (arr, sp = '') => {
   if (!arr) return ''
@@ -93,20 +60,23 @@ const genField = (name, data, schemas) => {
   return result
 }
 
-module.exports = async (filePath, name, schemas) => {
-  const data = await loadJsonFile(filePath)
-  if (data.tag !== 'mongodb') return
-  name = data.name
+const createModel = async (data, schemas) => {
+  const tpl = await fs.readFile(path.resolve(__dirname, './model.njk'), 'utf8')
+  const name = data.name
 
   const fields = []
+  let softDelete = false
   Object.keys(data.content.properties).forEach(k => {
-    if ([ '_id', 'createdAt', 'updatedAt' ].includes(k)) return
+    if (k === 'deletedAt') softDelete = true
+    if ([ '_id', 'createdAt', 'updatedAt', 'deletedAt' ].includes(k)) return
     fields.push(genField(k, data.content.properties[k], schemas))
   })
 
-  const template = nunjucks.compile(templateStr)
-  let content = template.render({ name, fields })
-  content = content.replace(/(\n[\s\t]*\r*\n)/g, '\n').replace(/^[\n\r\n\t]*|[\n\r\n\t]*$/g, '')
+  const template = nunjucks.compile(tpl)
+  const content = template.render({ name, fields, softDelete })
+  return content.replace(/(\n[\s\t]*\r*\n)/g, '\n').replace(/^[\n\r\n\t]*|[\n\r\n\t]*$/g, '')
+}
 
-  await fs.writeFile(path.resolve(__dirname, '../model', name + '.js'), content)
+module.exports = {
+  createModel,
 }

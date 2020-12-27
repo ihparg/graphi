@@ -25,7 +25,9 @@ module.exports = (app, routes) => {
       return
     }
     try {
-      const [ type, func, version ] = r.resolve.split(/[:@]/)
+      let [ type, func, version ] = r.resolve.split(/[:@]/)
+      const skipGraphql = type[0] === '*'
+      if (skipGraphql) type = type.substr(1)
       if (type === 'proxy') {
         exec(r.path, proxy[func])
         return
@@ -34,7 +36,11 @@ module.exports = (app, routes) => {
       if (type === 'faas-tx') {
         const [ Namespace, FunctionName ] = func.split('.')
         exec(r.path, async ctx => {
-          const result = await app.txcloud.invoke({ Namespace, FunctionName, Qualifier: version }, {})
+          const body = Object.assign({}, ctx.query, ctx.params, ctx.request.body)
+
+          const ClientContext = JSON.stringify({ body, env: app.config.graphi.env })
+
+          const result = await app.txcloud.invoke({ Namespace, FunctionName, Qualifier: version, ClientContext })
           ctx.body = JSON.parse(result.RetMsg)
         })
       }

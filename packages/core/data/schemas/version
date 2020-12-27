@@ -55,6 +55,10 @@
         "index": false,
         "type": "integer",
         "description": "接口数量"
+      },
+      "deletedAt": {
+        "required": false,
+        "type": "datetime"
       }
     }
   },

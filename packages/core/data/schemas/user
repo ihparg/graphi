@@ -101,6 +101,11 @@
       "lastLoginAt": {
         "required": false,
         "type": "datetime"
+      },
+      "deletedAt": {
+        "required": false,
+        "index": false,
+        "type": "string"
       }
     }
   },

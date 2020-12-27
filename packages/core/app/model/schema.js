@@ -1,6 +1,6 @@
 /**
  * model: schema
- * 由 modelGenerator 自动生成，不要修改
+ * 由 graphi-plugin 自动生成，不要修改
  */
 'use strict'
 const mongooseDelete = require('mongoose-delete')
@@ -9,7 +9,6 @@ module.exports = ({ mongoose }) => {
   const schema = new Schema({
     name: { type: String },
     description: { type: String },
-    deletedAt: { type: Date },
     content: {},
     tag: { type: String },
     aid: { type: Schema.Types.ObjectId, index: true },

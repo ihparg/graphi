@@ -1,0 +1,33 @@
+{%- macro fieldBlock(fs) %}
+  {% for field in fs -%}
+  {% if (field.name) %}{{field.name}}:{% endif %} {{field.text | safe }}
+  {% if (field.children) %}{{fieldBlock(field.children)}}{% endif %}
+  {% if (field.text === '{') -%}},{% endif %}
+  {% if (field.text === '[') -%}],{% endif %}
+  {% endfor -%}
+{% endmacro -%}
+/**
+ * model: {{name}}
+ * 由 graphi-plugin 自动生成，不要修改
+ */
+'use strict'
+
+{% if (softDelete) %}
+const mongooseDelete = require('mongoose-delete')
+{% endif %}
+ 
+module.exports = ({ mongoose }) => {
+  const Schema = mongoose.Schema
+  const {{name}} = new Schema({
+    {{- fieldBlock(fields) -}}
+  }, {
+    minimize: false,
+    timestamps: {},
+  })
+
+  {% if (softDelete) %}
+  {{name}}.plugin(mongooseDelete, { deletedAt: true, overrideMethods: true })
+  {% endif %}
+
+  return mongoose.model('{{name}}', {{name}})
+}
