@@ -35,9 +35,14 @@
           <v-icon name="refresh" size="1rem" />
           刷新
         </a>
+        <div style="flex:1;" />
+        <ui-checkbox :value="graphqlDisabled" style="margin: 0;" @input="graphqlToggle">
+          禁用Graphql
+        </ui-checkbox>
       </div>
     </div>
   </div>
+  <div v-if="focused" class="overlay" @click="close"></div>
 </template>
 
 <script>
@@ -45,6 +50,7 @@ import fuzzysearch from 'fuzzysearch'
 import fetch from '@/utils/fetch'
 
 export default {
+  inheritAttrs: false,
   props: {
     aid: String,
     disabled: Boolean,
@@ -55,6 +61,8 @@ export default {
   data() {
     // eslint-disable-next-line prefer-const
     let [type, func, version] = (this.value || '').split(/[:@]/)
+    const graphqlDisabled = type[0] === '*'
+    if (graphqlDisabled) type = type.sub(1)
 
     const types = Object.keys(this.resolves)
     if (!this.value && types.length === 1) {
@@ -71,6 +79,7 @@ export default {
       func,
       version,
       refreshing: false,
+      graphqlDisabled,
     }
   },
   computed: {
@@ -89,26 +98,22 @@ export default {
       return this.resolves[this.type][this.func]
     },
     formatValue() {
-      return `${this.type}:${this.func}${this.version ? `@${this.version}` : ''}`
+      const value = [
+        this.graphqlDisabled ? '*' : '',
+        `${this.type}:${this.func}`,
+        this.version ? `@${this.version}` : '',
+      ].join('')
+      return value
     },
   },
-  beforeUnmount() {
-    this.removeClickEvent()
-  },
   methods: {
-    close(e) {
-      if (e && this.$refs.container.contains(e.target)) return
+    close() {
       this.focused = false
-      this.removeClickEvent()
     },
     open() {
       if (this.disabled) return
       this.focused = true
       this.isRender = true
-      document.addEventListener('click', this.close, { passive: true })
-    },
-    removeClickEvent() {
-      document.removeEventListener('click', this.close)
     },
     typeChange(type) {
       this.type = type
@@ -132,6 +137,11 @@ export default {
       this.version = version
       this.setValue()
     },
+    graphqlToggle(event) {
+      if (this.graphqlDisabled === event) return
+      this.graphqlDisabled = event
+      if (this.version || !this.resolves[this.type][this.func]) this.setValue()
+    },
     forceRefresh() {
       this.refreshing = true
       fetch.get(`/api/resolve/${this.aid}/list?force=true`).then(res => {
@@ -147,6 +157,7 @@ export default {
 .resolve {
   position: relative;
   margin-left: 1rem;
+  width: 25rem;
 
   &:hover:not(.disabled) {
     .label {
@@ -210,11 +221,21 @@ export default {
   display: none;
   right: 0;
   width: 40rem;
-  height: 18rem;
+  height: 19rem;
   background: #fff;
-  z-index: 20;
+  z-index: 100;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
     0 1px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.01);
 }
 
 .list {
@@ -245,13 +266,15 @@ export default {
 }
 
 .footer {
+  display: flex;
   position: absolute;
-  height: 2rem;
+  height: 3rem;
   left: 0;
   right: 0;
   bottom: 0;
   border-top: 1px solid #eee;
-  line-height: 2rem;
+  line-height: 3rem;
+  padding: 0 1rem;
 
   a {
     cursor: pointer;

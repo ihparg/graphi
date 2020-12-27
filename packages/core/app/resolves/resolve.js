@@ -28,8 +28,8 @@ module.exports = {
         dataType: 'json',
       }
       const result = await ctx.curl(devServer.host + '/_/resolve', options)
+      console.log(result)
       ctx.assert(result.status === 200, '获取resolves失败')
-      console.log(result.data)
       return result.data
     })
 

@@ -19,7 +19,7 @@ const resolves = {
 }
 
 const execute = async (name, obj, args, ctx) => {
-  const [ m, f ] = name.replace('func:', '').split('.')
+  const [ , m, f ] = name.split(/[:\.]/)
   try {
     const data = await resolves[m][f](ctx, args.data)
     return obj === 'noWrap' ? data : { code: 200, data }

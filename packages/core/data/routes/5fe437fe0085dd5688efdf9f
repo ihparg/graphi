@@ -55,5 +55,5 @@
   ],
   "_id": "5fe437fe0085dd5688efdf9f",
   "fullPath": "GET:/api/app/:aid/modules",
-  "resolve": "func:app.getModules"
+  "resolve": "*func:app.getModules"
 }

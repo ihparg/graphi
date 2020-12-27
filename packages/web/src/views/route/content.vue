@@ -46,14 +46,7 @@
             @input="pathChange"
           />
 
-          <v-input
-            v-if="resolves"
-            :resolves="resolves"
-            :aid="aid"
-            name="resolve"
-            style="width: 25rem"
-            type="resolve"
-          />
+          <v-input v-if="resolves" :resolves="resolves" :aid="aid" name="resolve" type="resolve" />
         </div>
 
         <v-tabs v-for="(tab, i) in tabs" :key="i" style="margin-bottom: 1rem;">

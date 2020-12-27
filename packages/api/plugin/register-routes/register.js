@@ -25,7 +25,9 @@ module.exports = (app, routes) => {
       return
     }
     try {
-      const [ type, func, version ] = r.resolve.split(/[:@]/)
+      let [ type, func, version ] = r.resolve.split(/[:@]/)
+      const skipGraphql = type[0] === '*'
+      if (skipGraphql) type = type.substr(1)
       if (type === 'proxy') {
         exec(r.path, proxy[func])
         return

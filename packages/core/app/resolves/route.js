@@ -65,6 +65,9 @@ module.exports = {
       )
     }
 
+    // 不要 await
+    ctx.service.app.refreshPub(route.aid)
+
     return route
   },
 
@@ -84,6 +87,9 @@ module.exports = {
 
     await route.save()
 
+    // 不要 await
+    ctx.service.app.refreshPub(route.aid)
+
     return route.status
   },
 
@@ -101,6 +107,9 @@ module.exports = {
       content: route.title,
       deletedBy: ctx.user._id,
     })
+
+    // 不要 await
+    ctx.service.app.refreshPub(route.aid)
 
     return true
   },

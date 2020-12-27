@@ -17,9 +17,9 @@ const registerRoutes = async (router, config) => {
       return
     }
     const route = flattenRoute(r, schemas)
-    const isGraphql = ([ 'ref', 'object' ].includes(route.responseBody.type))
+    const useGraphql = ([ 'ref', 'object' ].includes(route.responseBody.type) && route.resolve[0] !== '*')
 
-    const execute = isGraphql
+    const execute = useGraphql
       ? graphql(route, resolve.execute)
       : (data, ctx) => resolve.execute(route.resolve, 'noWrap', { data }, ctx)
     const needLogin = route.requestHeaders && route.requestHeaders.properties.Authorization
@@ -37,7 +37,7 @@ const registerRoutes = async (router, config) => {
       filterProps(args, inputSchemaKeys)
       const res = await execute(args, ctx)
 
-      if (isGraphql) {
+      if (useGraphql) {
         if (res.errors) {
           ctx.body = { code: 500, message: res.errors[0].message }
           ctx.logger.error(new Error(res.errors))
