@@ -9,5 +9,7 @@ module.exports = async app => {
   if (token) headers.Authorization = token
   const result = await app.curl(url, { headers, dataType: 'json' })
 
+  app.router.stack = app.router.stack.filter(r => r.path.startsWith('/_/'))
+
   register(app, result.data.data)
 }
