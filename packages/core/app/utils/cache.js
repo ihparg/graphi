@@ -18,7 +18,7 @@ const createRedis = redis => ({
   },
   delMatches(match) {
     const stream = redis.scanStream({ match })
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       stream.on('data', function(keys) {
         if (keys.length) {
           const pipeline = redis.pipeline()
@@ -28,6 +28,9 @@ const createRedis = redis => ({
           pipeline.exec()
         }
         resolve()
+      })
+      stream.on('error', e => {
+        reject(e.message)
       })
     })
 
