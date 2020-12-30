@@ -3,6 +3,7 @@
 const { createProxyMiddleware } = require('http-proxy-middleware')
 const c2k = require('koa-connect')
 const { getTpl, mock } = require('@graphi/tools/src/mock')
+const proxyWithGraphql = require('./proxy')
 
 module.exports = (app, routes) => {
   const proxy = {}
@@ -30,7 +31,8 @@ module.exports = (app, routes) => {
       if (skipGraphql) type = type.substr(1)
 
       if (type === 'proxy') {
-        return exec(r.path, proxy[func])
+        if (skipGraphql) return exec(r.path, proxy[func])
+        return exec(r.path, proxyWithGraphql(r, rp[func]))
       }
 
       if (type === 'faas-tx') {
@@ -39,7 +41,6 @@ module.exports = (app, routes) => {
 
       app.logger.error(r.title + ' 没有匹配的resolve')
     } catch (e) {
-      console.log(r)
       app.logger.error(e)
     }
   })

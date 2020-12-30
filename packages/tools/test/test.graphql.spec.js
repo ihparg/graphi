@@ -2,6 +2,7 @@
 
 const assert = require('assert')
 const graphql = require('../src/graphql')
+const { validateArguments } = require('../src/graphql')
 const userone = require('./data/userone.json')
 const userlist = require('./data/userlist.json')
 const userlogin = require('./data/userlogin.json')
@@ -92,6 +93,17 @@ describe('Graphql query', function() {
     assert(user.password === undefined)
     assert(user.email === 'test@example.com')
     assert(user.createdAt === createdAt)
+  })
+
+  it('check arguments', async function() {
+    const fn = validateArguments(userlogin)
+    let res = fn({ name: 1234, invalid: true })
+    assert(Array.isArray(res))
+    assert(res.length === 3)
+    assert(res[0].message === 'Variable "$data" got invalid value { name: 1234, invalid: true }; Field "password" of required type "String!" was not provided.')
+
+    res = fn({ name: 'test', password: '123456' })
+    assert(!Array.isArray(res))
   })
 })
 
