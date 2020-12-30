@@ -3,6 +3,7 @@
 const { createProxyMiddleware } = require('http-proxy-middleware')
 const c2k = require('koa-connect')
 const { getTpl, mock } = require('@graphi/tools/src/mock')
+const proxyWithGraphql = require('./proxy')
 
 module.exports = (app, routes) => {
   const proxy = {}
@@ -13,39 +14,33 @@ module.exports = (app, routes) => {
   })
 
   routes.forEach(r => {
-    const tpl = getTpl(r.responseBody)
-
     const exec = app.router[r.method.toLowerCase()]
 
     if (r.status === 0 && app.config.graphi.env === 'dev') {
       // 未完成的接口,使用mock数据
+      const tpl = getTpl(r.responseBody)
       exec(r.path, ctx => {
         ctx.body = mock(tpl)
       })
       return
     }
+
     try {
       let [ type, func, version ] = r.resolve.split(/[:@]/)
       const skipGraphql = type[0] === '*'
       if (skipGraphql) type = type.substr(1)
+
       if (type === 'proxy') {
-        exec(r.path, proxy[func])
-        return
+        if (skipGraphql) return exec(r.path, proxy[func])
+        return exec(r.path, proxyWithGraphql(r, rp[func]))
       }
 
       if (type === 'faas-tx') {
-        const [ Namespace, FunctionName ] = func.split('.')
-        exec(r.path, async ctx => {
-          const body = Object.assign({}, ctx.query, ctx.params, ctx.request.body)
-
-          const ClientContext = JSON.stringify({ body, env: app.config.graphi.env })
-
-          const result = await app.txcloud.invoke({ Namespace, FunctionName, Qualifier: version, ClientContext })
-          ctx.body = JSON.parse(result.RetMsg)
-        })
+        return app.txcloud.registerRoute(r, func, version, skipGraphql)
       }
+
+      app.logger.error(r.title + ' 没有匹配的resolve')
     } catch (e) {
-      console.log(r)
       app.logger.error(e)
     }
   })

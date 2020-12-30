@@ -1,6 +1,8 @@
 'use strict'
 
-const { graphql, GraphQLSchema, GraphQLInt, GraphQLInputObjectType, GraphQLObjectType, GraphQLNonNull, GraphQLList } = require('graphql')
+const { graphql, graphqlSync, GraphQLSchema, GraphQLInt, GraphQLInputObjectType, GraphQLObjectType, GraphQLNonNull, GraphQLList } = require('graphql')
+const { parse } = require('graphql/language/parser')
+const { buildExecutionContext } = require('graphql/execution/execute')
 const convertType = require('./type')
 
 const isEmpty = val => {
@@ -74,7 +76,7 @@ const createType = (field, name, isInput, resolve) => {
     }
 
     if (field.resolve) {
-      propsTypeDefined.resolve = async (...args) => await (resolve(field.resolve, ...args))
+      propsTypeDefined.resolve = (...args) => (resolve(field.resolve, ...args))
     }
 
     propsType = isInput
@@ -114,7 +116,7 @@ const createSchema = (route, args, body, resolve) => {
             type: createInputType(args),
           },
         },
-        resolve: async (...args) => await resolve(route.resolve, ...args),
+        resolve: (...args) => resolve(route.resolve, ...args),
       },
     },
   }
@@ -140,6 +142,16 @@ const convertQuery = (data, route) => {
   })
 }
 
+const getSchema = (route, resolve, args) => {
+  const rootType = createSchema(route, args.properties, route.responseBody, resolve)
+
+  const schema = route.method === 'GET'
+    ? new GraphQLSchema({ query: rootType })
+    : new GraphQLSchema({ query: emptyQuery, mutation: rootType })
+
+  return schema
+}
+
 module.exports = (route, resolve) => {
   const args = {
     type: 'object',
@@ -152,15 +164,34 @@ module.exports = (route, resolve) => {
   }
 
   const query = createQuery(args, route.responseBody, route.method)
+  const schema = getSchema(route, resolve, args)
 
-  const rootType = createSchema(route, args.properties, route.responseBody, resolve)
-
-  const schema = route.method === 'GET'
-    ? new GraphQLSchema({ query: rootType })
-    : new GraphQLSchema({ query: emptyQuery, mutation: rootType })
-
-  return (data, ctx) => {
+  return (data, ctx, sync) => {
     convertQuery(data, route)
+    if (sync) {
+      return graphqlSync(schema, query, null, ctx, { data })
+    }
     return graphql(schema, query, null, ctx, { data })
+  }
+}
+
+module.exports.validateArguments = route => {
+  const args = {
+    type: 'object',
+    properties: Object.assign(
+      {},
+      (route.queryString || {}).properties,
+      (route.routeParams || {}).properties,
+      (route.requestBody || {}).properties
+    ),
+  }
+
+  const query = createQuery(args, route.responseBody, route.method)
+  const schema = getSchema(route, null, args)
+
+  return data => {
+    const res = buildExecutionContext(schema, parse(query), null, null, { data })
+    // console.log(res)
+    return res
   }
 }

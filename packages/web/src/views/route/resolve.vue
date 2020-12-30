@@ -62,7 +62,7 @@ export default {
     // eslint-disable-next-line prefer-const
     let [type, func, version] = (this.value || '').split(/[:@]/)
     const graphqlDisabled = type[0] === '*'
-    if (graphqlDisabled) type = type.sub(1)
+    if (graphqlDisabled) type = type.substr(1)
 
     const types = Object.keys(this.resolves)
     if (!this.value && types.length === 1) {
