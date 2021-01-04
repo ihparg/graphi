@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab-headers">
+    <div class="tab-headers" :style="headStyle">
       <div
         v-for="tab in tabs"
         :key="tab.id"
@@ -19,8 +19,10 @@
 export default {
   props: {
     active: String,
+    headStyle: Object,
   },
   data() {
+    console.log(this.headStyle)
     return {
       activeId: this.active,
       tabs: [],

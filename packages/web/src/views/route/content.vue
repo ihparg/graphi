@@ -1,5 +1,5 @@
 <template>
-  <div v-if="value === undefined" class="route-content">
+  <div v-if="value === undefined">
     <v-not-found />
   </div>
   <div v-else class="route-content">
@@ -306,13 +306,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.route-content {
-  flex: 1;
-  position: relative;
-  height: calc(100vh - 3.5rem);
-  overflow: auto;
-}
-
 .form {
   min-height: calc(100vh - 7.5rem);
   padding: 2rem;

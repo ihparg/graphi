@@ -9,7 +9,10 @@ import { nextUid } from '@/utils/uid'
 
 export default {
   props: {
-    avariable: Boolean,
+    avariable: {
+      type: Boolean,
+      default: true,
+    },
     id: {
       type: String,
       default: () => nextUid(),

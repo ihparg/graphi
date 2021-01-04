@@ -147,6 +147,18 @@
       "deletedAt": {
         "required": false,
         "type": "datetime"
+      },
+      "cache": {
+        "required": false,
+        "index": false,
+        "type": "integer",
+        "description": "缓存时长，单位秒。为0表示不缓存",
+        "defaultValue": "0"
+      },
+      "useGraphql": {
+        "required": false,
+        "type": "boolean",
+        "description": "是否使用graphql过滤数据"
       }
     }
   },
