@@ -17,8 +17,8 @@
         :rid="rid"
       />
     </v-tab>
-    <v-tab title="测试" :avariable="!editable && !!devServer">
-      <Test :route="route" :dev-server="devServer" />
+    <v-tab title="预览" :avariable="!editable && !!devServer">
+      <Test v-if="!route.$undone" :route="route" :schemas="schemas" :dev-server="devServer" />
     </v-tab>
   </v-tabs>
 </template>
@@ -63,21 +63,28 @@ export default {
   watch: {
     '$route.params.rid': function(rid) {
       this.editable = rid === '0'
+      this.getDetail()
     },
   },
   created() {
-    const { aid } = this.$route.params
-    this.fetchRoutes({ aid })
+    const { aid, rid } = this.$route.params
+    this.fetchRoutes({ aid, rid })
     this.fetchSchemas({ aid })
     if (aid !== '0') {
       fetch.get(`/api/app/${aid}/devServer`).then(res => {
         this.devServer = res
       })
     }
+    this.getDetail()
   },
   methods: {
     ...mapActions('route', { fetchRoutes: 'fetchList' }),
     ...mapActions('schema', { fetchSchemas: 'fetchAll' }),
+    getDetail() {
+      if (this.routes && this.route && this.route.$undone) {
+        this.$store.dispatch('route/fetchOne', { aid: this.aid, id: this.rid })
+      }
+    },
   },
 }
 </script>

@@ -223,11 +223,6 @@ export default {
       this.value = this.cloneRoute()
     },
   },
-  created() {
-    if (this.value.$undone) {
-      this.$store.dispatch('route/fetchOne', { aid: this.aid, id: this.rid })
-    }
-  },
   methods: {
     checkRefs() {
       const allRefs = getAllRefs(this.value)
