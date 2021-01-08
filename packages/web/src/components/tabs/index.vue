@@ -22,7 +22,6 @@ export default {
     headStyle: Object,
   },
   data() {
-    console.log(this.headStyle)
     return {
       activeId: this.active,
       tabs: [],
@@ -37,6 +36,9 @@ export default {
         tab.activeId = tab.id
         this.activeId = tab.id
       }
+    },
+    removeTab(tab) {
+      this.tabs = this.tabs.filter(t => t !== tab)
     },
     tabActive(id) {
       this.activeId = id

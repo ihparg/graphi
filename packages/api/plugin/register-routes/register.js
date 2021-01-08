@@ -44,4 +44,6 @@ module.exports = (app, routes) => {
       app.logger.error(e)
     }
   })
+
+  app.logger.info(routes.length + ' routes registered')
 }

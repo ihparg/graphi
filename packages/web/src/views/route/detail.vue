@@ -1,38 +1,44 @@
 <template>
   <List v-if="isReady" :list="routes" :active-id="rid" :aid="aid" />
-  <v-tabs v-if="isReady && rid" class="route" :head-style="{ borderBottom: 'solid 1px #ddd' }">
+  <v-tabs
+    v-if="isReady && rid"
+    :key="rid"
+    class="route"
+    :head-style="{ borderBottom: 'solid 1px #ddd' }"
+  >
     <v-tab title="接口信息">
       <Content
         :key="rid"
         v-model:editable="editable"
         :routes="routes"
+        :route="route"
         :schemas="schemas"
         :aid="aid"
         :rid="rid"
       />
     </v-tab>
-    <v-tab title="测试">hello</v-tab>
+    <v-tab title="测试" :avariable="!editable && !!devServer">
+      <Test :route="route" :dev-server="devServer" />
+    </v-tab>
   </v-tabs>
-
-  <router-link v-if="!editable && isDeveloper" class="add-button" :to="`/app/${aid}/route/0`">
-    <ui-fab color="primary">
-      <v-icon name="add" size="2rem" />
-    </ui-fab>
-  </router-link>
 </template>
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
+import fetch from '@/utils/fetch'
 import Content from './content.vue'
 import List from './list.vue'
+import Test from './test.vue'
 
 export default {
   components: {
     Content,
     List,
+    Test,
   },
   data() {
     return {
+      devServer: null,
       editable: this.$route.params.rid === '0',
     }
   },
@@ -40,6 +46,10 @@ export default {
     ...mapGetters('app', ['isDeveloper']),
     ...mapGetters('route', { routes: 'sortedRoutes' }),
     ...mapState('schema', { schemas: 'data' }),
+    route() {
+      if (this.rid === '0') return { aid: this.aid }
+      return this.routes.find(r => r._id === this.rid)
+    },
     aid() {
       return this.$route.params.aid
     },
@@ -59,6 +69,11 @@ export default {
     const { aid } = this.$route.params
     this.fetchRoutes({ aid })
     this.fetchSchemas({ aid })
+    if (aid !== '0') {
+      fetch.get(`/api/app/${aid}/devServer`).then(res => {
+        this.devServer = res
+      })
+    }
   },
   methods: {
     ...mapActions('route', { fetchRoutes: 'fetchList' }),
@@ -73,12 +88,5 @@ export default {
   position: relative;
   height: calc(100vh - 3.5rem);
   overflow: auto;
-}
-
-.add-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  z-index: 10;
 }
 </style>

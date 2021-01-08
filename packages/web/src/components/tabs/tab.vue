@@ -29,6 +29,12 @@ export default {
       return this.activeId === this.id
     },
   },
+  watch: {
+    avariable(val) {
+      if (val) this.$parent.addTab(this)
+      else this.$parent.removeTab(this)
+    },
+  },
   created() {
     if (this.avariable) this.$parent.addTab(this)
   },

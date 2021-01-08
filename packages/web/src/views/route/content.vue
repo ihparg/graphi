@@ -112,6 +112,12 @@
       </div>
     </v-form>
   </div>
+
+  <v-fab-add
+    v-if="!editable && isDeveloper"
+    :to="`/app/${aid}/route/0`"
+    style="top: 4.5rem; position: fixed;"
+  />
 </template>
 
 <script>
@@ -134,19 +140,20 @@ export default {
     aid: String,
     editable: Boolean,
     rid: String,
+    route: Object,
     routes: Object,
     schemas: Object,
   },
   emits: ['update:editable'],
   data() {
     const groups = {}
-    const { aid, rid } = this
+    const { rid } = this
     const existedPath = {}
-    let route = { aid, $undone: rid !== '0' ? true : undefined }
+    // let route = { aid, $undone: rid !== '0' ? true : undefined }
     this.routes.forEach(r => {
       if (r.tag) groups[r.tag] = true
       if (rid !== r._id) existedPath[r.fullPath] = true
-      else route = r
+      // else route = r
     })
 
     return {
@@ -174,7 +181,7 @@ export default {
           responseHeaders: { title: 'RESPONSE HEADERS', allowDash: true },
         },
       ],
-      value: fastClone(route),
+      value: fastClone(this.route),
     }
   },
   computed: {
@@ -262,8 +269,9 @@ export default {
       this.$emit('update:editable', editable)
     },
     cloneRoute() {
-      if (this.rid === '0') return { aid: this.aid }
-      return fastClone(this.routes.find(r => r._id === this.rid))
+      // if (this.rid === '0') return { aid: this.aid }
+      // return fastClone(this.routes.find(r => r._id === this.rid))
+      return fastClone(this.route)
     },
     pathChange(path) {
       const properties = this.value.routeParams ? this.value.routeParams.properties : {}
@@ -307,20 +315,20 @@ export default {
 
 <style lang="scss" scoped>
 .form {
-  min-height: calc(100vh - 7.5rem);
-  padding: 2rem;
+  padding: 1.5rem 1.5rem 5rem;
 }
 
 .foot {
-  position: sticky;
+  position: fixed;
+  width: 100%;
   bottom: 0;
   height: 4rem;
-  padding: 1rem 2rem;
+  padding: 1rem 1.5rem;
   background: #f2f2f2;
-  box-shadow: $box-shadow;
+  box-shadow: 2px -1px 5px rgba(0, 0, 0, 0.1);
 
-  button {
-    margin-right: 1rem;
+  button + button {
+    margin-left: 1rem;
   }
 
   .btn-remove {
