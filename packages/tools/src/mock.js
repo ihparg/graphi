@@ -56,6 +56,7 @@ const getTpl = function(v) {
 }
 
 const getValue = obj => {
+  if (!obj) return null
   const tpl = getTpl(obj)
   return Mock.mock(tpl)
 }

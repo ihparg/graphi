@@ -68,9 +68,6 @@
               "routeParams": {
                 "ref": "route.routeParams"
               },
-              "queryStrings": {
-                "ref": "route.queryStrings"
-              },
               "requestHeaders": {
                 "ref": "route.requestHeaders"
               },
@@ -104,6 +101,10 @@
               "resolve": {
                 "required": false,
                 "ref": "route.resolve"
+              },
+              "queryString": {
+                "required": false,
+                "ref": "route.queryString"
               }
             },
             "ref": "route"

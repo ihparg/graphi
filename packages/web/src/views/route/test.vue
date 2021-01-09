@@ -5,13 +5,39 @@
 
   <div class="test">
     <div class="request">
-      <div v-if="hasBody">
-        REQUEST BODY
-        <textarea v-model="requestBody" />
+      <div v-if="!isEmpty('queryString')" class="block">
+        <p>QUERY STRING</p>
+        <div>
+          <div
+            v-for="(p, n) in route.queryString.properties"
+            :key="n"
+            class="input-item"
+            :class="{ required: p.required }"
+          >
+            <div>{{ n }}</div>
+            <ui-textbox :value="queryString[n]" @input="queryString[n] = $event" />
+          </div>
+        </div>
+      </div>
+
+      <div v-if="hasBody" class="block">
+        <p>REQUEST BODY</p>
+        <v-editor
+          v-model="requestBody"
+          style="height: 15rem; border: solid 1px #ddd;"
+          @error="setError('body', $event)"
+        />
       </div>
 
       <div>
-        <ui-button color="primary" @click="test">{{ route.method }}</ui-button>
+        <ui-button
+          color="primary"
+          :loading="status === 'sending'"
+          :disabled="hasError"
+          @click="test"
+        >
+          {{ route.method }}
+        </ui-button>
         <span v-if="route.status === 0">
           <v-icon name="info" class="req-status" /> 开发中接口使用的是Mock数据
         </span>
@@ -49,12 +75,22 @@ export default {
     return {
       response: null,
       status: null,
+      queryString: mock.getValue(route.queryString),
       requestBody: body,
+      errors: {},
     }
   },
   computed: {
     path() {
-      return this.devServer + this.route.path
+      let url = this.devServer + this.route.path
+      if (!this.isEmpty('queryString')) {
+        const qs = Object.keys(this.queryString).reduce((q, k) => {
+          q.push(`${k}=${this.queryString[k]}`)
+          return q
+        }, [])
+        url += `?${qs.join('&')}`
+      }
+      return url
     },
     flattenRoute() {
       return flattenRoute(this.route, Object.values(this.schemas))
@@ -64,8 +100,16 @@ export default {
       if (method === 'GET' || !requestBody) return false
       return !isEmpty(requestBody.properties)
     },
+    hasError() {
+      return !isEmpty(this.errors)
+    },
   },
   methods: {
+    isEmpty(key) {
+      const obj = this.flattenRoute[key]
+      if (!obj) return true
+      return isEmpty(obj.properties)
+    },
     test() {
       const { method, responseBody } = this.flattenRoute
       this.status = 'sending'
@@ -89,6 +133,10 @@ export default {
           this.response = e.message
         })
     },
+    setError(key, error) {
+      if (error) this.errors[key] = error
+      else delete this.errors[key]
+    },
   },
 }
 </script>
@@ -98,7 +146,7 @@ export default {
   display: flex;
 
   & > div {
-    flex: 1;
+    width: 50%;
     padding: 1rem 1.5rem;
   }
 }
@@ -111,6 +159,34 @@ export default {
   .req-status {
     margin-left: 1rem;
     color: #ff9800;
+  }
+
+  .block {
+    margin-bottom: 1.5rem;
+
+    p {
+      color: #999999;
+    }
+
+    .input-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.5rem;
+
+      div:first-child {
+        width: 14rem;
+      }
+
+      div:last-child {
+        flex: 1;
+      }
+
+      &.required div:first-child:after {
+        content: '*';
+        margin-left: 4px;
+        color: #f44336;
+      }
+    }
   }
 }
 

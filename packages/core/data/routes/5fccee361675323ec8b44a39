@@ -55,10 +55,6 @@
         "required": false,
         "ref": "route._id"
       },
-      "queryStrings": {
-        "required": false,
-        "ref": "route.queryStrings"
-      },
       "title": {
         "required": true,
         "ref": "route.title"
@@ -82,6 +78,10 @@
       "resolve": {
         "required": false,
         "ref": "route.resolve"
+      },
+      "queryString": {
+        "required": false,
+        "ref": "route.queryString"
       }
     },
     "ref": "route"
@@ -132,9 +132,6 @@
           "routeParams": {
             "ref": "route.routeParams"
           },
-          "queryStrings": {
-            "ref": "route.queryStrings"
-          },
           "requestHeaders": {
             "ref": "route.requestHeaders"
           },
@@ -182,6 +179,10 @@
           "resolve": {
             "required": false,
             "ref": "route.resolve"
+          },
+          "queryString": {
+            "required": false,
+            "ref": "route.queryString"
           }
         },
         "ref": "route"

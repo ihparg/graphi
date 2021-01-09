@@ -12,7 +12,6 @@ module.exports = ({ mongoose }) => {
   method: { type: String, default: 'GET', enum: ['GET', 'POST', 'PUT', 'DELETE'] },
   description: { type: String },
   routeParams: {},
-  queryStrings: {},
   requestHeaders: {},
   requestBody: {},
   responseHeaders: {},
@@ -26,6 +25,7 @@ module.exports = ({ mongoose }) => {
   resolve: { type: String },
   cache: { type: Number, default: 0 },
   useGraphql: { type: Boolean, default: false },
+  queryString: {},
   }, {
     minimize: false,
     timestamps: {},

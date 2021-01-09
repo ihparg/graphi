@@ -61,11 +61,6 @@
         "type": "json",
         "required": false
       },
-      "queryStrings": {
-        "name": "queryStrings",
-        "type": "json",
-        "required": false
-      },
       "requestHeaders": {
         "name": "requestHeaders",
         "type": "json",
@@ -159,6 +154,10 @@
         "required": false,
         "type": "boolean",
         "description": "是否使用graphql过滤数据"
+      },
+      "queryString": {
+        "type": "json",
+        "required": false
       }
     }
   },
