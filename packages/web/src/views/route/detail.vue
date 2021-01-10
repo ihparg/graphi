@@ -17,10 +17,16 @@
         :rid="rid"
       />
     </v-tab>
-    <v-tab title="预览" :avariable="!editable && !!devServer">
+    <v-tab v-if="rid !== '0'" :avariable="!editable && !!devServer" title="预览">
       <Test v-if="!route.$undone" :route="route" :schemas="schemas" :dev-server="devServer" />
     </v-tab>
   </v-tabs>
+
+  <v-fab-add
+    v-if="isReady && isDeveloper && !editable"
+    :to="`/app/${aid}/route/0`"
+    style="position: fixed; left: 23rem; bottom: 1rem; top: auto;"
+  />
 </template>
 
 <script>
@@ -81,7 +87,7 @@ export default {
     ...mapActions('route', { fetchRoutes: 'fetchList' }),
     ...mapActions('schema', { fetchSchemas: 'fetchAll' }),
     getDetail() {
-      if (this.routes && this.route && this.route.$undone) {
+      if (this.rid !== '0' && this.routes && this.route && this.route.$undone) {
         this.$store.dispatch('route/fetchOne', { aid: this.aid, id: this.rid })
       }
     },

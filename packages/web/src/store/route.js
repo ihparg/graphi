@@ -42,7 +42,7 @@ const actions = {
     state.data = data
     state.resolves = resolves
 
-    if (rid) dispatch('fetchOne', { aid, id: rid })
+    if (rid && rid !== '0') dispatch('fetchOne', { aid, id: rid })
   },
 
   async fetchOne({ state }, { aid, id }) {

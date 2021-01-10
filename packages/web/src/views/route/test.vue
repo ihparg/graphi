@@ -20,6 +20,21 @@
         </div>
       </div>
 
+      <div v-if="!isEmpty('routeParams')" class="block">
+        <p>ROUTE PARAMS</p>
+        <div>
+          <div
+            v-for="(p, n) in route.routeParams.properties"
+            :key="n"
+            class="input-item"
+            :class="{ required: p.required }"
+          >
+            <div>{{ n }}</div>
+            <ui-textbox :value="routeParams[n]" @input="routeParams[n] = $event" />
+          </div>
+        </div>
+      </div>
+
       <div v-if="hasBody" class="block">
         <p>REQUEST BODY</p>
         <v-editor
@@ -76,6 +91,7 @@ export default {
       response: null,
       status: null,
       queryString: mock.getValue(route.queryString),
+      routeParams: mock.getValue(route.routeParams),
       requestBody: body,
       errors: {},
     }
@@ -89,6 +105,11 @@ export default {
           return q
         }, [])
         url += `?${qs.join('&')}`
+      }
+      if (!this.isEmpty('routeParams')) {
+        Object.keys(this.routeParams).forEach(k => {
+          url = url.replace(`:${k}`, this.routeParams[k])
+        })
       }
       return url
     },
@@ -168,10 +189,16 @@ export default {
       color: #999999;
     }
 
+    & > div {
+      padding: 1rem 2rem;
+      background: #ffffff;
+      border: solid 1px #dddddd;
+    }
+
     .input-item {
       display: flex;
       align-items: center;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
 
       div:first-child {
         width: 14rem;
@@ -179,6 +206,7 @@ export default {
 
       div:last-child {
         flex: 1;
+        margin: 0;
       }
 
       &.required div:first-child:after {

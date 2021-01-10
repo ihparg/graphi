@@ -9,11 +9,11 @@
     :name="name"
   />
 
-  <router-link v-if="!editable && isDeveloper" class="add-button" :to="`/app/${aid}/schema/0`">
-    <ui-fab color="primary">
-      <v-icon name="add" size="2rem" />
-    </ui-fab>
-  </router-link>
+  <v-fab-add
+    v-if="isDeveloper && !editable"
+    :to="`/app/${aid}/schema/0`"
+    style="position: fixed; left: 23rem; bottom: 1rem; top: auto;"
+  />
 </template>
 
 <script>

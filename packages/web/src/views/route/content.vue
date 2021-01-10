@@ -112,12 +112,6 @@
       </div>
     </v-form>
   </div>
-
-  <v-fab-add
-    v-if="!editable && isDeveloper"
-    :to="`/app/${aid}/route/0`"
-    style="top: 4.5rem; position: fixed;"
-  />
 </template>
 
 <script>
