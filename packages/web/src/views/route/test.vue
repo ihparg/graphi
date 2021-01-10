@@ -228,6 +228,8 @@ export default {
     border: solid 1px #dddddd;
     white-space: pre-wrap;
     word-wrap: break-word;
+    max-height: calc(100vh - 15rem);
+    overflow: auto;
   }
 }
 </style>
