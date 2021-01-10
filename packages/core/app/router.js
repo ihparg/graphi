@@ -22,7 +22,7 @@ module.exports = app => {
   router.get('/resolve/0/list', jsonWrapper, auth(true), controller.system.resolve.list)
 
   // 只有本地开发模式可以保存
-  if (app.env === 'local') {
+  if (app.config.env === 'local') {
     router.post('/route/0/save', jsonWrapper, controller.system.route.save)
     router.post('/schema/0/save', jsonWrapper, controller.system.schema.save)
   }

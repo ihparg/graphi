@@ -58,8 +58,13 @@ module.exports = app => {
         } else {
           const execute = await graphql(route, async (_, obj, args) => {
             const ClientContext = JSON.stringify({ body: args.data, env: app.config.graphi.env })
-            const res = await app.txcloud.invoke({ Namespace, FunctionName, Qualifier: version, ClientContext }, ctx)
-            return JSON.parse(res.RetMsg)
+            let res = await app.txcloud.invoke({ Namespace, FunctionName, Qualifier: version, ClientContext }, ctx)
+            res = JSON.parse(res.RetMsg)
+            if (res.errorCode === -1) {
+              ctx.logger.error(Namespace, FunctionName, version, res)
+              throw new Error(res.errorMessage)
+            }
+            return res
           })
           const response = await execute(body)
           if (response.errors) {

@@ -11,14 +11,15 @@ module.exports = {
     localhost: 'http://localhost:7002',
 
     // 获取接口内容参数
-    host: process.env.GRAPHI_HOST || 'http://localhost:7000',
+    host: process.env.GRAPHI_HOST || 'http://localhost:7001',
     appId: process.env.GRAPHI_APP_ID || '0',
     token: process.env.GRAPHI_TOKEN || '',
+    version: process.env.GRAPHI_VERSION || '$latest',
 
     resolve: {
       // 代理接口配置
       proxy: {
-        default: 'http://localhost:7000',
+        default: 'http://localhost:7001',
       },
 
       /**
