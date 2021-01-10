@@ -122,7 +122,7 @@ module.exports = {
       routes = await ctx.model.Route.find({ aid: data.aid })
       schemas = await ctx.model.Schema.find({ aid: data.aid })
     } else {
-      const version = await ctx.model.Version.find({ aid: data.aid, tag: data.tag })
+      const version = await ctx.model.Version.findOne({ aid: data.aid, tag: data.tag })
       ctx.assert(version, 404, '版本不存在')
       routes = version.routes
       schemas = version.schemas

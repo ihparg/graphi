@@ -131,7 +131,6 @@ export default {
 
 .list {
   padding: 4rem 2rem 2rem;
-  max-width: 96rem;
   margin: 0 auto;
 }
 </style>
