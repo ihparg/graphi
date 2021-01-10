@@ -13,7 +13,6 @@ module.exports = class extends Service {
     }
     */
     const exist = await this.ctx.model.Version.findOne({ aid, tag })
-    console.log(exist)
     return exist
   }
 

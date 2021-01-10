@@ -64,7 +64,7 @@ export default {
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 24rem;
   height: calc(100vh - 3.5rem);
 
   // 代替右边线条，消除 active 视觉差

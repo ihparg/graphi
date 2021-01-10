@@ -32,6 +32,13 @@ module.exports = appInfo => {
     },
   }
 
+  config.dateFormat = 'YYYY-MM-DD HH:mm:ss'
+
+  exports.cors = {
+    origin: '*',
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
+  }
+
   return {
     ...config,
     ...userConfig,

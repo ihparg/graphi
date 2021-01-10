@@ -93,6 +93,10 @@
                     "ref": "user.name"
                   }
                 }
+              },
+              "resolve": {
+                "required": false,
+                "ref": "route.resolve"
               }
             },
             "ref": "route"

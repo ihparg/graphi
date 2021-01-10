@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="tab-headers">
+    <div class="tab-headers" :style="headStyle">
       <div
         v-for="tab in tabs"
         :key="tab.id"
@@ -19,6 +19,7 @@
 export default {
   props: {
     active: String,
+    headStyle: Object,
   },
   data() {
     return {
@@ -35,6 +36,9 @@ export default {
         tab.activeId = tab.id
         this.activeId = tab.id
       }
+    },
+    removeTab(tab) {
+      this.tabs = this.tabs.filter(t => t !== tab)
     },
     tabActive(id) {
       this.activeId = id

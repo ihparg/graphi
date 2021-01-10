@@ -11,4 +11,8 @@ module.exports = {
     enable: !!process.env.GRAPHI_FAAS_TX,
     path: path.resolve(__dirname, '../plugin/txcloud'),
   },
+  cors: {
+    enable: true,
+    package: 'egg-cors',
+  },
 }

@@ -15,3 +15,5 @@ cd ../core
 yarn link @graphi/tools
 cd ../api
 yarn link @graphi/tools
+cd ../web
+yarn link @graphi/tools

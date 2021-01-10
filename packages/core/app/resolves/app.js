@@ -120,6 +120,12 @@ module.exports = {
     return true
   },
 
+  async getDevServer(ctx, data) {
+    await ctx.service.app.checkPermission(data.aid, 'get')
+    const devServer = await ctx.app.cache.get(`${data.aid}:dev-server`)
+    return devServer.host
+  },
+
   async getModules(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'get')
     const archive = Archiver('zip')

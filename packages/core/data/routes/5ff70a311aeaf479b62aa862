@@ -1,0 +1,62 @@
+{
+  "aid": "0",
+  "method": "GET",
+  "tag": "app",
+  "requestBody": {
+    "type": "object",
+    "properties": {}
+  },
+  "routeParams": {
+    "type": "object",
+    "properties": {
+      "aid": {
+        "type": "string"
+      }
+    }
+  },
+  "queryString": {
+    "type": "object",
+    "properties": {}
+  },
+  "requestHeaders": {
+    "type": "ref",
+    "properties": {
+      "Content-Type": {
+        "ref": "requestHeaders.Content-Type"
+      },
+      "Authorization": {
+        "ref": "requestHeaders.Authorization"
+      }
+    },
+    "ref": "requestHeaders"
+  },
+  "responseBody": {
+    "type": "ref",
+    "properties": {
+      "code": {
+        "ref": "response.code"
+      },
+      "message": {
+        "ref": "response.message"
+      },
+      "data": {
+        "required": false,
+        "type": "string"
+      }
+    },
+    "ref": "response"
+  },
+  "responseHeaders": {
+    "type": "object",
+    "properties": {}
+  },
+  "title": "获取dev服务地址",
+  "path": "/api/app/:aid/devServer",
+  "resolve": "func:app.getDevServer",
+  "refs": [
+    "requestHeaders",
+    "response"
+  ],
+  "_id": "5ff70a311aeaf479b62aa862",
+  "fullPath": "GET:/api/app/:aid/devserver"
+}

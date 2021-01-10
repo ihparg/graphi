@@ -18,5 +18,5 @@
   "description": "通用请求头",
   "do": false,
   "_id": "requestHeaders",
-  "tag": "模板"
+  "tag": "template"
 }

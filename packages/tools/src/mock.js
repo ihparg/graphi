@@ -8,7 +8,7 @@ const getItem = (v, word) => {
   if (v.defaultValue) return v.defaultValue
   if (v.enum) return `@pick([${(v.enum.map(r => r.value)).join(', ')}])`
   if (v.minimum && v.maximum) return `@${word}(${v.minimum}, ${Math.floor(Math.random() * ROUND) + v.minimum})`
-  if (v.minimum) return `@${word}(0, ${v.maximum})`
+  if (v.maximum) return `@${word}(0, ${v.maximum})`
   return `@${word}()`
 }
 
@@ -28,6 +28,8 @@ const getKey = function(key, v) {
 const getTpl = function(v) {
   switch (v.type) {
     case 'integer' :
+      return getItem(Object.assign({}, v, { maximum: 2147483640 }), 'natural')
+    case 'biginteger':
       return getItem(v, 'natural')
     case 'decial' || 'double':
       return getItem(v, 'float')
@@ -54,6 +56,7 @@ const getTpl = function(v) {
 }
 
 const getValue = obj => {
+  if (!obj) return null
   const tpl = getTpl(obj)
   return Mock.mock(tpl)
 }

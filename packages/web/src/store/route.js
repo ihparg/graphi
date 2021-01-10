@@ -21,8 +21,8 @@ const mutations = {
 }
 
 const actions = {
-  async fetchList({ state }, { aid }) {
-    if (state.aid === aid) return
+  async fetchList({ state, dispatch }, { aid, rid, force }) {
+    if (state.aid === aid && !force) return
 
     const data = await fetch.get(`/api/route/${aid}`)
     if (`${aid}` !== '0') {
@@ -41,6 +41,8 @@ const actions = {
     state.aid = aid
     state.data = data
     state.resolves = resolves
+
+    if (rid && rid !== '0') dispatch('fetchOne', { aid, id: rid })
   },
 
   async fetchOne({ state }, { aid, id }) {

@@ -37,7 +37,7 @@
         </a>
         <div style="flex:1;" />
         <ui-checkbox :value="graphqlDisabled" style="margin: 0;" @input="graphqlToggle">
-          禁用Graphql
+          跳过Graphql
         </ui-checkbox>
       </div>
     </div>
@@ -157,7 +157,7 @@ export default {
 .resolve {
   position: relative;
   margin-left: 1rem;
-  width: 25rem;
+  width: 26rem;
 
   &:hover:not(.disabled) {
     .label {

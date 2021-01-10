@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@graphi/mockjs": "^1.0.0",
+    "@graphi/tools": "file:../tools",
     "core-js": "^3.6.5",
     "path-to-regexp": "^6.2.0",
     "vue": "^3.0.2",

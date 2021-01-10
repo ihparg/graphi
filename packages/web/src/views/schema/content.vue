@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import fetch from '@/utils/fetch'
 import { fastClone } from '@/utils/clone'
 import { allTypes } from '@/utils/types'
@@ -151,6 +151,7 @@ export default {
     },
   },
   methods: {
+    ...mapActions('route', { fetchRoutes: 'fetchList' }),
     setEditable(editable) {
       if (editable) {
         this.value = fastClone(this.schema)
@@ -193,6 +194,7 @@ export default {
           } else {
             this.$emit('update:editable', false)
           }
+          this.fetchRoutes({ aid: this.aid, force: true })
         })
         .finally(() => {
           this.sending = false
@@ -214,6 +216,7 @@ export default {
         .then(() => {
           this.$router.push(`/app/${aid}/schema`)
           this.$store.commit('schema/REMOVE', this.name)
+          this.fetchRoutes({ aid: this.aid, force: true })
         })
         .finally(() => {
           this.sending = false
