@@ -5,6 +5,21 @@
 
   <div class="test">
     <div class="request">
+      <div v-if="!isEmpty('requestHeaders')" class="block">
+        <p>REQUEST HEADERS</p>
+        <div>
+          <div
+            v-for="(p, n) in route.requestHeaders.properties"
+            :key="n"
+            class="input-item"
+            :class="{ required: p.required }"
+          >
+            <div>{{ n }}</div>
+            <ui-textbox :value="requestHeaders[n]" @input="requestHeaders[n] = $event" />
+          </div>
+        </div>
+      </div>
+
       <div v-if="!isEmpty('queryString')" class="block">
         <p>QUERY STRING</p>
         <div>
@@ -74,6 +89,9 @@ import { flattenRoute } from '@graphi/tools/src/route'
 import mock from '@graphi/tools/src/mock'
 import { isEmpty } from '@/utils/is'
 
+// authorization cache
+let authorization = ''
+
 export default {
   props: {
     devServer: String,
@@ -87,11 +105,15 @@ export default {
       body = JSON.stringify(mock.getValue(route.requestBody), null, 2)
     }
 
+    const requestHeaders = mock.getValue(route.requestHeaders)
+    if (authorization) requestHeaders.Authorization = authorization
+
     return {
       response: null,
       status: null,
       queryString: mock.getValue(route.queryString),
       routeParams: mock.getValue(route.routeParams),
+      requestHeaders,
       requestBody: body,
       errors: {},
     }
@@ -135,7 +157,15 @@ export default {
       const { method, responseBody } = this.flattenRoute
       this.status = 'sending'
 
-      const headers = { 'Content-Type': 'application/json; charset=utf-8' }
+      const headers = {
+        Accept: 'application/json',
+        'Content-Type': 'application/json; charset=utf-8',
+        ...this.requestHeaders,
+      }
+
+      // set cache
+      if (headers.Authorization) authorization = headers.Authorization
+
       const body = this.hasBody ? this.requestBody : undefined
       fetch(this.path, { method, body, headers })
         .then(res => {
@@ -144,7 +174,7 @@ export default {
         })
         .then(res => {
           if (this.status === 200 && responseBody.properties) {
-            this.response = JSON.stringify(JSON.parse(res), null, 2)
+            this.response = JSON.stringify(JSON.parse(res), null, 4)
           } else {
             this.response = res
           }
@@ -227,7 +257,7 @@ export default {
     background: #ffffff;
     border: solid 1px #dddddd;
     white-space: pre-wrap;
-    word-wrap: break-word;
+    word-break: break-all;
     max-height: calc(100vh - 15rem);
     overflow: auto;
   }

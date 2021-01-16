@@ -51,13 +51,24 @@ module.exports = app => {
       app.router[route.method.toLowerCase()](route.path, async ctx => {
         const body = Object.assign({}, ctx.query, ctx.params, ctx.request.body)
 
+        const event = {
+          env: app.config.graphi.env,
+          jwtkey: app.config.graphi.jwtkey,
+          headers: ctx.request.headers,
+          payload: ctx.payload,
+        }
+
+        if (route.requestHeaders && route.requestHeaders.properties.Authorization && route.requestHeaders.properties.Authorization.required) {
+          if (!ctx.payload) ctx.throw(401, '用户鉴权失败')
+        }
+
         if (skipGraphql) {
-          const ClientContext = JSON.stringify({ body, env: app.config.graphi.env })
+          const ClientContext = JSON.stringify({ body, ...event })
           const response = await app.txcloud.invoke({ Namespace, FunctionName, Qualifier: version, ClientContext }, ctx)
           ctx.body = JSON.parse(response.RetMsg)
         } else {
           const execute = await graphql(route, async (_, obj, args) => {
-            const ClientContext = JSON.stringify({ body: args.data, env: app.config.graphi.env })
+            const ClientContext = JSON.stringify({ body: args.data, ...event })
             let res = await app.txcloud.invoke({ Namespace, FunctionName, Qualifier: version, ClientContext }, ctx)
             res = JSON.parse(res.RetMsg)
             if (res.errorCode === -1) {
