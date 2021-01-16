@@ -15,7 +15,7 @@ module.exports = appInfo => {
   config.keys = process.env.APP_KEYS || (appInfo.name + '_1607867947548_5744')
 
   // add your middleware config here
-  config.middleware = []
+  config.middleware = [ 'auth' ]
 
   config.security = {
     csrf: {

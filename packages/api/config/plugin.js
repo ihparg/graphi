@@ -15,4 +15,8 @@ module.exports = {
     enable: true,
     package: 'egg-cors',
   },
+  'graphi-jwt': {
+    enable: true,
+    path: path.resolve(__dirname, '../plugin/jwt'),
+  },
 }

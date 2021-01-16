@@ -1,0 +1,7 @@
+{
+  "name": "graphi-jwt",
+  "eggPlugin": {
+    "name": "graphi-jwt",
+    "dependencies": []
+  }
+}
