@@ -1,0 +1,7 @@
+{
+  "name": "aliyun",
+  "eggPlugin": {
+    "name": "aliyun",
+    "dependencies": []
+  }
+}

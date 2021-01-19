@@ -39,6 +39,10 @@ module.exports = (app, routes) => {
         return app.txcloud.registerRoute(r, func, version, skipGraphql)
       }
 
+      if (type === 'faas-ali') {
+        return app.aliyun.registerRoute(r, func, version, skipGraphql)
+      }
+
       app.logger.error(r.title + ' 没有匹配的resolve')
     } catch (e) {
       app.logger.error(e)

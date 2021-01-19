@@ -82,7 +82,7 @@ module.exports = {
 
     route.status += 1
     if (route.status === 2) {
-      ctx.assert(!route.resolve.endsWith('$LATEST'), '测试通过的版本不能为 LATEST')
+      ctx.assert(!route.resolve.endsWith('LATEST'), '测试通过的版本不能为 LATEST')
     }
 
     await route.save()
