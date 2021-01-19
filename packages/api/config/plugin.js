@@ -11,6 +11,10 @@ module.exports = {
     enable: !!process.env.GRAPHI_FAAS_TX,
     path: path.resolve(__dirname, '../plugin/txcloud'),
   },
+  aliyun: {
+    enable: !!process.env.GRAPHI_FAAS_ALI,
+    path: path.resolve(__dirname, '../plugin/aliyun'),
+  },
   cors: {
     enable: true,
     package: 'egg-cors',

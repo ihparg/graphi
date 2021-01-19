@@ -38,8 +38,15 @@ module.exports = {
       /**
        * 阿里云函数配置
        * 'faas-ali': {
+       *   accountId: '',
+       *   accessKeyID: '',
+       *   accessKeySecret: '',
+       *   region: '',
+       *   service: ['default']
        * },
       */
+
+      'faas-ali': JSON.parse(process.env.GRAPHI_FAAS_ALI || 'null'),
     },
   },
 }

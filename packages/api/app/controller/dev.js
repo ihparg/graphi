@@ -11,6 +11,10 @@ class DevController extends Controller {
       versions = await this.app.txcloud.listVersions(func)
     }
 
+    if (type === 'faas-ali') {
+      versions = await this.app.aliyun.listVersions(func)
+    }
+
     this.ctx.body = versions
   }
 
@@ -25,6 +29,10 @@ class DevController extends Controller {
 
     if (config['faas-tx']) {
       resolves['faas-tx'] = await this.app.txcloud.listFunctions()
+    }
+
+    if (config['faas-ali']) {
+      resolves['faas-ali'] = await this.app.aliyun.listFunctions()
     }
 
     this.ctx.body = resolves

@@ -123,7 +123,7 @@ module.exports = {
   async getDevServer(ctx, data) {
     await ctx.service.app.checkPermission(data.aid, 'get')
     const devServer = await ctx.app.cache.get(`${data.aid}:dev-server`)
-    return devServer.host
+    return devServer ? devServer.host : null
   },
 
   async getModules(ctx, data) {
