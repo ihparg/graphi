@@ -2,7 +2,6 @@
   "name": "@graphi/api",
   "version": "0.1.0",
   "description": "api gateway of graphi",
-  "private": true,
   "egg": {
     "declarations": true
   },
