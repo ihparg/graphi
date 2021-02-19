@@ -34,8 +34,8 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-graphi",
-    "stop": "egg-scripts stop --title=egg-server-graphi",
+    "start": "egg-scripts start --daemon --title=graphi-core",
+    "stop": "egg-scripts stop --title=graphi-core",
     "dev": "sh scripts/dev.sh",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",

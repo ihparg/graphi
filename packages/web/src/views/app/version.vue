@@ -4,10 +4,6 @@
     <v-fab-add @click="showCreate = true" />
 
     <div class="list">
-      <div style="margin-bottom: 2rem;">
-        <a href="javascript:;" @click="handleDownload('$latest')">$latest modules</a>
-      </div>
-
       <v-table :data="versions" class="table">
         <v-table-col title="版本号" name="tag" />
         <v-table-col title="接口数" name="routeCount" />
@@ -19,10 +15,10 @@
 
         <v-table-col v-slot="row">
           <a href="javascript:;" @click="handleDownload(row.tag)">
-            modules
+            models
           </a>
 
-          <a v-if="isMaintainer" href="javascript:;">
+          <a v-if="isMaintainer && row._id" href="javascript:;">
             <v-icon name="delete" /> 删除
             <v-confirm @confirm="handleRemove(row)">确定删除这个版本吗？</v-confirm>
           </a>
@@ -89,6 +85,7 @@ export default {
   },
   created() {
     fetch.get(`/api/version/${this.aid}`).then(res => {
+      res.unshift({ tag: '$latest' })
       this.versions = res
     })
   },

@@ -3,6 +3,7 @@
 module.exports = () => async (ctx, next) => {
   const { authorization } = ctx.request.headers
   if (ctx.app.jwt && authorization) {
+    console.log('author', authorization)
     try {
       const [ bearer, token ] = authorization.split(' ')
       if (bearer === 'Bearer') {

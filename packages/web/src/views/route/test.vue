@@ -106,7 +106,9 @@ export default {
     }
 
     const requestHeaders = mock.getValue(route.requestHeaders)
-    if (authorization) requestHeaders.Authorization = authorization
+    if (authorization && requestHeaders.Authorization) {
+      requestHeaders.Authorization = authorization
+    }
 
     return {
       response: null,
