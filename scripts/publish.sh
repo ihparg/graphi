@@ -1,10 +1,14 @@
 #!/bin/sh
 
-cd build/tools
+cd dist/tools
 npm publish --access=public
 
 cd ../core
-npm publish --access=public
+git add .
+git commit -m 'publish'
+git push origin main
 
 cd ../api
-npm publish --access=public
+git add .
+git commit -m 'publish'
+git push origin main

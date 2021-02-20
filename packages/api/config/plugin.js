@@ -15,6 +15,10 @@ module.exports = {
     enable: !!process.env.GRAPHI_FAAS_ALI,
     path: path.resolve(__dirname, '../plugin/aliyun'),
   },
+  redis: {
+    enable: true,
+    package: 'egg-redis',
+  },
   cors: {
     enable: true,
     package: 'egg-cors',

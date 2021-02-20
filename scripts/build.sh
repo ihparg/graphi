@@ -1,34 +1,38 @@
 #!/bin/sh
 
-rm -rf build
+rm -rf dist
 
-cd packages/web
+mkdir -p dist/tools
+cp -r packages/tools/src dist/tools/src
+cp -r packages/tools/package.json dist/tools/package.json
+
+cd dist
+git clone git@github.com:ihparg/graphi-api.git api
+git clone git@github.com:ihparg/graphi-core.git core
+
+cd ../packages/web
 yarn build
 
 cd ../../
+mv build/index.html build/public/index.html
+mv build/favicon.ico build/public/favicon.ico
+cp -r build/public dist/core/app
 
-mkdir build/tools
-cp -r packages/tools/src build/tools/src
-cp -r packages/tools/package.json build/tools/package.json
+cp -r packages/core/app dist/core
+cp -r packages/core/config dist/core
+cp -r packages/core/data dist/core
+cp -r packages/core/plugin dist/core
+cp -r packages/core/app.js dist/core
+cp -r packages/core/package.json dist/core
+cp -r packages/core/README.md dist/core
 
-cp -r packages/core/app build/core/app
-cp -r packages/core/config build/core/config
-cp -r packages/core/data build/core/data
-cp -r packages/core/plugin build/core/plugin
-cp -r packages/core/app.js build/core/app.js
-cp -r packages/core/package.json build/core/package.json
-
-mv build/core/index.html build/core/public/index.html
-mv build/core/favicon.ico build/core/public/favicon.ico
-
-mkdir build/api
-
-cp -r packages/api/app build/api/app
-cp -r packages/api/config build/api/config
-cp -r packages/api/plugin build/api/plugin
-cp -r packages/api/app.js build/api/app.js
-cp -r packages/api/config.js build/api/config.js
-cp -r packages/api/init.js build/api/init.js
-cp -r packages/api/package.json build/api/package.json
+cp -r packages/api/app dist/api
+cp -r packages/api/config dist/api
+cp -r packages/api/plugin dist/api
+cp -r packages/api/app.js dist/api
+cp -r packages/api/config.js dist/api
+cp -r packages/api/init.js dist/api
+cp -r packages/api/package.json dist/api
+cp -r packages/api/README.md dist/api
 
 node ./scripts/package.js

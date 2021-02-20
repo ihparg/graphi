@@ -5,21 +5,22 @@ const main = async () => {
   pkg = JSON.parse(pkg)
   const { version } = pkg
 
-  pkg = await fs.readFile('./build/core/package.json', 'utf-8')
+  pkg = await fs.readFile('./dist/core/package.json', 'utf-8')
   pkg = JSON.parse(pkg)
   pkg.version = version
   pkg.dependencies['@graphi/tools'] = version
-  await fs.writeFile('./build/core/package.json', JSON.stringify(pkg, null, 2))
+  await fs.writeFile('./dist/core/package.json', JSON.stringify(pkg, null, 2))
 
-  pkg = await fs.readFile('./build/api/package.json', 'utf-8')
+  pkg = await fs.readFile('./dist/api/package.json', 'utf-8')
   pkg = JSON.parse(pkg)
   pkg.version = version
-  await fs.writeFile('./build/api/package.json', JSON.stringify(pkg, null, 2))
+  pkg.dependencies['@graphi/tools'] = version
+  await fs.writeFile('./dist/api/package.json', JSON.stringify(pkg, null, 2))
 
-  pkg = await fs.readFile('./build/tools/package.json', 'utf-8')
+  pkg = await fs.readFile('./dist/tools/package.json', 'utf-8')
   pkg = JSON.parse(pkg)
   pkg.version = version
-  await fs.writeFile('./build/tools/package.json', JSON.stringify(pkg, null, 2))
+  await fs.writeFile('./dist/tools/package.json', JSON.stringify(pkg, null, 2))
 }
 
 main()

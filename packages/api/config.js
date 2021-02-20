@@ -4,6 +4,15 @@
 'use strict'
 
 module.exports = {
+  // 默认使用redis，如要关闭，请修改config/plugin.js
+  redis: {
+    client: {
+      port: process.env.REDIS_PORT || 6379,
+      host: process.env.REDIS_URL || '127.0.0.1',
+      password: process.env.REDIS_PASSWORD || null,
+      db: 0,
+    },
+  },
   graphi: {
     env: process.env.GRAPHI_ENV || 'prod',
 
@@ -20,9 +29,11 @@ module.exports = {
 
     resolve: {
       // 代理接口配置
+      /**
       proxy: {
         default: 'http://localhost:7001',
       },
+      */
 
       /**
        * 腾讯云函数配置

@@ -13,7 +13,7 @@ module.exports = {
   },
   lintOnSave: false,
   assetsDir: 'public',
-  outputDir: '../../build/core',
+  outputDir: '../../build',
   css: {
     loaderOptions: {
       scss: {

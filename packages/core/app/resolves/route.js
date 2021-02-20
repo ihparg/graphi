@@ -129,6 +129,8 @@ module.exports = {
     }
     schemas = flattenSchemas(schemas)
 
+    // test
+
     return routes.map(r => flattenRoute(r, schemas))
   },
 }

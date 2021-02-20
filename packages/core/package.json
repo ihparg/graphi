@@ -33,7 +33,7 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=graphi-core",
+    "start": "egg-scripts start --daemon --title=graphi-core --workers=1",
     "stop": "egg-scripts stop --title=graphi-core",
     "dev": "sh scripts/dev.sh",
     "debug": "egg-bin debug",
