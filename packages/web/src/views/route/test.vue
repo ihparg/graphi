@@ -113,8 +113,8 @@ export default {
     return {
       response: null,
       status: null,
-      queryString: mock.getValue(route.queryString),
-      routeParams: mock.getValue(route.routeParams),
+      queryString: mock.getValue(route.queryString || {}),
+      routeParams: mock.getValue(route.routeParams || {}),
       requestHeaders,
       requestBody: body,
       errors: {},

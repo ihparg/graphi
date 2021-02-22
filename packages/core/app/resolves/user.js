@@ -77,4 +77,32 @@ module.exports = {
     await user.save()
     return user
   },
+
+  async register(ctx, data) {
+    // convert email to lowercase
+    data.email = data.email.toLowerCase()
+    let user = await ctx.model.User.findOne({ $or: [{ name: data.name }, { email: data.email }] })
+    if (user) {
+      ctx.throw(user.name === data.name ? '用户名已存在' : '邮箱已存在')
+    }
+
+    data.password = createPwd(data.password)
+
+    // 判断是不是第一个用户
+    const exist = await ctx.model.User.exists({})
+
+    user = await ctx.model.User(data)
+    user.status = 1
+    if (!exist) user.role = 1
+
+    await user.save()
+
+    const info = { _id: user._id, dt: Date.now(), role: user.role, name: user.name }
+    const token = jwt.sign(info, ctx.app.config.keys)
+
+    await ctx.app.cache.set(user._id + ':' + info.dt, info.dt, 3600 * 24)
+    user.token = token
+
+    return user
+  },
 }
