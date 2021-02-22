@@ -1,13 +1,47 @@
 <template>
   <div class="login">
-    <v-form class="form" :data="value" :sending="sending" :submit="handleLogin">
+    <v-form
+      v-if="mode === 'login'"
+      class="form"
+      :data="value"
+      :sending="sending"
+      :submit="handleLogin"
+    >
       <div class="title">用户登录</div>
       <div style="padding: 2rem">
-        <v-input name="name" label="用户名" :rules="[rule.required]" />
-        <v-input name="password" type="password" label="密码" :rules="[rule.required]" />
+        <v-input name="name" required label="用户名" :rules="[rule.required]" />
+        <v-input name="password" required type="password" label="密码" :rules="[rule.required]" />
 
         <br />
-        <v-submit>登录</v-submit>
+        <div>
+          <v-submit>登录</v-submit>
+          <ui-button type="secondary" color="primary" @click="toggleMode('register')">
+            注册用户
+          </ui-button>
+        </div>
+      </div>
+    </v-form>
+
+    <v-form
+      v-if="mode === 'register'"
+      class="form"
+      :data="value"
+      :sending="sending"
+      :submit="handleRegister"
+    >
+      <div class="title">用户注册</div>
+      <div style="padding: 2rem">
+        <v-input name="name" required label="用户名" :rules="[rule.required]" />
+        <v-input name="email" required label="邮箱" :rules="[rule.required, rule.email]" />
+        <v-input name="password" required type="password" label="密码" :rules="[rule.required]" />
+
+        <br />
+        <div>
+          <v-submit>注册</v-submit>
+          <ui-button type="secondary" color="primary" @click="toggleMode('login')">
+            已有账号，登录
+          </ui-button>
+        </div>
       </div>
     </v-form>
   </div>
@@ -24,13 +58,29 @@ export default {
       rule: Rule(),
       value: {},
       sending: false,
+      mode: 'login',
     }
   },
   methods: {
+    toggleMode(mode) {
+      this.mode = mode
+    },
     handleLogin() {
       this.sending = true
       fetch
         .post('/api/user/login', this.value)
+        .then(user => {
+          setToken(user.token)
+          window.location.reload()
+        })
+        .catch(() => {
+          this.sending = false
+        })
+    },
+    handleRegister() {
+      this.sending = true
+      fetch
+        .post('/api/user/register', this.value)
         .then(user => {
           setToken(user.token)
           window.location.reload()
@@ -67,5 +117,9 @@ export default {
   background: #ffffff;
   margin: 15rem auto auto;
   border: solid 1px rgba(0, 0, 0, 0.1);
+
+  button + button {
+    margin-left: 0.5rem;
+  }
 }
 </style>

@@ -7,6 +7,12 @@ Graphi是一个Faas接口管理平台，包含接口文档，接口网关两个�
 
 网关使用参见[https://github.com/ihparg/graphi-api]
 
+## Demo
+示例项目[http://42.192.222.11:7001/]
+
+## Documentation
+编写中...
+
 ## Feature
 目前已完成功能
 - Schema 管理，复用数据结构和生成model代码
