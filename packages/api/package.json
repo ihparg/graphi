@@ -2,12 +2,12 @@
   "name": "@graphi/api",
   "version": "0.1.0",
   "description": "api gateway of graphi",
-  "private": true,
   "egg": {
     "declarations": true
   },
   "dependencies": {
     "@alicloud/fc2": "^2.2.2",
+    "@graphi/tools": "file:../tools",
     "dayjs": "^1.10.3",
     "egg": "^2.29.1",
     "egg-cors": "^2.2.3",
@@ -32,7 +32,7 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=graphi-api",
+    "start": "egg-scripts start --daemon --title=graphi-api --port=7002",
     "stop": "egg-scripts stop --title=graphi-api",
     "dev": "GRAPHI_ENV=dev egg-bin dev --port 7002",
     "debug": "egg-bin debug",
@@ -48,7 +48,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/ihparg/graphi"
   },
   "author": "loboos841@gmail.com",
   "license": "GPL-3.0"

@@ -23,15 +23,6 @@ module.exports = appInfo => {
     },
   }
 
-  config.redis = {
-    client: {
-      port: process.env.REDIS_PORT || 6379,
-      host: process.env.REDIS_URL || '127.0.0.1',
-      password: process.env.REDIS_PASSWORD || null,
-      db: 0,
-    },
-  }
-
   config.dateFormat = 'YYYY-MM-DD HH:mm:ss'
 
   exports.cors = {

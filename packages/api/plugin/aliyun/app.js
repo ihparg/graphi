@@ -66,7 +66,6 @@ module.exports = app => {
           const execute = await graphql(route, async (_, obj, args) => {
             event = JSON.stringify({ body: args.data, ...event })
             let res = await app.aliyun.invoke({ serviceName, functionName, qualifier: version, event }, ctx)
-            console.log(res)
             res = JSON.parse(res)
             if (res.errorCode === -1) {
               ctx.logger.error(serviceName, functionName, version, res)
@@ -75,7 +74,6 @@ module.exports = app => {
             return res
           })
           const response = await execute(body)
-          console.log('return', response)
           if (response.errors) {
             ctx.status = 500
             ctx.body = response.errors[0].message

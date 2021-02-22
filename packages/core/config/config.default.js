@@ -9,6 +9,12 @@ module.exports = app => {
    **/
   const config = {}
 
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  }
+
   config.keys = process.env.APP_KEYS || (app.name + '_1602347723076_8844')
 
   config.middleware = [ 'error' ]
