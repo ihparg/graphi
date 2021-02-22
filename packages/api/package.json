@@ -32,7 +32,7 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --title=graphi-api",
+    "start": "egg-scripts start --daemon --title=graphi-api --port=7002",
     "stop": "egg-scripts stop --title=graphi-api",
     "dev": "GRAPHI_ENV=dev egg-bin dev --port 7002",
     "debug": "egg-bin debug",
