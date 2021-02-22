@@ -17,7 +17,7 @@ module.exports = {
     env: process.env.GRAPHI_ENV || 'prod',
 
     // 注册到文档平台的本机地址，用来测试接口和获取函数配置
-    localhost: 'http://localhost:7002',
+    localhost: process.env.LOCALHOST || 'http://localhost:7002',
 
     jwtkey: process.env.GRAPHI_JWTKEY || null,
 
